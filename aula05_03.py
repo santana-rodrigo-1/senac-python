@@ -12,24 +12,24 @@ match opcao:
     case "1":
         valor = float(input("valor do saque: R$"))
         if valor < 0:
-            print("Valor inválido.")
+            print("Valor inválido.\n")
         elif valor > SALDO:
-            print("Valor maior que o saldo.")
+            print("Valor maior que o saldo.\n")
         else:
             SALDO = SALDO - valor
-            print(f"saque realizado, saldo = {SALDO}")
+            print(f"saque realizado, saldo = R$ {SALDO}.\n")
 
     case "2":
         valor = float(input("valor do depósito: R$"))
         if valor > 0:
             SALDO = SALDO + valor
-            print(f"Depósito realizado  - salto atual: R$ {SALDO}")
+            print(f"Depósito realizado  - salto atual: R$ {SALDO}.\n")
 
     case "3":
-       print(f"Saldo disponível: {SALDO}")
+       print(f"Saldo disponível: R$ {SALDO}.\n")
 
     case "4":
-        print("Programa encerrado.")
+        print("Programa encerrado.\n")
 
     case _:
-        print ("Opção inválida.")
+        print ("Opção inválida.\n")
