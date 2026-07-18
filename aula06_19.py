@@ -75,11 +75,12 @@ while True:
         
         case "6": # Sair
             print("\nRESUMO\n")
-            print(f"SALDO FINAL: R4 {SALDO}")
+            print(f"SALDO FINAL: R$ {SALDO}")
             print(f"DEPOSITOS REALIZADOS: {depositos}")
             print(f"SAQUES REALIZADOS: {saques}")
             print(f"TRANSFERÊNCIAS: {transferencias}")
-            print(f"TOTAL MOVIMENTADO: {total_movimentado}")                 
+            print(f"TOTAL MOVIMENTADO: {total_movimentado}\n")
+            break              
 
         case "7": # Cancelar
             break
