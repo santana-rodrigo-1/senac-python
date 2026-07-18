@@ -71,7 +71,7 @@ while True:
                 print("Nenhuma movimentação.")
             else:
                 for i in extrato:
-                    print(f"{i}")
+                    print(i)
         
         case "6": # Sair
             print("\nRESUMO\n")
