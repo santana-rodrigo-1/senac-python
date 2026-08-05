@@ -1,0 +1,4 @@
+data.strftime("%d/%m/%y")
+data.strftime("%d-%m-%y")
+data.strftime("%y/%m/%d")
+data.strftime("%d de %m de %y")
