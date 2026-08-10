@@ -1,4 +1,4 @@
-# Exercício 3 - Desafio: Controle de Preços
+# Exercício 4 - Desafio: Controle de Preços
 
 produtos = []
 precos = []
