@@ -64,7 +64,7 @@ while True:
 
     elif opcao == "10"
         print
-    elif opcao == "11" # Cancelar
+    elif opcao == "11"
         break
     else _:
         print("\nOpção invalida!") 
@@ -72,57 +72,7 @@ while True:
 
 
 
-
-    match  opcao:
-
-        case "1": # Cadastrar aluno
-
-
-            
-
-        case "2": # Listar alunos
-                
-
-
-
-            valor = float(input("Valor do deposito: R$ "))
-            if valor > 0:
-                SALDO = SALDO + valor
-                depositos +=1
-                total_movimentado += valor
-                extrato.append(f"Depósito: R$ {valor}")
-                print(f"Deposito realizado - saldo atualizado R$ {SALDO}")
-
-        case "3": # Consultar saldo
-            extrato.append(f"Saldo: R$ {valor}")
-            print(f"Saldo disponivel R$ {SALDO}")
-
-        case "4": # Transferência
-            tax_transf = 5.00
-            print(f"OBS: Transferências possuem uma taxa de: R$ {tax_transf:.2f}")
-            favorecido = input("Digite nome do favorecido: ").upper()
-            valor = float(input("Valor do transferência: R$ "))
-            if valor <= 0:
-                print("Valor inválido.")
-            elif valor > SALDO:
-                print("Saldo insuficiente.")
-                print(f"Seu saldo atual é: R$ {SALDO}")
-            else:
-                SALDO = SALDO - valor
-                transferencias += 1
-                total_movimentado += valor
-                extrato.append(f"Transferencia: favorecido {favorecido} - Valor R$ {valor}")
-                print(f"Transferência realizada para {favorecido}")
-                print(f"Seu saldo atual é: R$ {SALDO - tax_transf}")
-
-        case "5": # Extrato
-            print("\nEXTRATO\n")
-            if len(extrato) == 0:
-                print("Nenhuma movimentação.")
-            else:
-                for i in extrato:
-                    print(i)
-        
+"""      
         case "10": # Sair
             print("\nRESUMO\n")
             print(f"SALDO FINAL: R$ {SALDO}")
@@ -131,9 +81,4 @@ while True:
             print(f"TRANSFERÊNCIAS: {transferencias}")
             print(f"TOTAL MOVIMENTADO: {total_movimentado}\n")
             break              
-
-        case "11": # Cancelar
-            break
-
-        case _:
-            print("\nOpção invalida!")
+"""
