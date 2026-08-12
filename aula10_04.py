@@ -15,7 +15,11 @@ print("\n")
 print("Temperatura Diagonal")
 
 for i in range(len(temperaturas)):
-    print(f"Posição [{i}][{i}] ({cidade[i]} de {horarios[i]}) - {temperaturas[i][i]} ")
+    print(
+    f"Posição [{i}][{j}] "
+    f"({cidade[i]} de {horarios[j]}) "
+    f"- {temperaturas[i][j]}"
+)
 
 print("\n")
 print("Maior temperatura")
