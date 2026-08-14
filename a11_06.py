@@ -11,7 +11,3 @@ class Funcionario:
         self.nome = nome
         self.salario = salario
 
-
-
-
-calcular_bonus()
