@@ -1,14 +1,15 @@
-# 3. Solicite um número ao usuário e mostre:
-# • O dobro do número.
-# • O triplo do número.
+# LISTA DE EXERCÍCIOS – ENTRADA DE DADOS, CÁLCULOS E SAÍDA EM PYTHON.
 
-#import subprocess
-#subprocess.run("cls", shell=True)
+# 1. Crie um programa que solicite ao usuário a cidade onde ele mora
+# e exiba a mensagem: Você mora em [cidade].
 
-numero = float(input("\n\nDigite um número: "))
-dobro = numero * 2
-triplo = numero * 3
+cidade = input("\nDigite a cidade onde mora: ").strip().upper()
 
-print(f"\nO número digitado é: {numero}")
-print(f"O dobro  de {numero} é: {dobro}.")
-print(f"O triplo de {numero} é: {triplo}.\n\n")
+print(f"\nVocê mora em {cidade}.")
+print(f"\n+{"-" * 30}+\n")
+
+# .strip()      -> Remove os espaços em branco inúteis do início e do fim.
+# .title()      -> Coloca a primeira letra de CADA palavra em maiúscula (Ex: Rio De Janeiro).
+# .capitalize() -> Coloca APENAS a primeira letra do texto em maiúscula (Ex: Rio de janeiro).
+# .upper()      -> Deixa o texto INTEIRO EM MAIÚSCULO (Ex: RIO DE JANEIRO).
+# .lower()      -> Deixa o texto inteiro em minúsculo (Ex: rio de janeiro).
