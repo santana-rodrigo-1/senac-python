@@ -36,9 +36,11 @@ class VeiculoEstacionado:
 lista_estacionamento= []
 
 while True:
+    print('=' * 40)
+    print('ESTACIONAMENTO VIP JWC TECH'.center(40))
+    print("CADASTRO".center(40))
+    print('=' * 40)
     print()
-    print("ESTACIONAMENTO VIP JWC TECH")
-    print("========= CADASTRO ========")
     print("1 - Entrada")
     print("2 - Listar")
     print("3 - registrar")
