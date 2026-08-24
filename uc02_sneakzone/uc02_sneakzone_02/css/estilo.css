@@ -33,14 +33,25 @@ body {
 
         /* cabeçalho/menu */
         header {
-            background-color: #000;
+            background-color: #0d1b2a;
             padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         header a {
             color: #ffffff;
             text-decoration: none;
             font-weight: bold;
+        }
+
+        nav a {
+            transition: color .2s;
+        }
+        nav a:hover {
+            color: #ff6b35;
         }
 
         nav ul {
@@ -62,7 +73,7 @@ body {
 
         main section {
             max-width: 1000px;
-            margin: 30px;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
@@ -109,4 +120,19 @@ body {
 
         input[type="radio"], input[type="checkbox"] {
             width: auto;
+        }
+
+        #produtos > div {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        #produtos article{
+            flex: 1 1 260px;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(13, 27, 42, .06);
+            transition: box-shadow .2s, transform .2s;
+            background-color: #ffffff;
+            border: 1px solid #e3e8ef;
+            padding: 16px;
         }
