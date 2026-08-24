@@ -1,0 +1,129 @@
+nomes = []
+
+for i in range(5):
+    nome = input(f"Digite o {i + 1}º nome: ")
+    nomes.append(nome)
+
+print("\nLista de nomes:", nomes)
+
+print("Primeiro nome:", nomes[0])
+print("Último nome:", nomes[-1])
+print("Quantidade:", len(nomes))
+
+print("\nNomes cadastrados:")
+
+for nome in nomes:
+    print(nome)
+
+___________________________________________
+
+notas = []
+
+qtd = int(input("Quantos alunos existem? "))
+
+for i in range(qtd):
+    nota = float(input(f"Digite a nota do aluno {i + 1}: "))
+    notas.append(nota)
+
+print("\nNotas:", notas)
+print("Quantidade de alunos:", len(notas))
+print("Maior nota:", max(notas))
+print("Menor nota:", min(notas))
+print("Soma das notas:", sum(notas))
+
+media = sum(notas) / len(notas)
+
+print("Média:", media)
+
+nota_busca = float(input("\nQual nota deseja pesquisar? "))
+
+print(
+    "A nota aparece",
+    notas.count(nota_busca),
+    "vez(es)."
+)
+_____________________________________________________
+compras = ["arroz", "feijão", "macarrão", "leite", "café"]
+
+print("Lista inicial:", compras)
+
+print("Primeiro produto:", compras[0])
+print("Último produto:", compras[-1])
+
+produto_remover = input("\nQual produto deseja remover? ")
+
+if produto_remover in compras:
+    compras.remove(produto_remover)
+    print("Produto removido!")
+else:
+    print("Produto não encontrado.")
+
+novo_produto = input("Digite um novo produto: ")
+
+compras.append(novo_produto)
+
+compras.sort()
+
+print("\nLista final:", compras)
+___________________________________________________________
+produtos = []
+precos = []
+
+for i in range(5):
+    print(f"\nProduto {i + 1}")
+
+    produto = input("Nome do produto: ")
+    preco = float(input("Preço: R$ "))
+
+    produtos.append(produto)
+    precos.append(preco)
+
+print("\n===== RELATÓRIO =====")
+
+for i in range(len(produtos)):
+    print(f"{produtos[i]} - R$ {precos[i]:.2f}")
+
+print("\nQuantidade de produtos:", len(produtos))
+
+maior = max(precos)
+menor = min(precos)
+
+indice_maior = precos.index(maior)
+indice_menor = precos.index(menor)
+
+print(
+    "Produto mais caro:",
+    produtos[indice_maior],
+    "- R$",
+    f"{maior:.2f}"
+)
+
+print(
+    "Produto mais barato:",
+    produtos[indice_menor],
+    "- R$",
+    f"{menor:.2f}"
+)
+
+print("Maior preço:", maior)
+print("Menor preço:", menor)
+
+print("Soma dos preços:", sum(precos))
+
+media = sum(precos) / len(precos)
+
+print("Média dos preços:", f"R$ {media:.2f}")
+
+precos.sort()
+print("\nPreços em ordem crescente:", precos)
+
+precos.sort(reverse=True)
+print("Preços em ordem decrescente:", precos)
+
+preco_busca = float(input("\nDigite um preço para pesquisar: "))
+
+print(
+    "Esse preço aparece",
+    precos.count(preco_busca),
+    "vez(es)."
+)

@@ -1,0 +1,75 @@
+nomes = []
+notas = []
+
+qtd = int(input("Quantos alunos existem? "))
+
+for i in range(qtd):
+    print(f"\nAluno {i + 1}")
+
+    nome = input("Nome: ")
+    nota = float(input("Nota: "))
+
+    nomes.append(nome)
+    notas.append(nota)
+
+print("\n===== RESULTADO =====")
+
+# Lista de alunos e notas
+for i in range(len(nomes)):
+    print(f"{nomes[i]} - Nota: {notas[i]:.1f}")
+
+# Quantidade
+print("\nQuantidade de alunos:", len(nomes))
+
+# Maior e menor nota
+maior = max(notas)
+menor = min(notas)
+
+indice_maior = notas.index(maior)
+indice_menor = notas.index(menor)
+
+print(
+    f"Maior nota: {maior:.1f} - "
+    f"Aluno: {nomes[indice_maior]}"
+)
+
+print(
+    f"Menor nota: {menor:.1f} - "
+    f"Aluno: {nomes[indice_menor]}"
+)
+
+# Soma e média
+soma = sum(notas)
+media = soma / len(notas)
+
+print(f"Soma das notas: {soma:.1f}")
+print(f"Média da turma: {media:.1f}")
+
+# Aprovados e reprovados
+aprovados = 0
+reprovados = 0
+
+for nota in notas:
+    if nota >= 7:
+        aprovados += 1
+    else:
+        reprovados += 1
+
+print("Aprovados:", aprovados)
+print("Reprovados:", reprovados)
+
+# Ordenação
+notas.sort(reverse=True)
+
+print("\nNotas da maior para a menor:")
+print(notas)
+
+# Pesquisa de nota
+nota_busca = float(input("\nDigite uma nota para pesquisar: "))
+
+quantidade = notas.count(nota_busca)
+
+print(
+    f"A nota {nota_busca:.1f} "
+    f"aparece {quantidade} vez(es)."
+)

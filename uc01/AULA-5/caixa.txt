@@ -1,0 +1,42 @@
+saldo = 1000
+
+print("=== CAIXA ELETRÔNICO ===")
+print("1 - Saque")
+print("2 - Depósito")
+print("3 - Consultar Saldo")
+print("4 - Sair")
+
+opcao = input("Escolha uma opção: ")
+
+match opcao:
+
+    case "1":
+
+        valor = float(input("Valor do saque: R$ "))
+
+        if valor > 0 and valor <= saldo:
+            saldo = saldo - valor
+            print("Saque realizado com sucesso!")
+            print(f"Saldo atual: R$ {saldo:.2f}")
+        else:
+            print("Não foi possível realizar o saque.")
+
+    case "2":
+
+        valor = float(input("Valor do depósito: R$ "))
+
+        if valor > 0:
+            saldo = saldo + valor
+            print("Depósito realizado com sucesso!")
+            print(f"Saldo atual: R$ {saldo:.2f}")
+        else:
+            print("Valor inválido.")
+
+    case "3":
+        print(f"Saldo disponível: R$ {saldo:.2f}")
+
+    case "4":
+        print("Programa encerrado.")
+
+    case _:
+        print("Opção inválida.")

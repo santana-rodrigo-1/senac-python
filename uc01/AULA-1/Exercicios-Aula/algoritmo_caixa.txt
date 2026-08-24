@@ -1,0 +1,13 @@
+Início
+
+Definir senha correta = 1234
+
+Solicitar a senha ao usuário
+
+Se a senha estiver correta então
+    Solicitar o valor do saque
+    Informar "Saque realizado com sucesso!"
+Senão
+    Informar "Senha incorreta! Operação cancelada."
+
+Fim

@@ -1,0 +1,417 @@
+Gabarito – Exercícios 12 a 17
+Construindo o Caixa Eletrônico
+Exercício 12 – Caixa Eletrônico (Parte 1)
+Objetivo
+Criar um menu.
+Mostrar o saldo.
+Encerrar apenas quando escolher "Sair".
+# Saldo inicial
+saldo = 1000.00
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Sair")
+
+    opcao = input("Escolha uma opção: ")
+
+    # Consultar saldo
+    if opcao == "1":
+
+        print(f"\nSaldo atual: R$ {saldo:.2f}")
+
+    # Encerrar sistema
+    elif opcao == "2":
+
+        print("\nSistema encerrado.")
+        break
+
+    # Opção inválida
+    else:
+
+        print("\nOpção inválida!")
+Exercício 13 – Caixa Eletrônico (Parte 2)
+Novo recurso
+
+Adicionar Depósito.
+
+saldo = 1000.00
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Sair")
+    print("3 - Depositar")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+
+        print(f"\nSaldo: R$ {saldo:.2f}")
+
+    elif opcao == "2":
+
+        print("\nSistema encerrado.")
+        break
+
+    elif opcao == "3":
+
+        valor = float(input("Valor do depósito: R$ "))
+
+        if valor <= 0:
+
+            print("Valor inválido!")
+
+        else:
+
+            saldo += valor
+
+            print("Depósito realizado com sucesso!")
+
+            print(f"Novo saldo: R$ {saldo:.2f}")
+
+    else:
+
+        print("Opção inválida!")
+Exercício 14 – Caixa Eletrônico (Parte 3)
+Novo recurso
+
+Adicionar Saque.
+
+saldo = 1000.00
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Sair")
+    print("3 - Depositar")
+    print("4 - Sacar")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+
+        print(f"\nSaldo: R$ {saldo:.2f}")
+
+    elif opcao == "2":
+
+        print("\nSistema encerrado.")
+        break
+
+    elif opcao == "3":
+
+        valor = float(input("Depósito: "))
+
+        if valor > 0:
+
+            saldo += valor
+
+            print("Depósito realizado!")
+
+        else:
+
+            print("Valor inválido!")
+
+    elif opcao == "4":
+
+        valor = float(input("Valor do saque: "))
+
+        if valor <= 0:
+
+            print("Valor inválido!")
+
+        elif valor > saldo:
+
+            print("Saldo insuficiente!")
+
+        else:
+
+            saldo -= valor
+
+            print("Saque realizado!")
+
+            print(f"Saldo: R$ {saldo:.2f}")
+
+    else:
+
+        print("Opção inválida!")
+Exercício 15 – Caixa Eletrônico (Parte 4)
+Novo recurso
+
+Adicionar Transferência.
+
+saldo = 1000.00
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Sair")
+    print("3 - Depositar")
+    print("4 - Sacar")
+    print("5 - Transferir")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+
+        print(f"Saldo: R$ {saldo:.2f}")
+
+    elif opcao == "2":
+
+        print("Sistema encerrado.")
+        break
+
+    elif opcao == "3":
+
+        valor = float(input("Valor: "))
+
+        if valor > 0:
+
+            saldo += valor
+
+            print("Depósito realizado!")
+
+        else:
+
+            print("Valor inválido!")
+
+    elif opcao == "4":
+
+        valor = float(input("Valor: "))
+
+        if valor <= 0:
+
+            print("Valor inválido!")
+
+        elif valor > saldo:
+
+            print("Saldo insuficiente!")
+
+        else:
+
+            saldo -= valor
+
+            print("Saque realizado!")
+
+    elif opcao == "5":
+
+        favorecido = input("Nome do favorecido: ")
+
+        valor = float(input("Valor da transferência: "))
+
+        if valor <= 0:
+
+            print("Valor inválido!")
+
+        elif valor > saldo:
+
+            print("Saldo insuficiente!")
+
+        else:
+
+            saldo -= valor
+
+            print(f"Transferência realizada para {favorecido}!")
+
+    else:
+
+        print("Opção inválida!")
+Exercício 16 – Caixa Eletrônico (Parte 5)
+Novo recurso
+
+Adicionar Extrato.
+
+saldo = 1000.00
+
+extrato = []
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Sair")
+    print("3 - Depositar")
+    print("4 - Sacar")
+    print("5 - Transferir")
+    print("6 - Extrato")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+
+        print(f"Saldo: R$ {saldo:.2f}")
+
+    elif opcao == "2":
+
+        print("Sistema encerrado.")
+        break
+
+    elif opcao == "3":
+
+        valor = float(input("Valor: "))
+
+        if valor > 0:
+
+            saldo += valor
+
+            extrato.append(f"Depósito: R$ {valor:.2f}")
+
+            print("Depósito realizado!")
+
+    elif opcao == "4":
+
+        valor = float(input("Valor: "))
+
+        if valor > 0 and valor <= saldo:
+
+            saldo -= valor
+
+            extrato.append(f"Saque: R$ {valor:.2f}")
+
+            print("Saque realizado!")
+
+    elif opcao == "5":
+
+        nome = input("Favorecido: ")
+
+        valor = float(input("Valor: "))
+
+        if valor > 0 and valor <= saldo:
+
+            saldo -= valor
+
+            extrato.append(f"Transferência para {nome}: R$ {valor:.2f}")
+
+            print("Transferência realizada!")
+
+    elif opcao == "6":
+
+        print("\n====== EXTRATO ======")
+
+        if len(extrato) == 0:
+
+            print("Nenhuma movimentação registrada.")
+
+        else:
+
+            for item in extrato:
+
+                print(item)
+
+    else:
+
+        print("Opção inválida!")
+Exercício 17 – Caixa Eletrônico (Parte 6)
+Novo recurso
+
+Mostrar um resumo ao sair.
+
+saldo = 1000.00
+
+extrato = []
+
+depositos = 0
+saques = 0
+transferencias = 0
+
+total_movimentado = 0
+
+while True:
+
+    print("\n====== CAIXA ELETRÔNICO ======")
+    print("1 - Consultar Saldo")
+    print("2 - Depositar")
+    print("3 - Sacar")
+    print("4 - Transferir")
+    print("5 - Extrato")
+    print("6 - Sair")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+
+        print(f"Saldo: R$ {saldo:.2f}")
+
+    elif opcao == "2":
+
+        valor = float(input("Valor: "))
+
+        if valor > 0:
+
+            saldo += valor
+
+            depositos += 1
+
+            total_movimentado += valor
+
+            extrato.append(f"Depósito: R$ {valor:.2f}")
+
+    elif opcao == "3":
+
+        valor = float(input("Valor: "))
+
+        if valor > 0 and valor <= saldo:
+
+            saldo -= valor
+
+            saques += 1
+
+            total_movimentado += valor
+
+            extrato.append(f"Saque: R$ {valor:.2f}")
+
+    elif opcao == "4":
+
+        nome = input("Favorecido: ")
+
+        valor = float(input("Valor: "))
+
+        if valor > 0 and valor <= saldo:
+
+            saldo -= valor
+
+            transferencias += 1
+
+            total_movimentado += valor
+
+            extrato.append(f"Transferência para {nome}: R$ {valor:.2f}")
+
+    elif opcao == "5":
+
+        print("\n====== EXTRATO ======")
+
+        if len(extrato) == 0:
+
+            print("Nenhuma movimentação registrada.")
+
+        else:
+
+            for item in extrato:
+
+                print(item)
+
+    elif opcao == "6":
+
+        print("\n====== RESUMO ======")
+
+        print(f"Saldo final: R$ {saldo:.2f}")
+
+        print(f"Depósitos realizados: {depositos}")
+
+        print(f"Saques realizados: {saques}")
+
+        print(f"Transferências realizadas: {transferencias}")
+
+        print(f"Total movimentado: R$ {total_movimentado:.2f}")
+
+        print("\nObrigado por utilizar nosso sistema!")
+
+        break
+
+    else:
+
+        print("Opção inválida!")
