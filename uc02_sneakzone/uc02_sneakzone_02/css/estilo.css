@@ -153,18 +153,21 @@
  }
 
 
-aside.top-bar {
-  background-color: #ff6b35; /* Fundo Laranja */
+ aside.top-bar {
+    background-color: #ff6b35;
+     /* Fundo Laranja */
 
-}
-aside.top-bar p {
-    margin: 0;
-    color: white;
-    align: center;
-    
+ }
 
-}
-aside.top-bar strong {
-  background-color: rgba(0, 0, 0, 0.2);
+ aside.top-bar p {
+     margin: 0;
+     color: white;
+     font-size: 20px;
 
-}
+
+ }
+
+ aside.top-bar strong {
+    background-color: rgba(0, 0, 0, 0.2);
+
+ }
