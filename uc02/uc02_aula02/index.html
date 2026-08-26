@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SneakZone - a loja de tênis com os melhores modelos esportivos e casuais.">
+
+  <!-- Open Graph / Meta tags para redes sociais (SEO e compartilhamento - Padrão de Mercado) -->
+  <meta property="og:title" content="SneakZone | Loja de Tênis">
+  <meta property="og:description" content="Os tênis mais desejados do momento, do esportivo ao casual. Frete grátis e troca facilitada.">
+  <meta property="og:image" content="img/aerorun.svg">
+  <meta property="og:type" content="website">
+
+  <title>SneakZone | Loja de Tênis</title>
+
+  <!-- FAVICON (Ícone da aba do navegador) -->
+  <link rel="icon" type="image/svg+xml" href="img/aerorun.svg">
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
+<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
+<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+
+<body>
+
+  <!-- ===================== CABEÇALHO / NAVBAR (Aula 8) ===================== -->
+  <header>
+    <nav>
+      <div>
+        <a href="#inicio">
+          <i></i> SneakZone
+        </a>
+        <button type="button"
+                aria-controls="menu"
+                aria-expanded="false" aria-label="Abrir menu de navegação">
+          <span></span>
+        </button>
+        <div id="menu">
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#precos">Preços</a></li>
+            <li><a href="#duvidas">Dúvidas</a></li>
+            <li><a href="#cadastro">Cadastro</a></li>
+            <li>
+              <!-- Botão do Carrinho que abre a Gaveta Offcanvas -->
+              <button 
+                      type="button" 
+                      
+                      
+                      aria-controls="carrinhoOffcanvas"
+                      title="Abrir carrinho de compras">
+                <i></i>
+                <span id="cartBadge">0</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===================== CONTEÚDO PRINCIPAL (TAG SEMÂNTICA <main> - Aula 1) ===================== -->
+  <main id="conteudo-principal">
+
+    <!-- ===================== HERO / INÍCIO (Aula 1) ===================== -->
+    <section id="inicio">
+      <div>
+        <h1>Pise diferente. <span>Pise SneakZone.</span></h1>
+        <p>
+          Os tênis mais desejados do momento, do esportivo ao casual.
+          Frete grátis para todo o Brasil e troca facilitada em 30 dias.
+        </p>
+        <a href="#produtos"><i></i> Ver coleção</a>
+      </div>
+    </section>
+
+    <!-- Alerta informativo (Aula 8) -->
+    <div>
+      <div role="alert">
+        <i></i>
+        <div><strong>Promoção relâmpago!</strong> Frete grátis nas compras acima de R$ 299 até domingo.</div>
+      </div>
+    </div>
+
+    <!-- ===================== CARROSSEL (Aula 9) ===================== -->
+    <section>
+      <div id="carrosselDestaques">
+        <div>
+          <button type="button" aria-label="Slide 1"></button>
+          <button type="button" aria-label="Slide 2"></button>
+          <button type="button" aria-label="Slide 3"></button>
+        </div>
+        <div>
+          <div>
+            <h2>Linha Corrida 2026</h2>
+            <p>Leveza e amortecimento para bater seu recorde pessoal.</p>
+          </div>
+          <div>
+            <h2>Coleção Casual Urbana</h2>
+            <p>Conforto e estilo para o dia a dia na cidade.</p>
+          </div>
+          <div>
+            <h2>Edição Basquete Pro</h2>
+            <p>Firmeza e tração para dominar a quadra.</p>
+          </div>
+        </div>
+        <button type="button">
+          <span aria-hidden="true"></span>
+          <span>Anterior</span>
+        </button>
+        <button type="button">
+          <span aria-hidden="true"></span>
+          <span>Próximo</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== PRODUTOS: GRID + CARDS (Aula 7) =====================
+         Uso de data attributes (data-id, data-nome, data-preco, data-img) para integração dinâmica com o Carrinho JS. -->
+    <section id="produtos">
+      <h2>Nossos Tênis</h2>
+      <div>
+
+        <div>
+          <article>
+            <div><img src="img/aerorun.jpg" alt="Tênis de corrida laranja modelo AeroRun"></div>
+            <div>
+              <h3>AeroRun Laranja</h3>
+              <p>
+                <i></i><i></i><i></i><i></i><i></i> (4.5)
+              </p>
+              <p>R$ 349,90</p>
+              <button 
+                      data-id="1"
+                      data-nome="AeroRun Laranja" 
+                      data-preco="349.90"
+                      data-img="img/aerorun.jpg">
+                <i></i> Adicionar ao carrinho
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div>
+          <article>
+            <div><img src="img/urbanstep.jpg" alt="Tênis casual azul modelo UrbanStep"></div>
+            <div>
+              <h3>UrbanStep Azul</h3>
+              <p>
+                <i></i><i></i><i></i><i></i><i></i> (4.0)
+              </p>
+              <p>R$ 279,90</p>
+              <button 
+                      data-id="2"
+                      data-nome="UrbanStep Azul" 
+                      data-preco="279.90"
+                      data-img="img/urbanstep.jpg">
+                <i></i> Adicionar ao carrinho
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div>
+          <article>
+            <div><img src="img/courtpro.jpg" alt="Tênis de basquete verde modelo CourtPro"></div>
+            <div>
+              <h3>CourtPro Verde</h3>
+              <p>
+                <i></i><i></i><i></i><i></i><i></i> (5.0)
+              </p>
+              <p>R$ 429,90</p>
+              <button 
+                      data-id="3"
+                      data-nome="CourtPro Verde" 
+                      data-preco="429.90"
+                      data-img="img/courtpro.jpg">
+                <i></i> Adicionar ao carrinho
+              </button>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== TABELA DE PREÇOS (Aula 4) ===================== -->
+    <section id="precos">
+      <h2>Fretes e Prazos</h2>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Região</th>
+              <th scope="col">Prazo de entrega</th>
+              <th scope="col">Frete padrão</th>
+              <th scope="col">Frete grátis a partir de</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Sudeste</td><td>2 a 4 dias úteis</td><td>R$ 19,90</td><td>R$ 299,00</td></tr>
+            <tr><td>Sul</td><td>3 a 6 dias úteis</td><td>R$ 24,90</td><td>R$ 299,00</td></tr>
+            <tr><td>Nordeste</td><td>5 a 9 dias úteis</td><td>R$ 29,90</td><td>R$ 349,00</td></tr>
+            <!-- colspan = mesclagem de células (Aula 4) -->
+            <tr><td colspan="3">Retirada na loja física (Centro/RJ):</td><td>Grátis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== DÚVIDAS: ACCORDION (Aula 9) ===================== -->
+    <section id="duvidas">
+      <h2>Dúvidas Frequentes</h2>
+      <div id="faq">
+        <div>
+          <h3>
+            <button type="button">Como funciona a política de troca?</button>
+          </h3>
+          <div id="faq1">
+            <div>Você tem até 30 dias após o recebimento para solicitar a troca por tamanho ou modelo, desde que o produto esteja sem sinais de uso.</div>
+          </div>
+        </div>
+        <div>
+          <h3>
+            <button type="button">Quais formas de pagamento vocês aceitam?</button>
+          </h3>
+          <div id="faq2">
+            <div>Cartão de crédito (em até 10x sem juros), Pix (com 5% de desconto) e boleto bancário.</div>
+          </div>
+        </div>
+        <div>
+          <h3>
+            <button type="button">Como saber o meu número ideal?</button>
+          </h3>
+          <div id="faq3">
+            <div>Cada página de produto tem uma tabela de medidas. Na dúvida entre dois números, recomendamos escolher o maior.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FORMULÁRIO DE CADASTRO (Aulas 5 e 6) ===================== -->
+    <section id="cadastro">
+      <h2>Cadastro do Cliente</h2>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div id="mensagemSucesso" role="alert"></div>
+              <form id="formCadastro" novalidate>
+                <div>
+                  <div>
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Ex.: Ana Paula Souza" required>
+                    <div>Por favor, informe seu nome completo.</div>
+                  </div>
+                  <div>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="voce@email.com" required>
+                    <div>Por favor, informe um e-mail válido.</div>
+                  </div>
+                  <div>
+                    <label for="telefone">Telefone (com DDD)</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(21) 90000-0000" pattern="\(\d{2}\)\s?\d{4,5}-\d{4}" title="Use o formato (21) 90000-0000" required>
+                    <div>Use o formato (21) 90000-0000.</div>
+                  </div>
+                  <div>
+                    <label for="idade">Idade</label>
+                    <input type="number" id="idade" name="idade" min="0" max="120" placeholder="Ex.: 25" required>
+                    <div>Por favor, informe uma idade válida.</div>
+                  </div>
+                  <div>
+                    <label for="numeracao">Numeração</label>
+                    <select id="numeracao" name="numeracao" required>
+                      <option value="" selected disabled>Escolha...</option>
+                      <option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option>
+                    </select>
+                    <div>Selecione uma numeração.</div>
+                  </div>
+                  <div>
+                    <label for="cor">Cor preferida</label>
+                    <input type="color" id="cor" name="cor" value="#ff6b35">
+                  </div>
+                  <div>
+                    <span>Estilo favorito</span>
+                    <div>
+                      <input type="radio" name="estilo" id="estiloEsportivo" value="Esportivo" checked>
+                      <label for="estiloEsportivo">Esportivo</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="estilo" id="estiloCasual" value="Casual">
+                      <label for="estiloCasual">Casual</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="estilo" id="estiloBasquete" value="Basquete">
+                      <label for="estiloBasquete">Basquete</label>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="mensagem">Alguma observação?</label>
+                    <textarea id="mensagem" name="mensagem" rows="3" placeholder="Conte o que você procura..."></textarea>
+                  </div>
+                  <div>
+                    <div>
+                      <input type="checkbox" id="termos" required>
+                      <label for="termos">Li e aceito os termos e a política de privacidade (LGPD).</label>
+                      <div>Você precisa aceitar os termos para se cadastrar.</div>
+                    </div>
+                  </div>
+                  <div>
+                    <button type="submit"><i></i> Cadastrar</button>
+                    <button type="reset">Limpar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ (Aula 1) ===================== -->
+  <footer>
+    <div>
+      <div>
+        <div>
+          <h5><i></i> SneakZone</h5>
+          <p>A loja de tênis que combina conforto, estilo e performance para você.</p>
+        </div>
+        <div>
+          <h6>Navegação</h6>
+          <ul>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#precos">Fretes e prazos</a></li>
+            <li><a href="#duvidas">Dúvidas frequentes</a></li>
+            <li><a href="#cadastro">Cadastro</a></li>
+          </ul>
+        </div>
+        <div>
+          <h6>Siga a gente</h6>
+          <!-- target="_blank" abre em nova aba; rel="noopener noreferrer" é boa prática de segurança (Aula 3) -->
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram"><i></i></a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook"><i></i></a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube"><i></i></a>
+          <a href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i></i></a>
+        </div>
+      </div>
+      <hr>
+      <p>&copy; 2026 SneakZone — Projeto didático da UC2 (Front-end) • SENAC-RJ.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== GAVETA DO CARRINHO (Offcanvas - Aulas 8 e 9) ===================== -->
+  <div tabindex="-1" id="carrinhoOffcanvas" aria-labelledby="carrinhoOffcanvasLabel">
+    <div>
+      <h5 id="carrinhoOffcanvasLabel">
+        <i></i> Seu Carrinho
+      </h5>
+      <button type="button" aria-label="Fechar"></button>
+    </div>
+    <div>
+      <!-- Lista de Itens do Carrinho -->
+      <div id="listaCarrinho">
+        <!-- Inserido dinamicamente via JS -->
+      </div>
+
+      <!-- Rodapé do Carrinho com Resumo de Preço e Finalização -->
+      <div>
+        <div>
+          <span>Total do pedido:</span>
+          <span id="valorTotalCarrinho">R$ 0,00</span>
+        </div>
+        <button id="btnFinalizarCompra">
+          <i></i> Finalizar Pedido
+        </button>
+        <button id="btnLimparCarrinho">
+          <i></i> Esvaziar carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL DE FINALIZAÇÃO DE PEDIDO (Aula 9) ===================== -->
+  <div id="modalFinalizacao" tabindex="-1" aria-hidden="true">
+    <div>
+      <div>
+        <div>
+          <h5><i></i> Pedido Concluído!</h5>
+          <button type="button" aria-label="Fechar"></button>
+        </div>
+        <div>
+          <div>
+            <i></i>
+          </div>
+          <h4>Obrigado pela compra! 🎉</h4>
+          <p>Seu pedido foi registrado com sucesso no sistema da <strong>SneakZone</strong>.</p>
+          <div>
+            <h6>Resumo do Pedido:</h6>
+            <div id="resumoPedidoModal">
+              <!-- Preenchido via JS com a lista e total do pedido -->
+            </div>
+          </div>
+          <p>Esta é uma demonstração do projeto prático da UC2 (Front-end Web).</p>
+        </div>
+        <div>
+          <button type="button">Voltar à loja</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
