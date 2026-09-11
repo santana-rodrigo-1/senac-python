@@ -10,10 +10,10 @@ Crie um programa que pergunte:
 
 print()
 
-q1 = input("Digite seu nome: ").upper()
+q1 = input("Digite seu nome: ").capitalize()
 q2 = int(input("Digite sua idade: "))
-q3 = input("Digite sua cidade: ").upper()
-q4 = input("Digite sua inguagem de programação favorita: ").upper()
+q3 = input("Digite sua cidade: ").capitalize()
+q4 = input("Digite sua linguagem de programação favorita: ").capitalize()
 
 print()
 print(f"Olá, {q1}!")
