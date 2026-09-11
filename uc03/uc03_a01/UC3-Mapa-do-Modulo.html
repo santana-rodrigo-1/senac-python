@@ -1,0 +1,340 @@
+<title>Mapa da UC3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#eef1f6; --panel:#ffffff; --ink:#0f1b2d; --muted:#5b6b7b;
+    --line:#d7dee8; --line-soft:#e6ebf2;
+    --teal:#009a83; --blue:#1e75d3; --indigo:#5758b8; --amber:#c9820a;
+    --chip-bg:#eef2f7; --chip-ink:#3c4a5a;
+    --navy:#0f1b2d;
+    --shadow:0 1px 2px rgba(15,27,45,.06),0 6px 20px rgba(15,27,45,.06);
+    --display:"Archivo",system-ui,sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0b1420; --panel:#111f31; --ink:#e9eef5; --muted:#93a4b6;
+      --line:#25384c; --line-soft:#1b2a3b;
+      --teal:#2dd4bf; --blue:#5aa9f7; --indigo:#9aa5f2; --amber:#f2b23a;
+      --chip-bg:#1a2a3c; --chip-ink:#b9c8d8;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0b1420; --panel:#111f31; --ink:#e9eef5; --muted:#93a4b6;
+    --line:#25384c; --line-soft:#1b2a3b;
+    --teal:#2dd4bf; --blue:#5aa9f7; --indigo:#9aa5f2; --amber:#f2b23a;
+    --chip-bg:#1a2a3c; --chip-ink:#b9c8d8;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding-inline:20px;padding-block:36px 56px}
+
+  /* ---- header ---- */
+  .masthead{background:var(--navy);color:#eaf1f8;border-radius:16px;padding:30px 32px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .masthead::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(45,212,191,.22),transparent 70%);pointer-events:none}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#4fd6c0;font-weight:600;margin:0 0 12px}
+  .masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.5vw,44px);
+    line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+  .masthead .sub{color:#aebfce;font-size:16px;margin:12px 0 0;max-width:60ch}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .meta span{font-family:var(--mono);font-size:12px;font-weight:500;color:#cfe0ef;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    padding:6px 10px;border-radius:999px}
+  .meta span b{color:#4fd6c0;font-weight:600}
+
+  /* ---- legend ---- */
+  .legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin:20px 4px 4px;
+    font-size:13px;color:var(--muted)}
+  .legend .k{display:inline-flex;align-items:center;gap:7px}
+  .flag{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.03em;
+    padding:2px 8px;border-radius:6px;line-height:1.6}
+  .flag.desafio{background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber);
+    border:1px solid color-mix(in srgb,var(--amber) 40%,transparent)}
+  .flag.aval{background:color-mix(in srgb,var(--blue) 15%,transparent);color:var(--blue);
+    border:1px solid color-mix(in srgb,var(--blue) 40%,transparent)}
+  .legend .theme-btn{margin-left:auto;font-family:var(--mono);font-size:12px;cursor:pointer;
+    background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:8px;
+    padding:6px 11px}
+  .legend .theme-btn:hover{color:var(--ink);border-color:var(--muted)}
+
+  /* ---- phase band ---- */
+  .phase{margin-top:26px}
+  .phase-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:0 4px 12px;border-bottom:2px solid var(--pc);margin-bottom:16px}
+  .phase-tag{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:#fff;background:var(--pc);padding:5px 11px;border-radius:7px}
+  .phase-head h2{font-family:var(--display);font-weight:700;font-size:20px;margin:0;color:var(--ink)}
+  .phase-head .rng{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:auto}
+  .phase-head .goal{flex-basis:100%;font-size:13.5px;color:var(--muted);margin-top:2px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px 14px;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px;position:relative}
+  .card .top{display:flex;align-items:center;gap:10px}
+  .num{font-family:var(--mono);font-weight:600;font-size:13px;color:#fff;background:var(--pc);
+    width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;
+    font-variant-numeric:tabular-nums}
+  .card h3{font-family:var(--display);font-weight:600;font-size:15.5px;margin:0;line-height:1.15;
+    color:var(--ink);text-wrap:balance}
+  .card p{margin:0;font-size:13px;color:var(--muted);line-height:1.45}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
+  .chip{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--chip-ink);
+    background:var(--chip-bg);border-radius:6px;padding:2px 7px}
+  .flags{display:flex;gap:6px;position:absolute;top:13px;right:13px}
+
+  /* ---- footer callouts ---- */
+  .foot{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:30px}
+  .callout{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+    box-shadow:var(--shadow)}
+  .callout.final{border-left:4px solid var(--teal)}
+  .callout h4{font-family:var(--display);font-weight:700;font-size:16px;margin:0 0 8px;color:var(--ink)}
+  .callout p{margin:0;font-size:13.5px;color:var(--muted)}
+  .callout ul{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}
+  .callout li{margin:3px 0}
+  .ind{font-size:12.5px}
+  .ind ol{margin:6px 0 0;padding-left:20px}
+  .ind li{margin:4px 0;color:var(--muted)}
+  .ind b{color:var(--ink);font-weight:600}
+
+  .pageft{margin-top:26px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+  @media (max-width:640px){
+    .foot{grid-template-columns:1fr}
+    .masthead{padding:24px 20px}
+  }
+  @media print{
+    body{background:#fff}
+    .theme-btn{display:none}
+    .card,.callout,.masthead{box-shadow:none}
+    .phase{break-inside:avoid}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">SENAC-RJ · Programação em Python · Cod SGA 12953</p>
+    <h1>UC3 — Desenvolver Aplicações Back-end para Web com Python</h1>
+    <p class="sub">Do primeiro <code>print()</code> a uma aplicação web completa em Django. Fio condutor: o processo seletivo da empresa <b>JWC</b> para a vaga de Programador Full Stack — a turma são os candidatos, e cada aula é um desafio.</p>
+    <div class="meta">
+      <span><b>84h</b> · 21 aulas</span>
+      <span><b>4h</b> por aula</span>
+      <span>Aperfeiçoamento</span>
+      <span>Projeto-fio: <b>JWC</b></span>
+      <span>Entregas no <b>GitHub</b></span>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span class="k"><span class="flag desafio">DESAFIO</span> desafio da JWC na aula</span>
+    <span class="k"><span class="flag aval">AVALIAÇÃO</span> ponto de avaliação (PTD)</span>
+    <span class="k">Material complementar recorrente: <b>Lista de Atividades da UC1</b></span>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Alternar tema">◐ tema</button>
+  </div>
+
+  <!-- BLOCO 1 -->
+  <section class="phase" style="--pc:var(--teal)">
+    <div class="phase-head">
+      <span class="phase-tag">Bloco 1</span>
+      <h2>Fundamentos de Python</h2>
+      <span class="rng">Aulas 1–6</span>
+      <p class="goal">A base da lógica: do ambiente montado até funções e orientação a objetos — tudo antes do Django.</p>
+    </div>
+    <div class="grid">
+      <article class="card"><div class="flags"><span class="flag desafio">D1</span></div>
+        <div class="top"><span class="num">01</span><h3>Ambiente & primeiros códigos</h3></div>
+        <p>Instalação, venv/pip, <code>print</code>, variáveis e tipos, input, operadores e condicionais.</p>
+        <div class="chips"><span class="chip">venv</span><span class="chip">pip</span><span class="chip">input()</span><span class="chip">if/else</span></div></article>
+
+      <article class="card"><div class="flags"><span class="flag desafio">D2</span></div>
+        <div class="top"><span class="num">02</span><h3>Condicionais & palavra secreta</h3></div>
+        <p>if/elif/else, Soft &amp; Hard Skills e o jogo da forca (palavra <code>perfume</code>).</p>
+        <div class="chips"><span class="chip">if/elif/else</span><span class="chip">len()</span><span class="chip">in</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">03</span><h3>Estruturas de repetição</h3></div>
+        <p><code>for</code>, <code>while</code>, <code>range()</code>, contador e comparação entre linguagens.</p>
+        <div class="chips"><span class="chip">for</span><span class="chip">while</span><span class="chip">range()</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">04</span><h3>Coleções</h3></div>
+        <p>Listas, tuplas e dicionários; manipulação e prática guiada no CodinGame.</p>
+        <div class="chips"><span class="chip">list</span><span class="chip">tuple</span><span class="chip">dict</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">05</span><h3>Arquivos & funções</h3></div>
+        <p>Leitura e escrita em arquivos; funções com retorno, parâmetros e docstring.</p>
+        <div class="chips"><span class="chip">open()</span><span class="chip">def</span><span class="chip">return</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">06</span><h3>POO & funções</h3></div>
+        <p>Introdução a objetos e classes na dinâmica de transações bancárias.</p>
+        <div class="chips"><span class="chip">class</span><span class="chip">métodos</span><span class="chip">herança</span></div></article>
+    </div>
+  </section>
+
+  <!-- BLOCO 2 -->
+  <section class="phase" style="--pc:var(--blue)">
+    <div class="phase-head">
+      <span class="phase-tag">Bloco 2</span>
+      <h2>Django essencial</h2>
+      <span class="rng">Aulas 7–11</span>
+      <p class="goal">Sair do script para a web: primeiro projeto Django, navegação, Bootstrap, templates e o admin.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="top"><span class="num">07</span><h3>Start no Django</h3></div>
+        <p>Instalação, <code>startproject</code>, <code>startapp</code>, <code>runserver</code> e troca de porta.</p>
+        <div class="chips"><span class="chip">django-admin</span><span class="chip">runserver</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">08</span><h3>Páginas & navegação</h3></div>
+        <p>Estático × dinâmico; links entre as páginas <code>home</code> e <code>produtos</code>.</p>
+        <div class="chips"><span class="chip">urls</span><span class="chip">views</span><span class="chip">links</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">09</span><h3>Bootstrap & navbar</h3></div>
+        <p>Navegação com navbar e rodapé; isolar URLs e usar páginas dinâmicas.</p>
+        <div class="chips"><span class="chip">bootstrap</span><span class="chip">navbar</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">10</span><h3>Templates & partials</h3></div>
+        <p>Páginas dinâmicas, arquivos estáticos, partials e upload de imagem de perfil.</p>
+        <div class="chips"><span class="chip">templates</span><span class="chip">static</span><span class="chip">partials</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">11</span><h3>Admin do Django</h3></div>
+        <p>Criar superusuário, organizar templates/partials; conceitos de SGBD.</p>
+        <div class="chips"><span class="chip">admin</span><span class="chip">createsuperuser</span></div></article>
+    </div>
+  </section>
+
+  <!-- BLOCO 3 -->
+  <section class="phase" style="--pc:var(--indigo)">
+    <div class="phase-head">
+      <span class="phase-tag">Bloco 3</span>
+      <h2>Dados & segurança</h2>
+      <span class="rng">Aulas 12–15</span>
+      <p class="goal">O back-end de verdade: banco de dados via ORM, integração com o front, login e upload de imagens.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="top"><span class="num">12</span><h3>Models & ORM</h3></div>
+        <p>Criar model, definir tipos, <code>migrate</code> e ativar no admin.</p>
+        <div class="chips"><span class="chip">models</span><span class="chip">migrate</span><span class="chip">ORM</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">13</span><h3>Back-end ↔ Front-end</h3></div>
+        <p>Exibir dados nas templates, personalizar o admin e publicar o conteúdo.</p>
+        <div class="chips"><span class="chip">queryset</span><span class="chip">template</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">14</span><h3>Autenticação & níveis</h3></div>
+        <p>Login, autorização e controle de acesso; requisições e sessão.</p>
+        <div class="chips"><span class="chip">login</span><span class="chip">auth</span><span class="chip">session</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">15</span><h3>Upload de imagens</h3></div>
+        <p>Campo de imagem no model dos produtos, filtros e upload automático.</p>
+        <div class="chips"><span class="chip">ImageField</span><span class="chip">media</span></div></article>
+    </div>
+  </section>
+
+  <!-- BLOCO 4 -->
+  <section class="phase" style="--pc:var(--amber)">
+    <div class="phase-head">
+      <span class="phase-tag">Bloco 4</span>
+      <h2>Projeto final integrador</h2>
+      <span class="rng">Aulas 16–21</span>
+      <p class="goal">Cada grupo constrói e apresenta um sistema web próprio — reunindo tudo, do model ao deploy do conteúdo.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="top"><span class="num">16</span><h3>Kickoff do projeto</h3></div>
+        <p>Pesquisa de mercado, seleção da ideia e revisão dos conceitos.</p>
+        <div class="chips"><span class="chip">pesquisa</span><span class="chip">escopo</span></div></article>
+
+      <article class="card"><div class="flags"><span class="flag aval">AVAL</span></div>
+        <div class="top"><span class="num">17</span><h3>Estrutura & layout</h3></div>
+        <p>Layout do site e dos formulários, navegação, models e envio ao GitHub.</p>
+        <div class="chips"><span class="chip">layout</span><span class="chip">forms</span><span class="chip">git</span></div></article>
+
+      <article class="card"><div class="flags"><span class="flag aval">AVAL</span></div>
+        <div class="top"><span class="num">18</span><h3>Models & QuerySets</h3></div>
+        <p>Desenvolver os models e refatorar o acesso ao banco com QuerySets.</p>
+        <div class="chips"><span class="chip">models</span><span class="chip">queryset</span></div></article>
+
+      <article class="card"><div class="flags"><span class="flag aval">AVAL</span></div>
+        <div class="top"><span class="num">19</span><h3>Rodízio de grupos</h3></div>
+        <p>Troca entre grupos: reescrita de models e novo usuário no admin.</p>
+        <div class="chips"><span class="chip">adaptação</span><span class="chip">refatorar</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">20</span><h3>Documentação & prévia</h3></div>
+        <p>Retorno aos grupos de origem e apresentação das documentações.</p>
+        <div class="chips"><span class="chip">docs</span><span class="chip">review</span></div></article>
+
+      <article class="card">
+        <div class="top"><span class="num">21</span><h3>Entrega final</h3></div>
+        <p>Apresentação dos projetos, feedback candidato × empresa e encerramento.</p>
+        <div class="chips"><span class="chip">pitch</span><span class="chip">feedback</span></div></article>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div class="callout final">
+      <h4>Projeto final integrador</h4>
+      <p>Um sistema web em Django escolhido por cada grupo, reunindo toda a UC: models e banco via ORM, área administrativa, autenticação por níveis, front-end integrado com Bootstrap e conteúdo publicado — versionado no GitHub. Simula uma entrega real da JWC.</p>
+    </div>
+    <div class="callout ind">
+      <h4>Indicadores da UC</h4>
+      <ol>
+        <li><b>Configura</b> o ambiente de desenvolvimento.</li>
+        <li><b>Estrutura</b> algoritmos pela lógica computacional.</li>
+        <li><b>Cria</b> código back-end conforme o projeto.</li>
+        <li><b>Trata</b> requisições POST e GET do front.</li>
+        <li><b>Implementa</b> session e cookies.</li>
+        <li><b>Integra</b> banco de dados à aplicação.</li>
+      </ol>
+    </div>
+  </div>
+
+  <p class="pageft">Base: PTD oficial da UC3 · SENAC-RJ · Programação em Python (12953) — mapa aula por aula</p>
+</div>
+
+<script>
+  (function(){
+    var btn=document.getElementById('themeBtn');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      var cur=document.documentElement.getAttribute('data-theme');
+      var next;
+      if(cur==='dark')next='light';
+      else if(cur==='light')next='dark';
+      else{ // system: flip to opposite of what's showing
+        var dark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+        next=dark?'light':'dark';
+      }
+      document.documentElement.setAttribute('data-theme',next);
+    });
+  })();
+</script>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
+<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
+<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
