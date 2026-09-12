@@ -1,12 +1,14 @@
 print()
 
+categpermitidas = ["Tênis","Sandália","Chinelo","Bota"]
+
 q1 = input("Insira o nome do produto: ").lower()
 q2 = input("Digite a categoria do produto: ").lower()
 q3 = float(input("Digite o preço do produto: "))
 q4 = float(input("Digite a quantidade em estoque do produto: "))
 q5 = float(input("Digite o tamanho do produto: "))
 
-categpermitidas = ["Tênis","Sandália","Chinelo","Bota"]
+
 
 
 print("=" * 20)
