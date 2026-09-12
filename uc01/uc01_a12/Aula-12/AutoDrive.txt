@@ -1,0 +1,108 @@
+# =========================================================
+# SOLUÇÃO PROJETO 2: LOCADORA AUTODRIVE (SEM SUPER)
+# =========================================================
+
+class Veiculo:
+    def __init__(self, modelo, preco_diaria):
+        self.modelo = modelo
+        self.preco_diaria = preco_diaria
+        self.__dias_alugados = 0  # Atributo privado
+
+    def alugar(self, dias):
+        if dias > 0:
+            self.__dias_alugados = dias
+            print(f"🚗 Veículo {self.modelo} alugado por {dias} dia(s)!")
+        else:
+            print("❌ Dias inválidos.")
+
+    def consultar_dias(self):
+        return self.__dias_alugados
+
+    def calcular_aluguel(self):
+        return self.preco_diaria * self.__dias_alugados
+
+
+class Moto(Veiculo):
+    def __init__(self, modelo, preco_diaria, desconto_promocional=15.0):
+        # Inicialização explícita chamando a classe mãe Veiculo.__init__ (sem super)
+        Veiculo.__init__(self, modelo, preco_diaria)
+        self.desconto_promocional = desconto_promocional
+
+    # Polimorfismo: Sobrescrita do cálculo usando apenas self
+    def calcular_aluguel(self):
+        subtotal = self.preco_diaria * self.consultar_dias()
+        if subtotal > 0:
+            total_com_desconto = subtotal - self.desconto_promocional
+            if total_com_desconto < 0:
+                return 0.0
+            return total_com_desconto
+        return 0.0
+
+
+# REPOSITÓRIO EM MEMÓRIA E CRUD
+frota = []
+
+def buscar_veiculo(modelo):
+    for v in frota:
+        if v.modelo.lower() == modelo.lower():
+            return v
+    return None
+
+def cadastrar_veiculo():
+    print("\n--- CADASTRO DE VEÍCULO ---")
+    modelo = input("Modelo do Veículo: ")
+    if buscar_veiculo(modelo) != None:
+        print("❌ Veículo com este modelo já cadastrado!")
+        return
+
+    diaria = float(input("Valor da Diária: R$ "))
+    tipo = input("Tipo (1-Carro, 2-Moto): ")
+
+    if tipo == "1":
+        novo_veiculo = Veiculo(modelo, diaria)
+    elif tipo == "2":
+        novo_veiculo = Moto(modelo, diaria)
+    else:
+        print("❌ Tipo inválido!")
+        return
+
+    frota.append(novo_veiculo)
+    print("✅ Veículo cadastrado com sucesso!")
+
+def listar_veiculos():
+    if len(frota) == 0:
+        print("ℹ️ Nenhum veículo cadastrado.")
+    else:
+        print("\n---------------- FROTA DA LOCADORA ----------------")
+        for v in frota:
+            tipo_str = "Moto" if isinstance(v, Moto) else "Carro"
+            print(f"Modelo: {v.modelo} | Tipo: {tipo_str} | Diária: R$ {v.preco_diaria:.2f} | Dias: {v.consultar_dias()} | Total Aluguel: R$ {v.calcular_aluguel():.2f}")
+        print("--------------------------------------------------")
+
+def registrar_aluguel():
+    modelo = input("Digite o modelo do veículo para alugar: ")
+    v = buscar_veiculo(modelo)
+    if v != None:
+        dias = int(input("Quantidade de dias de aluguel: "))
+        v.alugar(dias)
+    else:
+        print("❌ Veículo não encontrado!")
+
+
+# MENU PRINCIPAL
+while True:
+    print("\n=== LOCADORA AUTODRIVE ===")
+    print("1 - Cadastrar Veículo")
+    print("2 - Listar Frota")
+    print("3 - Registrar Aluguel")
+    print("0 - Sair")
+
+    op = input("Opção: ")
+    if op == "1": cadastrar_veiculo()
+    elif op == "2": listar_veiculos()
+    elif op == "3": registrar_aluguel()
+    elif op == "0":
+        print("Encerrando a locadora... Até logo!")
+        break
+    else:
+        print("Opção inválida!")

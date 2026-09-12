@@ -1,0 +1,57 @@
+1) Custo de Viagem
+
+distancia = float(input("Distância da viagem (km): "))
+consumo = float(input("Consumo do veículo (km/l): "))
+preco = float(input("Preço da gasolina: R$ "))
+
+litros = distancia / consumo
+custo = litros * preco
+
+print("\n===== RESUMO =====")
+print(f"Litros necessários: {litros:.2f} L")
+print(f"Custo da viagem: R$ {custo:.2f}")
+
+2) Consumo
+
+distancia = float(input("Distância percorrida (km): "))
+litros = float(input("Combustível gasto (L): "))
+
+consumo = distancia / litros
+
+print(f"\nConsumo médio: {consumo:.2f} km/l")
+
+3) Frete
+peso = float(input("Peso da encomenda (kg): "))
+preco_kg = float(input("Valor por kg: R$ "))
+taxa = float(input("Taxa fixa: R$ "))
+
+frete = (peso * preco_kg) + taxa
+
+print(f"\nValor total do frete: R$ {frete:.2f}")
+
+4) Investimento
+capital = float(input("Valor investido: R$ "))
+taxa = float(input("Taxa de juros mensal (%): ")) / 100
+meses = int(input("Quantidade de meses: "))
+
+juros = capital * taxa * meses
+montante = capital + juros
+
+print(f"\nJuros: R$ {juros:.2f}")
+print(f"Montante final: R$ {montante:.2f}")
+
+5) Terreno
+lado = float(input("Lado do terreno (m): "))
+
+area = lado ** 2
+
+print(f"\nÁrea do terreno: {area:.2f} m²")
+
+6) Semanas e Dias
+dias = int(input("Quantidade de dias: "))
+
+semanas = dias // 7
+resto = dias % 7
+
+print(f"\nSemanas completas: {semanas}")
+print(f"Dias restantes: {resto}")
