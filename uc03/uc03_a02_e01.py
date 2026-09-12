@@ -8,6 +8,7 @@ q5 = float(input("Digite o tamanho do produto: "))
 
 categpermitidas = ["Tênis","Sandália","Chinelo","Bota"]
 
+
 print("=" * 20)
 print(f"PRODUTO CADASTRADO COM SUCESSO")
 print("=" * 20)
