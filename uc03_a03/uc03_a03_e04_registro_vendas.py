@@ -1,6 +1,6 @@
-print("=" * 32)
-print("CONTROLE DE VENDAS")
-print("=" * 32)
+print("=" * 30)
+print("CONTROLE DE VENDAS".center(30))
+print("=" * 30)
 
 vendedor = input("Digite o nome do vendedor: ")
 
@@ -66,9 +66,9 @@ while True:
         print("Venda registrada com sucesso!")
 
     elif opcao == "2":
-        print("\n" + "=" * 32)
-        print("RESUMO DO EXPEDIENTE")
-        print("=" * 32)
+        print("\n" + "=" * 30)
+        print("RESUMO DO EXPEDIENTE".center(30))
+        print("=" * 30)
 
         print(f"Vendedor: {vendedor}")
         print(f"Quantidade de vendas: {quantidade_vendas}")
