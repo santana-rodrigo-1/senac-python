@@ -1,0 +1,72 @@
+# ======================================================
+# DESAFIO DE AULA: BATALHA NAVAL 4x4
+# ======================================================
+
+# 1. Mapa Real (Escondido do jogador) - 3 Navios 'N' posicionados
+mapa_real = [
+    ["~", "N", "~", "~"],
+    ["~", "~", "~", "N"],
+    ["~", "~", "~", "~"],
+    ["N", "~", "~", "~"]
+]
+
+# 2. Mapa Visível (O que o jogador enxerga) - Começa com '?'
+mapa_visivel = [["?" for _ in range(4)] for _ in range(4)]
+
+tentativas = 5
+pontos = 0
+acertos = 0
+
+print("="*45)
+print("     🎮 BEM-VINDO À BATALHA NAVAL 4x4 🎮     ")
+print("="*45)
+print("Encontre os 3 navios escondidos! Você tem 5 tiros.\n")
+
+# Loop principal das jogadas
+while tentativas > 0 and acertos < 3:
+    # Exibe o mapa visível formatado
+    print(f"Tentativas restantes: {tentativas} | Pontuação: {pontos}")
+    print("      Colunas: 0   1   2   3")
+    print("    " + "-"*23)
+    for i in range(4):
+        print(f"Linha {i} |  " + "   ".join(mapa_visivel[i]) + "  |")
+    print("    " + "-"*23)
+    
+    try:
+        linha = int(input("\nDigite a Linha do tiro (0 a 3): "))
+        coluna = int(input("Digite a Coluna do tiro (0 a 3): "))
+        
+        # Validação se as coordenadas estão dentro da Matriz 4x4
+        if not (0 <= linha < 4 and 0 <= coluna < 4):
+            print("\n❌ Coordenada fora do mapa! Digite entre 0 e 3.\n")
+            continue
+            
+        # Validação se a posição já foi atingida antes
+        if mapa_visivel[linha][coluna] != "?":
+            print("\n⚠️ Você já atirou nessa posição! Escolha outra.\n")
+            continue
+            
+        # Checando o resultado do tiro no mapa real
+        if mapa_real[linha][coluna] == "N":
+            print("\n💥 BOOM! VOCÊ ACERTOU UM NAVIO! (+100 pontos)\n")
+            mapa_visivel[linha][coluna] = "X" # Marca Acerto
+            pontos += 100
+            acertos += 1
+        else:
+            print("\n🌊 ÁGUA! Nenhum navio nessa posição.\n")
+            mapa_visivel[linha][coluna] = "O" # Marca Erro
+            
+        tentativas -= 1
+        
+    except ValueError:
+        print("\n❌ Digite apenas números inteiros para Linha e Coluna!\n")
+
+# --- FIM DO JOGO ---
+print("="*45)
+if acertos == 3:
+    print("🎉 PARABÉNS! VOCÊ DESTRUIU TODOS OS NAVIOS!")
+else:
+    print("☠️ FIM DE JOGO! Suas tentativas acabaram.")
+
+print(f"Pontuação Final: {pontos} pontos | Navios destruídos: {acertos}/3")
+print("="*45)
