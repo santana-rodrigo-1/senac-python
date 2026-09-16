@@ -1,3 +1,8 @@
+'''
+EXERCÍCIO 1 - CADASTRO DE PRODUTOS
+Python • Arquivos TXT + Funções
+'''
+
 import os
 
 ARQUIVO = "produtos.txt"
