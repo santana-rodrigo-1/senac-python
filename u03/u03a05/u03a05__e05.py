@@ -76,13 +76,41 @@ def excluir():
         print("Operação cancelada.")
 
 
+def excluir_produto():
+    if not os.path.exists(ARQUIVO):
+        print("Nenhum produto cadastrado.")
+        return
+
+    nome_excluir = input("Digite o nome do produto que deseja excluir: ")
+
+    with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
+        produtos = arquivo.readlines()
+
+    encontrou = False
+
+    with open(ARQUIVO, "w", encoding="utf-8") as arquivo:
+        for produto in produtos:
+            nome, preco, quantidade = produto.strip().split(";")
+
+            if nome.lower() != nome_excluir.lower():
+                arquivo.write(produto)
+            else:
+                encontrou = True
+
+    if encontrou:
+        print("Produto excluído com sucesso!")
+    else:
+        print("Produto não encontrado.")
+
+
 while True:
     print("\n===== SISTEMA DE PRODUTOS =====")
     print("1 - Cadastrar produto")
     print("2 - Listar produtos")
     print("3 - Consultar quantidade de produtos")
-    print("4 - Excluir cadastro")
-    print("5 - Sair")
+    print("4 - Excluir produto")
+    print("5 - Excluir cadastro")
+    print("6 - Sair")
 
     opcao = input("Escolha uma opção: ")
 
@@ -97,9 +125,12 @@ while True:
         print(f"Total de produtos cadastrados: {total}")
 
     elif opcao == "4":
-        excluir()
+        excluir_produto()
 
     elif opcao == "5":
+        excluir()
+
+    elif opcao == "6":
         print("Encerrando o sistema...")
         break
 
