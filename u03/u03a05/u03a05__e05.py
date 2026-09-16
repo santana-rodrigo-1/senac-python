@@ -7,7 +7,7 @@ import os
 
 ARQUIVO = "produtos.txt"
 # Abaixo opção de salvamento por pasta substituto do: ARQUIVO = "produtos.txt"
-# ARQUIVO = "C:\Users\santana.rodrigo\OneDrive - SENAC RIO\senac\senac_python\u03\u03a05\u03a05__e05.py"
+# ARQUIVO = r"C:\Users\santana.rodrigo\OneDrive - SENAC RIO\senac\senac_python\u03\u03a05\u03a05__e05.py"
 
 def cadastrar():
     nome = input("Nome do produto: ")
