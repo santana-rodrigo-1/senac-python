@@ -9,22 +9,13 @@ ARQUIVO = "teste.txt"
 
 def cadastrar():
     nome = input("Digite o nome do produto: ")
+    preco = float(input("Digite o preço do produto: "))
+    quantidade = int(input("Digite a quantidade do produto: "))
+    
     with open(ARQUIVO, "a", encoding="utf-8") as arquivo:
-        arquivo.write(nome + "\n")
-    print(f"Nome '{nome}' cadastrado com sucesso!")
+        arquivo.write(f"{nome};{preco};{quantidade}\n")
+    print(f"Produto '{nome}' cadastrado com sucesso!")
 
-    preco = input("Digite o preço do produto: ")
-    with open(ARQUIVO, "a", encoding="utf-8") as arquivo:
-        arquivo.write(preco + "\n")
-    print(f"Preço '{preco}' cadastrado com sucesso!")
-
-    quantidade = input("Digite a quantidade do produto: ")
-    with open(ARQUIVO, "a", encoding="utf-8") as arquivo:
-        arquivo.write(quantidade + "\n")
-    print(f"Quantidade '{quantidade}' cadastrada com sucesso!")
-
-    print("\n====PRODUTO CADASTRADO=====")
-    print()
 
 def listar():
     if not os.path.exists(ARQUIVO):
@@ -35,11 +26,13 @@ def listar():
         print("Nomes cadastrados:")
         for nome in nomes:
             print(nome.strip())
+"""
 
 def consultar():
     if os.path.exists(ARQUIVO):
         print'
 
+"""
 def excluir():
     if os.path.exists(ARQUIVO):
         os.remove(ARQUIVO)
