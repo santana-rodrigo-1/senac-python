@@ -1,67 +1,4 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Sobre - JWC</title>
-</head>
-<body>
-    <h1>Sobre a JWC</h1>
-
-    <p>
-        Somos uma empresa fictícia utilizada como exemplo didático
-        na primeira aula de Django.
-    </p>
-
-    <a href="/">Voltar para Home</a>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Produtos - JWC</title>
-</head>
-<body>
-    <h1>Produtos</h1>
-
-    <ul>
-        <li>Sistema Web</li>
-        <li>Aplicações Python</li>
-        <li>Consultoria em Tecnologia</li>
-    </ul>
-
-    <a href="/">Voltar para Home</a>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>JWC Tecnologia</title>
-</head>
-<body>
-    <h1>JWC Tecnologia</h1>
-    <h2>Bem-vindo!</h2>
-
-    <p>
-        Esta é a primeira aplicação Web da nossa aula de Django.
-    </p>
-
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/produtos/">Produtos</a> |
-        <a href="/sobre/">Sobre</a>
-    </nav>
-</body>
-</html>
-
-
------------------------------
-<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -81,8 +18,42 @@
 
 <body>
 
+    <nav class="navbar navbar-expand-lg bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand text-white"
+           href="{% url 'home' %}">
+            SneakZone
+        </a>
+
+        <div>
+
+            <a class="btn btn-dark text-white"
+               href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a class="btn btn-dark text-white"
+               href="{% url 'produtos' %}">
+                Produtos
+            </a>
+
+            <a class="btn btn-dark text-white"
+               href="{% url 'sobre' %}">
+                Sobre
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<main class="container mt-4">
     {% block content %}
     {% endblock %}
+</main>
 
 </body>
 
