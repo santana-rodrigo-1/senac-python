@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block tittle %}
-    Produtos | SneakZone
+Produtos | SneakZone
 {% endblock %}
 
 {% block content %}
@@ -12,4 +12,24 @@
     Confira nossos produtos.
 </p>
 
+{% for produtos in produtos %}
+<h2> {{ produtos.nome }} </h2>
+<p> {{ produto.descricao }} </p>
+<p> {{ produto.preco | floatformat:2 }} </p>
+
+{% if produto.estoque > 0 %}
+
+<span class="badge bg-sucess">
+    Disponível
+</span>
+
+{% else %}
+<span class="badge bg-danger">
+    Esgotado
+</span>
+{% endif %}
+
+{% empty %}
+<p> Nenhum produto encontrado. </p>
+{% endfor %}
 {% endblock %}

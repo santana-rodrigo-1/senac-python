@@ -6,10 +6,15 @@
 
 {% block content %}
 
-<h1>Bem-vindo à SneakZone!</h1>
+<h1>{{ titulo | upper}}</h1>
 
 <p>
-    Encontre os melhores tênis para seu estilo.
+    {{ subtitulo | lower}}
 </p>
 
+{% for categoria in categorias %}
+    <p>
+        {{ categoria }}
+    </p>
+{% endfor %}
 {% endblock %}
