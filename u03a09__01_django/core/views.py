@@ -1,42 +1,42 @@
 from django.shortcuts import render
 
-PRODUTOS = [
+PRODUTOS =[
     {
-        "id': 1,"
-        "mome": "Air Run",
+        "id": 1,
+        "nome": "Air Run",
         "preco": 299.90,
         "descricao": "Tênis confortável para corrida.",
         "categoria": "Corrida",
-        "estoque": 10
-
+        "estoque": 10,
+        "marca": "marca01"
     },
-        {
-        "id': 2,"
-        "mome": "Street MAx",
+    {
+        "id": 2,
+        "nome": "Street Max",
         "preco": 399.90,
-        "descricao": "Tênis urbano par o dia a dia.",
-        "categoria": "Strretwear",
-        "estoque": 5
-
+        "descricao": "Tênis urbano para o dia a dia.",
+        "categoria": "Streetwear",
+        "estoque": 5,
+        "marca": "marca02"
     },
-        {
-        "id': 3,"
-        "mome": "Runner Pro",
+    {
+        "id": 3,
+        "nome": "Runner Pro",
         "preco": 499.90,
         "descricao": "Tênis profissional.",
         "categoria": "Corrida",
-        "estoque": 0
-
+        "estoque": 0,
+        "marca": "marca03"
     },
-
 ]
+
 
 def home(request):
     categorias = [
-        "Corrida",
-        "casual",
+        "Corrida", 
+        "Casual",
         "Esportivo",
-        "streetwear"
+        "Streetwear"
     ]
     contexto = {
         "titulo": "Os melhores tênis para o seu estilo",
@@ -56,9 +56,9 @@ def sobre(request):
 
 def produto_detalhe(request, id):
     produto = None
-
-    for item in PRODUTOS:
+    
+    for item in PRODUTOS :
         if item["id"] == id:
             produto = item
             break
-    return render(request, "core/produto_detalhe.html", {})
+    return render(request, "core/produto_detalhe.html",{"produto": produto})
