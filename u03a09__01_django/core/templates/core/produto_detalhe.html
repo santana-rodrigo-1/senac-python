@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block tittle %}
+{{produto.nme}} | SneakZone
+{% endblock %}
+
+{% block content %}
+
+{% if produto %}
+
+
+<h1>{{ produto.nome }}</h1>
+
+<p>
+    {{ produto.descricao }}
+</p>
+
+<h2>
+    R$ {{ produto.preco|floatformat:2 }}
+</h2>
+
+{% if produto.estoque > 0 %}
+
+<span class="badge bg-success">
+    Disponível
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+    Esgotado
+</span>
+
+{% endif %}
+
+{% else %}
+
+<div class="alert alert-danger">
+    Produto não encontrado.
+</div>
+
+{% endif %}
+
+<a href="{% url 'produtos' %}" class="btn btn-secondary">
+
+    Voltar
+
+</a>
+
+{% endblock %}

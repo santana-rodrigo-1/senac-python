@@ -1,10 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-from core.views import home, produtos, sobre
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", home, name="home"),
-    path("produtos/", produtos, name="produtos"),
-    path("sobre/", sobre, name="sobre"),
+    path("", include("core.urls"))
 ]

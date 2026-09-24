@@ -53,3 +53,12 @@ def produtos(request):
 
 def sobre(request):
     return render(request, "core/sobre.html")
+
+def produto_detalhe(request, id):
+    produto = None
+
+    for item in PRODUTOS:
+        if item["id"] == id:
+            produto = item
+            break
+    return render(request, "core/produto_detalhe.html", {})

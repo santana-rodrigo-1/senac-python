@@ -23,10 +23,13 @@ Produtos | SneakZone
     Disponível
 </span>
 
+<a href="{% url 'produto_detalhe' produto.id %}" class="btn btn-primary"> Ver detalhes</a>
+
 {% else %}
 <span class="badge bg-danger">
     Esgotado
 </span>
+<a> href="{% url 'produto_detalhe' produto.id %}" class="btn btn-primary".</a>
 {% endif %}
 
 {% empty %}
