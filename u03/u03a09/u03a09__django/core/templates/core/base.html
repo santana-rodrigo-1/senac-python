@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        {% block tittle %}
+        {% block title %}
         SneakZone
         {% endblock %}
     
@@ -29,7 +29,7 @@
     {% block content %}
     {% endblock %}
 </main>
-{ % incude 'core/partials/footer.html' %}
+{% include 'core/partials/footer.html' %}
 </body>
 
 </html>

@@ -62,3 +62,6 @@ def produto_detalhe(request, id):
             produto = item
             break
     return render(request, "core/produto_detalhe.html",{"produto": produto})
+
+def contato(request):
+    return render(request, "core/contato.html")
