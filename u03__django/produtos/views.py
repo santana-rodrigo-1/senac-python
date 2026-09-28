@@ -35,7 +35,7 @@ def produtos(request):
     contexto = {
         "produtos": PRODUTOS
     }
-    return render(request, "core/produtos.html", contexto)
+    return render(request, "produtos/produtos.html", contexto)
 def produto_detalhe(request, id):
     produto = None
     
@@ -43,5 +43,5 @@ def produto_detalhe(request, id):
         if item["id"] == id:
             produto = item
             break
-    return render(request, "core/produto_detalhe.html",{"produto": produto})
+    return render(request, "produtos/produto_detalhe.html",{"produto": produto})
 
