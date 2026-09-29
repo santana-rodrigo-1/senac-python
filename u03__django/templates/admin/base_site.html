@@ -1,13 +1,36 @@
 {% extends "admin/base.html" %}
 
+{% load static %}
+
 {% block title %}
     SneakZone | Administração
 {% endblock %}
 
+
 {% block branding %}
 
-<h1 id="site-name">
-    SneakZone
-</h1>
+<div class="sneakzone-brand">
+
+    <div class="sneakzone-logo">
+        SneakZone
+    </div>
+
+    <div class="sneakzone-subtitle">
+        Painel Administrativo
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extrastyle %}
+
+{{ block.super }}
+
+<link
+    rel="stylesheet"
+    href="{% static 'admin/css/admin.css' %}"
+>
 
 {% endblock %}
