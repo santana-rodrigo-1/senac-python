@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+Produtos | SneakZone
+{% endblock %}
+
+{% block content %}
+
+<h1>Nossos Produtos</h1>
+
+<p>
+    Confira nossos produtos.
+</p>
+{% for produto in produtos %}
+
+<div class="col-md-4">
+
+    {% include 'produtos/partials/produto_card.html' %}
+
+</div>
+
+{% empty %}
+
+<div class="col-12">
+
+    <div class="alert alert-warning">
+        Nenhum produto encontrado.
+    </div>
+
+</div>
+{% endfor %}
+{% endblock %}
