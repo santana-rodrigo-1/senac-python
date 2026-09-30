@@ -21,3 +21,11 @@ def produtos_esgotados(request):
         "produtos": lista_esgotados
     }
     return render(request, "produtos/produtos.html", contexto)
+
+def produtos_categoria(request, categoria):
+    produto = Produto.objects.filter(
+        categoria = categoria
+    )
+    return render(request, "produtos/produtos.html",{
+    "produtos":produto
+    })
