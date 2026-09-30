@@ -1,4 +1,8 @@
 SENAC - PROGRAMAÇÃO EM PYTHON
 
-ver significado código marretado
+ver significado código marretado.
+
+ver python manage.py makemigrations
+python manage.py migrate
+
 
