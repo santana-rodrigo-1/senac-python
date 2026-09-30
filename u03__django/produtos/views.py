@@ -9,14 +9,15 @@ def produtos(request):
     return render(request, "produtos/produtos.html", contexto)
 
 def produto_detalhe(request, id):
-    produto = Produto.objects.get(id=id)
+
+    produto = get_object_or_404(Produto, id=id)
     return render(request, "produtos/produto_detalhe.html", {"produto": produto})
 
 def produtos_esgotados(request):
-    produtos = produtos,object.filter(
-        estoque=0
-    )
-    return render(request, "produtos/produtos.html",
-    {
-        "produtos": produtos
-    })
+    # Busca apenas os tênis cujo estoque cadastrado no admin seja igual a 0
+    lista_esgotados = Produto.objects.filter(estoque=0)
+    
+    contexto = {
+        "produtos": lista_esgotados
+    }
+    return render(request, "produtos/produtos.html", contexto)
