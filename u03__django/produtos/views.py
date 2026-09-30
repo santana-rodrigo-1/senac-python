@@ -22,3 +22,4 @@ def produtos_esgotados(request):
     {
         "produtos": produtos
     })
+
