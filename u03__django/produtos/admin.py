@@ -1,6 +1,21 @@
 from django.contrib import admin
+from .models import Produto, Categoria
 
-from .models import Produto
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "nome",
+    )
+
+    search_fields = (
+        "nome",
+    )
+
+    ordering = (
+        "nome",
+    )
 
 
 @admin.register(Produto)
@@ -11,11 +26,11 @@ class ProdutoAdmin(admin.ModelAdmin):
         "categoria",
         "preco",
         "estoque",
+        "data_cadastro",
     )
 
     search_fields = (
         "nome",
-        "categoria",
     )
 
     list_filter = (
@@ -23,5 +38,5 @@ class ProdutoAdmin(admin.ModelAdmin):
     )
 
     ordering = (
-        "nome",
+        "-data_cadastro",
     )
