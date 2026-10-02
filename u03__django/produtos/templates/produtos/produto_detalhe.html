@@ -31,7 +31,17 @@
         </span>
 
     {% endif %}
+    {% if user.is_authenticated %}
 
+        <a
+            href="{% url 'produto_editar' produto.id %}"
+            class="btn btn-primary">
+
+            Editar
+
+        </a>
+
+    {% endif %}
 {% else %}
 
     <div class="alert alert-danger">
