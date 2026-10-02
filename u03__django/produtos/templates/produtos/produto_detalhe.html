@@ -39,7 +39,12 @@
 
             Editar
 
-        </a>
+        </a
+            href = "{% url 'produto_excluir' produto.id %}"
+            class = "btn btn-outline-danger">
+
+            Excluir
+            </a>
 
     {% endif %}
 {% else %}
