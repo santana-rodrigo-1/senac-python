@@ -1,6 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Produto, Categoria
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+from .forms import ProdutoForm
+
+
+
+
 def produtos(request):
     PRODUTOS = Produto.objects.all()
     contexto = {
@@ -29,3 +38,33 @@ def produtos_categoria(request, categoria):
     return render(request, "produtos/produtos.html",{
     "produtos":produto
     })
+
+@login_required
+def produto_novo(request):
+
+    if request.method == "POST":
+
+        form = ProdutoForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Produto cadastrado com sucesso!"
+            )
+
+            return redirect("produtos")
+
+    else:
+
+        form = ProdutoForm()
+
+    return render(
+        request,
+        "produtos/produto_form.html",
+        {
+            "form": form
+        }
+    )
