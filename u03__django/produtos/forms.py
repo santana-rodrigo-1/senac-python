@@ -1,0 +1,15 @@
+from  django import forms
+from .model import Produto
+
+class ProdutosForm(forms.ModelForm):
+
+    class Meta:
+        model = Produto
+        fields = [
+            "nome"
+            "descricao"
+            "preco"
+            "categoria"
+            "estoque"
+            "imagem"
+        ]
