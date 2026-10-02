@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Produto
+from .models import Produto, Categoria
 
 def produtos(request):
     PRODUTOS = Produto.objects.all()

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from produtos.models import Produto, Categoria
 
 def home(request):
-    PRODUTOS = Produto.objeccts.all()
+    PRODUTOS = Produto.objects.all()
     categorias = Categoria.objects.all()
 
     contexto = {
