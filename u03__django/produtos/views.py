@@ -54,6 +54,50 @@ def produto_novo(request):
         }
     )
 
+@login_required
+def produto_editar(request, id):
+
+    produto = get_object_or_404(
+        Produto,
+        id=id
+    )
+
+    if request.method == "POST":
+
+        form = ProdutoForm(
+            request.POST,
+            instance=produto
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Produto atualizado com sucesso!"
+            )
+
+            return redirect(
+                "produto_detalhe",
+                id=produto.id
+            )
+
+    else:
+
+        form = ProdutoForm(
+            instance=produto
+        )
+
+    return render(
+        request,
+        "produtos/produto_form.html",
+        {
+            "form": form,
+            "titulo": "Editar produto",
+            "botao": "Salvar alterações"
+        }
+    )
 
 
 
