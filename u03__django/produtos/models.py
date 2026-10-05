@@ -30,10 +30,10 @@ class Produto(models.Model):
     )
 
     estoque = models.PositiveIntegerField(
-        default=0
+        upload_to="produtos/"
     )
 
-    imagem = models.CharField(
+    imagem = models.ImageField(
         max_length=255,
         blank=True
     )
