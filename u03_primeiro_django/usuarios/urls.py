@@ -5,9 +5,11 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
 
     path("cadastro/", views.cadastro, name="cadastro"),
-    path("login-usuario/", auth_views.LoginView.as_view(
-        template_name="usuarios/login.html", name="login"
-    ))
+    path(
+        "login-usuario/", 
+        auth_views.LoginView.as_view(template_name="usuarios/login.html"), 
+        name="login"
+    ),    
 
 
 ]
