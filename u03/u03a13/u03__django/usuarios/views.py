@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 
-from .forms import CadastroUsuarioForm
+from .....u03__django.usuarios.forms import CadastroUsuarioForm
 
 
 def cadastro(request):
