@@ -30,13 +30,13 @@ class Produto(models.Model):
     )
 
     estoque = models.PositiveIntegerField(
+    )
+
+
+    imagem = models.ImageField(
         upload_to="produtos/"
     )
 
-    imagem = models.ImageField(
-        max_length=255,
-        blank=True
-    )
 
     data_cadastro = models.DateTimeField(
         auto_now_add=True
