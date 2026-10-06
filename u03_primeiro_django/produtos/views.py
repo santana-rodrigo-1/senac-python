@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from django.http import HttpResponseForbidden
 from .forms import ProdutoForm
 from django.shortcuts import render
 from .models import Produto, Categoria
@@ -34,6 +34,12 @@ def produtos_categoria(request, categoria):
 
 @login_required
 def produto_novo(request):
+
+    if not request.user.is_staff:
+
+        return HttpResponseForbidden(
+            "Você não possui permissão."
+        )
 
     if request.method == "POST":
 
