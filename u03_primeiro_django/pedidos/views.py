@@ -2,14 +2,32 @@ from django.shortcuts import get_object_or_404, redirect, render
 from produtos.models import Produto
 
 def carrinho(request):
+
     carrinho = request.session.get(
-    "carrinho",
-{}
-)
+        "carrinho",
+        {}
+    )
+
+    produtos = []
+
+    for id_produto, quantidade in carrinho.items():
+
+        produto = get_object_or_404(
+            Produto,
+            id=id_produto
+        )
+
+        produtos.append({
+            "produto": produto,
+            "quantidade": quantidade,
+            "subtotal": produto.preco * quantidade
+        })
+
     return render(
-        request, "pedidos/carrinho.html",
+        request,
+        "pedidos/carrinho.html",
         {
-            "carrinho":carrinho
+            "produtos": produtos
         }
     )
 
