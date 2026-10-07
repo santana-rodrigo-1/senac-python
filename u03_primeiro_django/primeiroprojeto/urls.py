@@ -10,8 +10,9 @@ urlpatterns = [
     
     path("logout/", auth_views.LogoutView.as_view(), name="logout"), 
     path("", include("core.urls")),
-    path('', include("produtos.urls")),
-    path('', include("usuarios.urls")),
+    path("", include("produtos.urls")),
+    path("", include("usuarios.urls")),
+    path("", include("pedidos.urls")),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
