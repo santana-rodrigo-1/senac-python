@@ -33,27 +33,22 @@ def carrinho(request):
 
 
 def adicionar_carrinho(request, id):
+    produto = get_object_or_404(Produto, id=id)
+    carrinho = request.session.get("carrinho", {})
 
-    produto = get_object_or_404(
-        Produto,
-        id=id
-    )
-
-    carrinho = request.session.get(
-        "carrinho",
-        {}
-    )
-
-    id_produto = str(produto.id)
-
-    if id_produto in carrinho:
-
-        carrinho[id_produto] += 1
-
+    if str(id) in carrinho:
+        carrinho[str(id)]["quantidade"] += 1
     else:
-
-        carrinho[id_produto] = 1
+        carrinho[str(id)] = {
+            "nome": produto.nome,
+            "preco": str(produto.preco),
+            "quantidade": 1,
+        }
 
     request.session["carrinho"] = carrinho
-
     return redirect("carrinho")
+
+
+def ver_carrinho(request):
+    carrinho = request.session.get("carrinho", {})
+    return render(request, "pedidos/carrinho.html", {"carrinho": carrinho})
