@@ -42,7 +42,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
 
-                "pedidos.context_processors.contador_carrinho",
+                "pedidos.views.contador_carrinho",
             ],
         },
     },

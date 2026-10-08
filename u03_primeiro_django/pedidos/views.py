@@ -60,10 +60,18 @@ def ver_carrinho(request):
     return carrinho(request)
 
 
+
 def contador_carrinho(request):
     carrinho_sessao = request.session.get("carrinho", {})
-    # Aqui você pode implementar a contagem de itens se precisar usar no menu/badge
-    return render(request, "pedidos/contador.html", {"carrinho": carrinho_sessao})
+    
+    # Soma a quantidade de itens salvos na sessão (exemplo comum)
+    quantidade_total = sum(item.get('quantidade', 0) for item in carrinho_sessao.values())
+    
+    # Retorna um dicionário (o Django exige isso de um context processor)
+    return {
+        "carrinho": carrinho_sessao,
+        "quantidade_carrinho": quantidade_total,
+    }
 
 def remover_carrinho(request, id):
     """Diminui em 1 a quantidade do produto no carrinho."""
