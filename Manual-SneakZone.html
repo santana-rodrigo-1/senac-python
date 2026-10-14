@@ -1,0 +1,1261 @@
+<title>Manual SneakZone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#f4f6fa;
+    --surface:#ffffff;
+    --surface-2:#eef1f7;
+    --ink:#0d1b2a;
+    --fg:#1b2735;
+    --muted:#5b6b7b;
+    --faint:#8795a6;
+    --border:#dbe2ec;
+    --accent:#ff6b35;
+    --accent-ink:#c8481a;
+    --blue:#1e88e5;
+    --teal:#00a88f;
+    --code-bg:#0f1b2d;
+    --code-fg:#e8eef5;
+    --code-border:#22344c;
+    --ok:#1f9d5b;
+    --shadow:0 1px 2px rgba(13,27,42,.06),0 8px 24px rgba(13,27,42,.06);
+    --shadow-sm:0 1px 2px rgba(13,27,42,.08);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0a121e;
+      --surface:#101c2c;
+      --surface-2:#16263a;
+      --ink:#e9eff7;
+      --fg:#dce4ee;
+      --muted:#93a4b7;
+      --faint:#64788d;
+      --border:#213246;
+      --accent:#ff7a48;
+      --accent-ink:#ffb595;
+      --blue:#5aa9f0;
+      --teal:#2fc7ac;
+      --code-bg:#070e18;
+      --code-fg:#dbe6f2;
+      --code-border:#1b2c40;
+      --ok:#44c17e;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a121e;
+    --surface:#101c2c;
+    --surface-2:#16263a;
+    --ink:#e9eff7;
+    --fg:#dce4ee;
+    --muted:#93a4b7;
+    --faint:#64788d;
+    --border:#213246;
+    --accent:#ff7a48;
+    --accent-ink:#ffb595;
+    --blue:#5aa9f0;
+    --teal:#2fc7ac;
+    --code-bg:#070e18;
+    --code-fg:#dbe6f2;
+    --code-border:#1b2c40;
+    --ok:#44c17e;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:"Space Grotesk","Inter",system-ui,sans-serif;color:var(--ink);text-wrap:balance;margin:0}
+  a{color:var(--blue)}
+  code,kbd{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  /* ===== top progress bar ===== */
+  #progressbar{
+    position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:4px;
+    background:transparent;z-index:60;pointer-events:none;
+  }
+  #progressbar>span{
+    display:block;height:100%;width:0%;
+    background:linear-gradient(90deg,var(--accent),#ffb086);
+    transition:width .35s ease;
+  }
+
+  /* ===== top bar ===== */
+  header.topbar{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+    display:flex;align-items:center;gap:14px;
+    padding:12px 20px;
+    background:color-mix(in srgb,var(--surface) 88%,transparent);
+    backdrop-filter:saturate(1.3) blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk",sans-serif;font-weight:700;color:var(--ink);font-size:17px;letter-spacing:-.2px}
+  .brand .mark{
+    width:30px;height:30px;border-radius:9px;flex:none;
+    background:linear-gradient(135deg,var(--ink),#1c3350);
+    display:grid;place-items:center;color:var(--accent);font-size:17px;box-shadow:var(--shadow-sm);
+  }
+  .brand small{display:block;font-family:"Inter",sans-serif;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.3px;text-transform:uppercase}
+  .topbar .spacer{flex:1}
+  .counter{
+    font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:7px;
+  }
+  .counter b{color:var(--ink);font-weight:700}
+  .iconbtn{
+    border:1px solid var(--border);background:var(--surface);color:var(--fg);
+    width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;
+    display:grid;place-items:center;transition:.15s;
+  }
+  .iconbtn:hover{border-color:var(--accent);color:var(--accent)}
+  .menutoggle{display:none}
+
+  /* ===== layout ===== */
+  .shell{display:grid;grid-template-columns:288px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+  nav.toc{
+    position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);
+    align-self:start;height:calc(100vh - 62px);overflow-y:auto;
+    padding:22px 14px 60px 20px;
+  }
+  nav.toc .toc-head{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--faint);font-weight:600;margin:0 0 12px 8px}
+  nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  nav.toc a{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 10px;border-radius:9px;
+    color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;
+    border-left:2px solid transparent;transition:.15s;
+  }
+  nav.toc a .num{
+    flex:none;width:22px;height:22px;border-radius:7px;background:var(--surface-2);
+    color:var(--faint);font-size:11px;font-weight:700;display:grid;place-items:center;
+    font-family:"JetBrains Mono",monospace;transition:.15s;
+  }
+  nav.toc a:hover{background:var(--surface-2);color:var(--ink)}
+  nav.toc a.active{background:var(--surface);color:var(--ink);border-left-color:var(--accent);box-shadow:var(--shadow-sm)}
+  nav.toc a.active .num{background:var(--accent);color:#fff}
+  nav.toc a.done .num{background:var(--ok);color:#fff}
+  nav.toc a.done .num::after{content:"✓"}
+  nav.toc a.done .num span{display:none}
+
+  main{padding:26px 24px 120px;min-width:0}
+
+  /* ===== intro hero ===== */
+  .hero{
+    background:linear-gradient(140deg,var(--ink),#16304c 70%,#1c3a5c);
+    border-radius:20px;padding:32px 30px;color:#eaf1f9;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);margin-bottom:12px;
+  }
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,107,53,.35),transparent 70%)}
+  .hero .kicker{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+  .hero h1{color:#fff;font-size:30px;line-height:1.15;margin-bottom:12px}
+  .hero p{color:#c3d2e2;max-width:60ch;margin:0 0 20px;font-size:15px}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px}
+  .hero .meta span{
+    font-size:12.5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    padding:6px 12px;border-radius:999px;color:#dbe6f2;display:inline-flex;align-items:center;gap:6px;
+  }
+  .howto{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0 6px;
+  }
+  .howto .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 16px;box-shadow:var(--shadow-sm)}
+  .howto .card h4{font-size:14px;margin-bottom:5px;display:flex;align-items:center;gap:8px}
+  .howto .card p{margin:0;font-size:13px;color:var(--muted)}
+  .howto .ic{font-size:18px}
+
+  /* ===== phase block ===== */
+  section.phase{
+    background:var(--surface);border:1px solid var(--border);border-radius:18px;
+    margin-top:22px;box-shadow:var(--shadow-sm);scroll-margin-top:80px;overflow:hidden;
+  }
+  .phase-head{
+    display:flex;align-items:center;gap:16px;padding:20px 22px;cursor:pointer;user-select:none;
+  }
+  .phase-head .pnum{
+    flex:none;width:46px;height:46px;border-radius:13px;
+    background:linear-gradient(135deg,var(--ink),#20374f);color:var(--accent);
+    font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;
+    display:grid;place-items:center;box-shadow:var(--shadow-sm);
+  }
+  .phase-head.allok .pnum{background:linear-gradient(135deg,var(--ok),#1f9d5b);color:#fff}
+  .phase-head .ptitle{flex:1;min-width:0}
+  .phase-head .ptitle h2{font-size:19px;letter-spacing:-.3px}
+  .phase-head .ptitle p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+  .phase-head .pprog{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .phase-head .chev{transition:.25s;color:var(--faint);font-size:14px}
+  section.phase.collapsed .chev{transform:rotate(-90deg)}
+  section.phase.collapsed .phase-body{display:none}
+  .phase-body{padding:0 22px 8px}
+  .phase-tag{
+    display:inline-block;margin:0 22px 14px;font-size:11.5px;color:var(--muted);
+    background:var(--surface-2);border:1px solid var(--border);padding:4px 10px;border-radius:8px;
+  }
+
+  /* ===== step ===== */
+  .step{border-top:1px solid var(--border);padding:20px 2px 22px}
+  .step:first-child{border-top:none}
+  .step-head{display:flex;align-items:flex-start;gap:12px}
+  .chk{
+    appearance:none;-webkit-appearance:none;flex:none;margin-top:2px;
+    width:24px;height:24px;border-radius:8px;border:2px solid var(--border);
+    background:var(--surface);cursor:pointer;position:relative;transition:.15s;
+  }
+  .chk:hover{border-color:var(--accent)}
+  .chk:checked{background:var(--ok);border-color:var(--ok)}
+  .chk:checked::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:14px;font-weight:700}
+  .step-head .st{flex:1;min-width:0}
+  .step-head h3{font-size:16.5px;letter-spacing:-.2px;transition:.15s}
+  .step.done .step-head h3{color:var(--muted)}
+  .step-objetivo{font-size:13.5px;color:var(--muted);margin:5px 0 0}
+  .step-body{margin-top:14px;display:flex;flex-direction:column;gap:14px}
+  .step-body p{margin:0;font-size:14.5px;color:var(--fg)}
+  .step-body p.lead{color:var(--muted)}
+  .step-body b{color:var(--ink)}
+  .step-body ul{margin:0;padding-left:20px;font-size:14px;color:var(--fg)}
+  .step-body ul li{margin:3px 0}
+  .step-body code.inl{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:13px;color:var(--accent-ink)}
+
+  /* ===== code block ===== */
+  .codewrap{border-radius:13px;overflow:hidden;border:1px solid var(--code-border);background:var(--code-bg);box-shadow:var(--shadow-sm)}
+  .codebar{
+    display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,.03);
+    border-bottom:1px solid var(--code-border);
+  }
+  .codebar .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .codebar .fname{font-family:"JetBrains Mono",monospace;font-size:12px;color:#8fa4bd;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .copybtn{
+    border:1px solid var(--code-border);background:rgba(255,255,255,.04);color:#cfe0f2;
+    font-size:12px;font-weight:600;padding:5px 11px;border-radius:8px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;transition:.15s;font-family:"Inter",sans-serif;
+  }
+  .copybtn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .copybtn.copied{background:var(--ok);border-color:var(--ok);color:#fff}
+  pre{margin:0;overflow-x:auto;padding:14px 16px}
+  pre code{font-family:"JetBrains Mono",monospace;font-size:13px;line-height:1.65;color:var(--code-fg);white-space:pre;display:block}
+  .cmt{color:#7c93a8}
+
+  /* callouts */
+  .callout{border-radius:12px;padding:13px 15px 13px 14px;font-size:13.5px;display:flex;gap:11px;align-items:flex-start;border:1px solid}
+  .callout .ci{flex:none;font-size:16px;line-height:1.3}
+  .callout b{display:block;margin-bottom:2px}
+  .callout.check{background:color-mix(in srgb,var(--ok) 12%,var(--surface));border-color:color-mix(in srgb,var(--ok) 40%,var(--border));color:var(--fg)}
+  .callout.erro{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-color:color-mix(in srgb,var(--accent) 40%,var(--border));color:var(--fg)}
+  .callout.tip{background:color-mix(in srgb,var(--blue) 12%,var(--surface));border-color:color-mix(in srgb,var(--blue) 38%,var(--border));color:var(--fg)}
+  .callout.erro b{color:var(--accent-ink)}
+  .callout.check b{color:var(--ok)}
+  .callout.tip b{color:var(--blue)}
+
+  /* finish card */
+  .finish{
+    margin-top:30px;background:linear-gradient(140deg,#0d1b2a,#13314c);border-radius:20px;
+    padding:30px;text-align:center;color:#eaf1f9;box-shadow:var(--shadow);
+  }
+  .finish h2{color:#fff;font-size:22px;margin-bottom:8px}
+  .finish p{color:#bfd0e2;font-size:14px;margin:0 auto 18px;max-width:52ch}
+  .finish .runbtn{
+    display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;border:none;
+    font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:14px;padding:11px 20px;border-radius:12px;cursor:pointer;
+  }
+  .finish .runbtn:hover{filter:brightness(1.07)}
+
+  footer.foot{max-width:1240px;margin:0 auto;padding:10px 24px 40px;color:var(--faint);font-size:12px;text-align:center}
+
+  .backdrop{display:none}
+
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr}
+    .menutoggle{display:grid}
+    nav.toc{
+      position:fixed;top:0;left:0;bottom:0;width:280px;height:100%;z-index:70;
+      background:var(--surface);border-right:1px solid var(--border);
+      transform:translateX(-102%);transition:transform .25s ease;padding-top:22px;
+      box-shadow:var(--shadow);
+    }
+    body.navopen nav.toc{transform:translateX(0)}
+    body.navopen .backdrop{display:block;position:fixed;inset:0;background:rgba(5,10,18,.5);z-index:65}
+    .hero h1{font-size:24px}
+    main{padding:18px 16px 110px}
+    .counter .lbl{display:none}
+  }
+</style>
+
+<div id="progressbar"><span></span></div>
+
+<header class="topbar">
+  <button class="iconbtn menutoggle" id="menutoggle" aria-label="Abrir índice">☰</button>
+  <div class="brand">
+    <span class="mark">◆</span>
+    <span>SneakZone<small>Manual do Projeto Final · Django</small></span>
+  </div>
+  <div class="spacer"></div>
+  <div class="counter"><span class="lbl">Progresso</span> <b id="cdone">0</b>/<span id="ctotal">0</span></div>
+  <button class="iconbtn" id="themebtn" aria-label="Alternar tema" title="Alternar tema claro/escuro">◐</button>
+  <button class="iconbtn" id="resetbtn" aria-label="Zerar progresso" title="Zerar progresso">↺</button>
+</header>
+
+<div class="backdrop" id="backdrop"></div>
+
+<div class="shell">
+  <nav class="toc" id="toc">
+    <p class="toc-head">Fases do projeto</p>
+    <ol id="toclist"></ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="kicker">SENAC · Programação em Python — UC3</div>
+      <h1>Construindo a loja SneakZone do zero com Django</h1>
+      <p>Este é o seu guia de consulta para montar o projeto final, passo a passo. Cada fase corresponde ao que vimos em aula (Aulas 7 a 16). Siga na ordem, copie os comandos e marque o que já concluiu — seu progresso fica salvo neste navegador.</p>
+      <div class="meta">
+        <span>🐍 Python 3.12+</span>
+        <span>🎸 Django 5.x</span>
+        <span>🎨 Bootstrap 5.3</span>
+        <span>🗄️ SQLite</span>
+        <span>⏱️ 10 fases</span>
+      </div>
+    </div>
+
+    <div class="howto">
+      <div class="card"><h4><span class="ic">✅</span> Marque cada passo</h4><p>Clique na caixinha ao concluir. A barra no topo mostra o quanto você já avançou.</p></div>
+      <div class="card"><h4><span class="ic">📋</span> Copie o código</h4><p>Todo bloco tem botão <b>Copiar</b>. Cole no terminal ou no arquivo indicado no topo do bloco.</p></div>
+      <div class="card"><h4><span class="ic">🔎</span> Teste sempre</h4><p>As faixas verdes dizem <b>como testar</b>; as laranjas avisam dos <b>erros comuns</b>.</p></div>
+    </div>
+
+    <div id="content"></div>
+
+    <div class="finish">
+      <h2>🎉 Loja no ar!</h2>
+      <p>Se você marcou todas as fases, a SneakZone já tem catálogo, login, carrinho e pedidos funcionando. Rode o servidor e navegue pela sua loja.</p>
+      <button class="runbtn copybtn" data-code="python manage.py runserver">▶ Copiar: python manage.py runserver</button>
+    </div>
+
+    <footer class="foot">Manual didático SneakZone · UC3 Back-end Python · uso em sala e online · 2026</footer>
+  </main>
+</div>
+
+<script>
+/* ============ CONTEÚDO (dirigido por dados) ============ */
+const PHASES = [
+ {
+  n:0, id:"fase-ambiente", title:"Ambiente e criação do projeto",
+  sub:"Preparar a máquina e nascer o projeto Django.", tag:"Base para todas as aulas",
+  steps:[
+   {t:"Criar a pasta e o ambiente virtual",
+    o:"Isolar as bibliotecas do projeto para não misturar com outros trabalhos.",
+    body:[
+     {type:"p",html:"O <b>ambiente virtual (venv)</b> é como uma caixa fechada só para este projeto: o Django instalado aqui não afeta outros programas do computador."},
+     {type:"code",file:"Terminal",code:
+`# cria a pasta do projeto e entra nela
+mkdir sneakzone
+cd sneakzone
+
+# cria o ambiente virtual chamado .venv
+python -m venv .venv
+
+# ATIVA o ambiente (Windows)
+.venv\\Scripts\\activate
+
+# ATIVA o ambiente (Linux / macOS)
+source .venv/bin/activate`},
+     {type:"check",html:"O nome <code class='inl'>(.venv)</code> aparece no início da linha do terminal. É o sinal de que o ambiente está ativo."},
+     {type:"erro",html:"No Windows, se der erro de <i>execução de scripts</i>, rode o PowerShell como administrador e execute <code class='inl'>Set-ExecutionPolicy RemoteSigned</code>."},
+     {type:"tip",html:"<b>Deu problema com o ambiente virtual?</b> Como aconteceu em aula, dá para seguir <b>sem o venv</b>: pule este passo e vá direto para o próximo (instalar o Django e criar o projeto). O venv é a boa prática recomendada, mas não é obrigatório para o projeto funcionar — abaixo está o caminho rápido."},
+     {type:"code",file:"Terminal — caminho rápido (sem venv, como na aula)",code:
+`# pule a criação/ativação do ambiente virtual
+# e instale o Django direto:
+pip install django
+
+# depois crie o projeto normalmente (próximo passo)
+django-admin startproject sneakzone .`},
+     {type:"erro",html:"Sem o venv, o Django é instalado para o Python do sistema inteiro. Funciona para aprender, mas em projetos de verdade prefira sempre o ambiente virtual para não misturar versões entre trabalhos."}
+    ]},
+   {t:"Instalar o Django e criar o projeto",
+    o:"Trazer o framework e gerar a estrutura inicial da aplicação.",
+    body:[
+     {type:"code",file:"Terminal",code:
+`# instala o Django dentro do ambiente ativo
+pip install django
+
+# cria o projeto 'sneakzone' na pasta atual (repare no ponto final)
+django-admin startproject sneakzone .`},
+     {type:"p",html:"O ponto final <code class='inl'>.</code> faz o Django criar o projeto <b>na pasta atual</b>, evitando uma pasta repetida (sneakzone/sneakzone/sneakzone)."},
+     {type:"tip",html:"Guarde o que você instalou em um arquivo: <code class='inl'>pip freeze > requirements.txt</code>. Assim qualquer colega recria o ambiente igual ao seu."}
+    ]},
+   {t:"Rodar o servidor pela primeira vez",
+    o:"Confirmar que tudo foi instalado corretamente.",
+    body:[
+     {type:"code",file:"Terminal",code:
+`python manage.py runserver`},
+     {type:"check",html:"Abra <code class='inl'>http://127.0.0.1:8000</code> no navegador. Deve aparecer o foguetinho do Django (“The install worked successfully!”). Pare o servidor com <kbd>Ctrl</kbd>+<kbd>C</kbd>."},
+     {type:"erro",html:"<b>Port already in use</b>: já existe um servidor rodando. Feche o outro terminal ou use <code class='inl'>python manage.py runserver 8001</code>."}
+    ]}
+  ]
+ },
+ {
+  n:1, id:"fase-paginas", title:"Primeiras páginas e navegação",
+  sub:"Criar o app principal, as views e as rotas.", tag:"Aula 7 — rotas e views",
+  steps:[
+   {t:"Criar o app 'core'",
+    o:"Separar a lógica das páginas gerais (home, sobre, contato) em um módulo próprio.",
+    body:[
+     {type:"p",html:"No Django o <b>projeto</b> é a loja inteira; cada <b>app</b> é um setor. O app <code class='inl'>core</code> cuida das páginas institucionais."},
+     {type:"code",file:"Terminal",code:
+`python manage.py startapp core`},
+     {type:"p",html:"Depois registre o app em <code class='inl'>sneakzone/settings.py</code>:"},
+     {type:"code",file:"sneakzone/settings.py",code:
+`INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "core",            # <-- nosso app
+]`},
+     {type:"erro",html:"Esquecer de adicionar o app em <code class='inl'>INSTALLED_APPS</code> faz o Django ignorar templates, static e models dele. É o erro número 1 de iniciantes."}
+    ]},
+   {t:"Escrever as views",
+    o:"Cada view é a função que responde por uma página.",
+    body:[
+     {type:"p",html:"Uma <b>view</b> recebe a requisição e devolve a resposta. Aqui usamos <code class='inl'>render()</code> para entregar um template HTML."},
+     {type:"code",file:"core/views.py",code:
+`from django.shortcuts import render
+
+
+def home(request):
+    # request = pedido do navegador; render monta a resposta com o template
+    return render(request, "core/home.html")
+
+
+def sobre(request):
+    return render(request, "core/sobre.html")`},
+     {type:"tip",html:"Nomes claros: a função <code class='inl'>home</code> serve a página inicial, <code class='inl'>sobre</code> serve a página “Sobre”. Evite nomes como <code class='inl'>view1</code>."}
+    ]},
+   {t:"Ligar as rotas (urls.py)",
+    o:"Dizer ao Django qual endereço chama qual view.",
+    body:[
+     {type:"p",html:"Crie o arquivo de rotas <b>do app</b> e depois inclua ele no roteador <b>do projeto</b>."},
+     {type:"code",file:"core/urls.py (novo arquivo)",code:
+`from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("sobre/", views.sobre, name="sobre"),
+]`},
+     {type:"code",file:"sneakzone/urls.py",code:
+`from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("core.urls")),   # entrega as rotas para o app core
+]`},
+     {type:"check",html:"Depois de criar os templates (próxima fase), <code class='inl'>http://127.0.0.1:8000/</code> abre a home e <code class='inl'>/sobre/</code> abre o Sobre."},
+     {type:"erro",html:"<b>TemplateDoesNotExist</b> agora é esperado — ainda não criamos os HTML. Resolvemos na Fase 2."}
+    ]}
+  ]
+ },
+ {
+  n:2, id:"fase-templates", title:"Templates reutilizáveis",
+  sub:"Um layout-base com cabeçalho e rodapé para todas as páginas.", tag:"Aula 8 — herança de templates",
+  steps:[
+   {t:"Criar a estrutura de pastas de templates",
+    o:"Organizar os HTML dentro do app, no caminho que o Django procura.",
+    body:[
+     {type:"p",html:"O Django procura templates em <code class='inl'>&lt;app&gt;/templates/&lt;app&gt;/</code>. Repetir o nome do app evita que dois apps com <code class='inl'>home.html</code> se confundam."},
+     {type:"code",file:"Terminal",code:
+`# dentro da pasta do projeto
+mkdir core\\templates\\core        # Windows
+# ou:  mkdir -p core/templates/core   # Linux/macOS`}
+    ]},
+   {t:"Montar o template-base (base.html)",
+    o:"Definir o esqueleto que as outras páginas vão herdar.",
+    body:[
+     {type:"p",html:"O <b>base.html</b> tem a estrutura comum (navbar, rodapé) e deixa “buracos” marcados com <code class='inl'>{% block %}</code> para cada página preencher."},
+     {type:"code",file:"core/templates/core/base.html",code:
+`{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SneakZone{% endblock %}</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark" style="background:#0d1b2a">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <span style="color:#ff6b35">◆</span> SneakZone
+      </a>
+      <div>
+        <a class="text-light me-3" href="{% url 'home' %}">Início</a>
+        <a class="text-light" href="{% url 'sobre' %}">Sobre</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-muted py-4">
+    © SneakZone 2026 — Projeto SENAC
+  </footer>
+</body>
+</html>`},
+     {type:"tip",html:"<code class='inl'>{% url 'home' %}</code> usa o <b>nome</b> da rota, não o endereço fixo. Se um dia o endereço mudar, os links continuam funcionando."}
+    ]},
+   {t:"Criar as páginas que herdam o base",
+    o:"Preencher apenas os blocos, sem repetir navbar e rodapé.",
+    body:[
+     {type:"code",file:"core/templates/core/home.html",code:
+`{% extends 'core/base.html' %}
+
+{% block title %}SneakZone — Início{% endblock %}
+
+{% block content %}
+  <h1>Bem-vindo à SneakZone</h1>
+  <p>Os melhores tênis você encontra aqui.</p>
+{% endblock %}`},
+     {type:"code",file:"core/templates/core/sobre.html",code:
+`{% extends 'core/base.html' %}
+{% block title %}Sobre a SneakZone{% endblock %}
+{% block content %}
+  <h1>Sobre nós</h1>
+  <p>Loja fictícia criada para o curso de Python do SENAC.</p>
+{% endblock %}`},
+     {type:"check",html:"Rode <code class='inl'>runserver</code>: a navbar e o rodapé aparecem nas duas páginas, mas você só escreveu o conteúdo central uma vez em cada arquivo."},
+     {type:"erro",html:"<code class='inl'>{% extends %}</code> precisa ser a <b>primeira linha</b> do arquivo (fora o <code class='inl'>{% load %}</code>). Qualquer HTML antes dele quebra a herança."}
+    ]}
+  ]
+ },
+ {
+  n:3, id:"fase-estatico", title:"Estilo, arquivos estáticos e componentes",
+  sub:"CSS próprio, imagens e um cartão de produto reutilizável.", tag:"Aula 9 — static e includes",
+  steps:[
+   {t:"Configurar e criar os arquivos estáticos",
+    o:"Guardar CSS, JS e imagens do projeto.",
+    body:[
+     {type:"p",html:"<b>Static</b> são arquivos fixos do site (CSS, JS, ícones). Ficam em <code class='inl'>&lt;app&gt;/static/&lt;app&gt;/</code>."},
+     {type:"code",file:"Terminal",code:
+`mkdir -p core/static/core/css
+mkdir -p core/static/core/img`},
+     {type:"code",file:"core/static/core/css/estilo.css",code:
+`/* cores da marca SneakZone */
+:root { --laranja: #ff6b35; --azul-escuro: #0d1b2a; }
+
+.card-produto { transition: transform .15s; }
+.card-produto:hover { transform: translateY(-4px); }
+.preco { color: var(--laranja); font-weight: 700; }`},
+     {type:"p",html:"Carregue o CSS no <b>base.html</b>, logo abaixo do Bootstrap:"},
+     {type:"code",file:"core/templates/core/base.html (dentro do &lt;head&gt;)",code:
+`{% load static %}
+<link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">`},
+     {type:"erro",html:"<b>{% static %} não funciona</b>? Confirme que <code class='inl'>{% load static %}</code> está no topo do template e que <code class='inl'>django.contrib.staticfiles</code> está em INSTALLED_APPS."}
+    ]},
+   {t:"Criar um componente reutilizável (partial)",
+    o:"Escrever o cartão do produto uma vez e reaproveitar em várias telas.",
+    body:[
+     {type:"p",html:"Um <b>partial</b> é um pedaço de template incluído com <code class='inl'>{% include %}</code>. O arquivo começa com <code class='inl'>_</code> por convenção."},
+     {type:"code",file:"core/templates/core/_produto_card.html",code:
+`{% load static %}
+<div class="card card-produto h-100">
+  <div class="card-body">
+    <h5 class="card-title">{{ produto.nome }}</h5>
+    <p class="preco">R$ {{ produto.preco }}</p>
+  </div>
+</div>`},
+     {type:"p",html:"Use assim, dentro de um laço, em qualquer página:"},
+     {type:"code",file:"exemplo de uso",code:
+`{% for produto in produtos %}
+  {% include 'core/_produto_card.html' %}
+{% endfor %}`},
+     {type:"tip",html:"Cada partial precisa do seu próprio <code class='inl'>{% load static %}</code> — o include não herda o load da página que o chamou."}
+    ]}
+  ]
+ },
+ {
+  n:4, id:"fase-produtos", title:"App de produtos e modelo de dados",
+  sub:"Criar o app 'produtos', o model Produto e as migrações.", tag:"Aula 10 — models e migrações",
+  steps:[
+   {t:"Criar o app 'produtos'",
+    o:"Separar o catálogo em um app dedicado.",
+    body:[
+     {type:"code",file:"Terminal",code:
+`python manage.py startapp produtos`},
+     {type:"p",html:"Registre em <code class='inl'>INSTALLED_APPS</code> (settings.py), junto com <code class='inl'>core</code>: adicione <code class='inl'>\"produtos\",</code>."}
+    ]},
+   {t:"Definir o model Produto",
+    o:"Descrever como cada produto é guardado no banco de dados.",
+    body:[
+     {type:"p",html:"Um <b>model</b> é uma classe Python que vira uma tabela no banco. Cada atributo vira uma coluna."},
+     {type:"code",file:"produtos/models.py",code:
+`from django.db import models
+
+
+class Produto(models.Model):
+    nome = models.CharField(max_length=120)
+    categoria = models.CharField(max_length=60)
+    preco = models.DecimalField(max_digits=8, decimal_places=2)
+    estoque = models.PositiveIntegerField(default=0)
+    ativo = models.BooleanField(default=True)
+
+    def __str__(self):
+        # texto que aparece no admin e no shell
+        return self.nome`},
+     {type:"tip",html:"Use <code class='inl'>DecimalField</code> para dinheiro (não <code class='inl'>FloatField</code>): evita erros de arredondamento em preços."}
+    ]},
+   {t:"Gerar e aplicar as migrações",
+    o:"Criar de fato a tabela no banco a partir do model.",
+    body:[
+     {type:"p",html:"<b>makemigrations</b> escreve o plano de mudança; <b>migrate</b> executa esse plano no banco."},
+     {type:"code",file:"Terminal",code:
+`python manage.py makemigrations
+python manage.py migrate`},
+     {type:"check",html:"O terminal mostra algo como <code class='inl'>Applying produtos.0001_initial... OK</code>. A tabela já existe."},
+     {type:"erro",html:"Mudou o model e esqueceu de migrar? O Django avisa <b>“changes not yet reflected in a migration”</b>. Rode os dois comandos de novo."}
+    ]},
+   {t:"Registrar no admin",
+    o:"Ter uma tela pronta para cadastrar produtos sem escrever código.",
+    body:[
+     {type:"code",file:"produtos/admin.py",code:
+`from django.contrib import admin
+from .models import Produto
+
+
+@admin.register(Produto)
+class ProdutoAdmin(admin.ModelAdmin):
+    list_display = ("nome", "categoria", "preco", "estoque", "ativo")
+    list_filter = ("categoria", "ativo")
+    search_fields = ("nome",)`},
+     {type:"p",html:"Crie o usuário administrador e entre no painel:"},
+     {type:"code",file:"Terminal",code:
+`python manage.py createsuperuser`},
+     {type:"check",html:"Abra <code class='inl'>/admin/</code>, faça login e cadastre alguns produtos — vamos usá-los na próxima fase."}
+    ]}
+  ]
+ },
+ {
+  n:5, id:"fase-catalogo", title:"Catálogo: consultando o banco (ORM)",
+  sub:"Listar produtos na loja com QuerySets e filtros.", tag:"Aula 11 — ORM e QuerySets",
+  steps:[
+   {t:"View que busca os produtos",
+    o:"Trazer do banco só o que a loja deve mostrar.",
+    body:[
+     {type:"p",html:"O <b>ORM</b> traduz Python em SQL. <code class='inl'>Produto.objects.filter(...)</code> monta a consulta sem você escrever SQL."},
+     {type:"code",file:"produtos/views.py",code:
+`from django.shortcuts import render
+from .models import Produto
+
+
+def lista_produtos(request):
+    # só produtos ativos, ordenados por nome
+    produtos = Produto.objects.filter(ativo=True).order_by("nome")
+
+    # busca opcional pela caixa de pesquisa (?q=...)
+    termo = request.GET.get("q")
+    if termo:
+        produtos = produtos.filter(nome__icontains=termo)
+
+    return render(request, "produtos/lista.html", {"produtos": produtos})`},
+     {type:"tip",html:"<code class='inl'>nome__icontains</code> busca ignorando maiúsculas/minúsculas. O <code class='inl'>i</code> é de <i>insensitive</i>."}
+    ]},
+   {t:"Rota do catálogo",
+    o:"Expor a página de produtos em um endereço.",
+    body:[
+     {type:"code",file:"produtos/urls.py (novo)",code:
+`from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("produtos/", views.lista_produtos, name="produtos"),
+]`},
+     {type:"code",file:"sneakzone/urls.py",code:
+`urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("core.urls")),
+    path("", include("produtos.urls")),   # novo
+]`}
+    ]},
+   {t:"Template da listagem",
+    o:"Mostrar os produtos reaproveitando o cartão da Fase 3.",
+    body:[
+     {type:"code",file:"produtos/templates/produtos/lista.html",code:
+`{% extends 'core/base.html' %}
+{% block title %}Produtos — SneakZone{% endblock %}
+
+{% block content %}
+  <h1 class="mb-3">Nossos tênis</h1>
+
+  <form class="mb-4" method="get">
+    <input class="form-control" name="q" placeholder="Buscar...">
+  </form>
+
+  <div class="row g-3">
+    {% for produto in produtos %}
+      <div class="col-md-4">
+        {% include 'core/_produto_card.html' %}
+      </div>
+    {% empty %}
+      <p>Nenhum produto encontrado.</p>
+    {% endfor %}
+  </div>
+{% endblock %}`},
+     {type:"check",html:"Em <code class='inl'>/produtos/</code> aparecem os produtos que você cadastrou no admin. Digite na busca e os resultados filtram."},
+     {type:"erro",html:"Lista vazia? Confirme que os produtos têm <code class='inl'>ativo = True</code> no admin."}
+    ]}
+  ]
+ },
+ {
+  n:6, id:"fase-login", title:"Login e área protegida",
+  sub:"Autenticar usuários e proteger páginas.", tag:"Aula 12–13 — autenticação",
+  steps:[
+   {t:"Configurar rotas de login/logout",
+    o:"Usar o sistema de autenticação pronto do Django.",
+    body:[
+     {type:"p",html:"O Django já traz as views de login/logout. Basta ligar as rotas e dizer para onde ir depois."},
+     {type:"code",file:"sneakzone/urls.py",code:
+`urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("contas/", include("django.contrib.auth.urls")),  # login, logout...
+    path("", include("core.urls")),
+    path("", include("produtos.urls")),
+]`},
+     {type:"code",file:"sneakzone/settings.py",code:
+`LOGIN_URL = "login"              # para onde manda quem não está logado
+LOGIN_REDIRECT_URL = "home"      # para onde vai depois de entrar
+LOGOUT_REDIRECT_URL = "home"`}
+    ]},
+   {t:"Tela de login",
+    o:"Dar ao usuário um formulário para entrar.",
+    body:[
+     {type:"p",html:"O Django procura este template em <code class='inl'>registration/login.html</code>. Crie a pasta <code class='inl'>core/templates/registration/</code>."},
+     {type:"code",file:"core/templates/registration/login.html",code:
+`{% extends 'core/base.html' %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+  <h1>Entrar</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Entrar</button>
+  </form>
+{% endblock %}`},
+     {type:"erro",html:"Sem <code class='inl'>{% csrf_token %}</code> o Django bloqueia o envio com erro <b>403 CSRF</b>. Todo formulário <code class='inl'>POST</code> precisa dele."}
+    ]},
+   {t:"Proteger uma página com @login_required",
+    o:"Impedir que quem não entrou acesse áreas internas.",
+    body:[
+     {type:"p",html:"O <b>decorator</b> <code class='inl'>@login_required</code> colocado acima de uma view exige login. Quem não entrou é levado para a tela de login."},
+     {type:"code",file:"core/views.py",code:
+`from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+
+@login_required
+def painel(request):
+    # request.user é o usuário logado
+    return render(request, "core/painel.html", {"usuario": request.user})`},
+     {type:"tip",html:"No template, use <code class='inl'>{% if user.is_authenticated %}</code> para mostrar “Sair” só a quem já entrou."},
+     {type:"check",html:"Acesse <code class='inl'>/painel/</code> deslogado: o Django te redireciona para o login. Depois de entrar, cai de volta no painel."}
+    ]}
+  ]
+ },
+ {
+  n:7, id:"fase-crud", title:"Cadastro de produtos pelo site (CRUD + formulários)",
+  sub:"Criar, editar e remover produtos com ModelForm.", tag:"Aula 13 — formulários e CRUD",
+  steps:[
+   {t:"Criar o formulário com ModelForm",
+    o:"Gerar o formulário automaticamente a partir do model.",
+    body:[
+     {type:"p",html:"<b>ModelForm</b> lê o model e cria os campos sozinho — sem reescrever nome, preço etc. à mão."},
+     {type:"code",file:"produtos/forms.py (novo)",code:
+`from django import forms
+from .models import Produto
+
+
+class ProdutoForm(forms.ModelForm):
+    class Meta:
+        model = Produto
+        fields = ["nome", "categoria", "preco", "estoque", "ativo"]
+        widgets = {
+            "nome": forms.TextInput(attrs={"class": "form-control"}),
+            "categoria": forms.TextInput(attrs={"class": "form-control"}),
+            "preco": forms.NumberInput(attrs={"class": "form-control"}),
+            "estoque": forms.NumberInput(attrs={"class": "form-control"}),
+        }`},
+     {type:"tip",html:"Os <b>widgets</b> deixam aplicar classes do Bootstrap (<code class='inl'>form-control</code>) para o formulário ficar bonito."}
+    ]},
+   {t:"Views de criar e editar",
+    o:"Salvar um produto novo e alterar um existente.",
+    body:[
+     {type:"code",file:"produtos/views.py",code:
+`from django.shortcuts import render, redirect, get_object_or_404
+from .models import Produto
+from .forms import ProdutoForm
+
+
+def produto_novo(request):
+    if request.method == "POST":
+        form = ProdutoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("produtos")
+    else:
+        form = ProdutoForm()
+    return render(request, "produtos/form.html", {"form": form})
+
+
+def produto_editar(request, pk):
+    produto = get_object_or_404(Produto, pk=pk)
+    form = ProdutoForm(request.POST or None, instance=produto)
+    if form.is_valid():
+        form.save()
+        return redirect("produtos")
+    return render(request, "produtos/form.html", {"form": form})`},
+     {type:"p",html:"<code class='inl'>get_object_or_404</code> busca o produto; se o <code class='inl'>pk</code> não existir, devolve página 404 em vez de quebrar."}
+    ]},
+   {t:"Rotas e template do formulário",
+    o:"Ligar os endereços e reaproveitar um só HTML para criar e editar.",
+    body:[
+     {type:"code",file:"produtos/urls.py",code:
+`urlpatterns = [
+    path("produtos/", views.lista_produtos, name="produtos"),
+    path("produtos/novo/", views.produto_novo, name="produto_novo"),
+    path("produtos/<int:pk>/editar/", views.produto_editar, name="produto_editar"),
+]`},
+     {type:"code",file:"produtos/templates/produtos/form.html",code:
+`{% extends 'core/base.html' %}
+{% block content %}
+  <h1>Produto</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success">Salvar</button>
+  </form>
+{% endblock %}`},
+     {type:"check",html:"Em <code class='inl'>/produtos/novo/</code> você cadastra pelo site; o produto aparece na listagem sem usar o admin."}
+    ]}
+  ]
+ },
+ {
+  n:8, id:"fase-permissao", title:"Permissões e upload de imagem",
+  sub:"Só funcionários editam; produtos ganham foto.", tag:"Aula 14 — is_staff e media",
+  steps:[
+   {t:"Permitir edição só para funcionários",
+    o:"Usuário comum vê a loja; só quem é da equipe cadastra produtos.",
+    body:[
+     {type:"p",html:"Todo usuário tem o campo <code class='inl'>is_staff</code>. Protegemos as views de cadastro com <code class='inl'>user_passes_test</code>."},
+     {type:"code",file:"produtos/views.py",code:
+`from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def eh_equipe(user):
+    return user.is_staff
+
+
+@login_required
+@user_passes_test(eh_equipe)
+def produto_novo(request):
+    ...  # mesmo corpo da fase anterior`},
+     {type:"tip",html:"Alternativa manual dentro da view: <code class='inl'>if not request.user.is_staff: return HttpResponseForbidden()</code> (erro 403 = acesso proibido)."},
+     {type:"erro",html:"Marque <code class='inl'>is_staff</code> do usuário no admin, senão nem você consegue cadastrar pelo site."}
+    ]},
+   {t:"Adicionar imagem ao produto",
+    o:"Guardar a foto enviada pelo usuário.",
+    body:[
+     {type:"p",html:"<b>Static</b> são arquivos do projeto; <b>media</b> são arquivos enviados pelo usuário (fotos de produtos). São coisas diferentes."},
+     {type:"code",file:"produtos/models.py",code:
+`class Produto(models.Model):
+    nome = models.CharField(max_length=120)
+    # ... demais campos ...
+    imagem = models.ImageField(upload_to="produtos/", blank=True)`},
+     {type:"code",file:"Terminal",code:
+`pip install Pillow        # ImageField precisa da biblioteca Pillow
+python manage.py makemigrations
+python manage.py migrate`},
+     {type:"code",file:"sneakzone/settings.py",code:
+`import os
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"`},
+     {type:"code",file:"sneakzone/urls.py (final do arquivo, só em desenvolvimento)",code:
+`from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)`}
+    ]},
+   {t:"Receber o arquivo no formulário",
+    o:"Deixar o formulário aceitar upload.",
+    body:[
+     {type:"p",html:"Formulários com arquivo precisam de <code class='inl'>enctype</code> e a view precisa receber <code class='inl'>request.FILES</code>."},
+     {type:"code",file:"template do formulário",code:
+`<form method="post" enctype="multipart/form-data">`},
+     {type:"code",file:"produtos/views.py",code:
+`form = ProdutoForm(request.POST or None, request.FILES or None, instance=produto)`},
+     {type:"p",html:"E mostre a imagem no cartão (<code class='inl'>_produto_card.html</code>):"},
+     {type:"code",file:"core/templates/core/_produto_card.html",code:
+`{% if produto.imagem %}
+  <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}">
+{% endif %}`},
+     {type:"erro",html:"Esqueceu <code class='inl'>enctype=\"multipart/form-data\"</code>? O arquivo não chega e o campo imagem fica vazio sem erro aparente."}
+    ]}
+  ]
+ },
+ {
+  n:9, id:"fase-carrinho", title:"Carrinho e finalização de pedidos",
+  sub:"Carrinho na sessão e pedido gravado no banco.", tag:"Aulas 15–16 — sessão e pedidos",
+  steps:[
+   {t:"Criar o app de pedidos e os models",
+    o:"Registrar pedidos e seus itens no banco.",
+    body:[
+     {type:"code",file:"Terminal",code:
+`python manage.py startapp pedidos`},
+     {type:"p",html:"Registre <code class='inl'>\"pedidos\"</code> em INSTALLED_APPS. Um pedido tem vários itens — relação feita com <b>ForeignKey</b>."},
+     {type:"code",file:"pedidos/models.py",code:
+`from django.db import models
+from django.contrib.auth.models import User
+from produtos.models import Produto
+
+
+class Pedido(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    criado_em = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default="novo")
+
+    @property
+    def total(self):
+        # soma o subtotal de cada item do pedido
+        return sum(item.subtotal for item in self.itens.all())
+
+
+class ItemPedido(models.Model):
+    pedido = models.ForeignKey(Pedido, related_name="itens",
+                               on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.PROTECT)
+    quantidade = models.PositiveIntegerField(default=1)
+    preco = models.DecimalField(max_digits=8, decimal_places=2)
+
+    @property
+    def subtotal(self):
+        return self.quantidade * self.preco`},
+     {type:"tip",html:"<code class='inl'>related_name=\"itens\"</code> permite escrever <code class='inl'>pedido.itens.all()</code> para pegar os itens daquele pedido."}
+    ]},
+   {t:"Carrinho usando a sessão",
+    o:"Guardar o que o usuário escolheu antes de fechar o pedido.",
+    body:[
+     {type:"p",html:"A <b>sessão</b> (<code class='inl'>request.session</code>) é a memória do navegador daquele usuário no servidor. Guardamos o carrinho ali até ele finalizar."},
+     {type:"code",file:"pedidos/views.py",code:
+`from django.shortcuts import redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+from produtos.models import Produto
+
+
+@require_POST
+def adicionar(request, pk):
+    get_object_or_404(Produto, pk=pk)          # garante que existe
+    carrinho = request.session.get("carrinho", {})
+    chave = str(pk)
+    carrinho[chave] = carrinho.get(chave, 0) + 1
+    request.session["carrinho"] = carrinho     # salva de volta na sessão
+    return redirect("ver_carrinho")`},
+     {type:"erro",html:"<code class='inl'>@require_POST</code> garante que só um formulário (POST) adicione itens — um link (GET) não deve alterar dados."}
+    ]},
+   {t:"Finalizar: gravar o pedido com segurança",
+    o:"Transformar o carrinho em um pedido definitivo no banco.",
+    body:[
+     {type:"p",html:"Ao finalizar, gravamos tudo dentro de uma <b>transação</b>: ou salva o pedido inteiro, ou nada — nunca pela metade."},
+     {type:"code",file:"pedidos/views.py",code:
+`from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from .models import Pedido, ItemPedido
+
+
+@login_required
+def finalizar(request):
+    carrinho = request.session.get("carrinho", {})
+    if not carrinho:
+        return redirect("produtos")
+
+    with transaction.atomic():                 # tudo ou nada
+        pedido = Pedido.objects.create(usuario=request.user)
+        for pk, qtd in carrinho.items():
+            # trava a linha do produto para checar estoque com segurança
+            produto = Produto.objects.select_for_update().get(pk=pk)
+            ItemPedido.objects.create(
+                pedido=pedido, produto=produto,
+                quantidade=qtd, preco=produto.preco,
+            )
+            produto.estoque -= qtd
+            produto.save()
+
+    request.session["carrinho"] = {}           # esvazia o carrinho
+    return redirect("meus_pedidos")`},
+     {type:"tip",html:"<code class='inl'>select_for_update()</code> trava o produto durante a transação, evitando que dois clientes comprem o último par ao mesmo tempo."}
+    ]},
+   {t:"Meus pedidos e detalhes",
+    o:"Deixar o cliente ver o histórico só dos próprios pedidos.",
+    body:[
+     {type:"code",file:"pedidos/views.py",code:
+`from django.shortcuts import render, get_object_or_404
+
+
+@login_required
+def meus_pedidos(request):
+    # prefetch_related evita uma consulta por pedido (mais rápido)
+    pedidos = (Pedido.objects
+               .filter(usuario=request.user)
+               .prefetch_related("itens")
+               .order_by("-criado_em"))
+    return render(request, "pedidos/meus.html", {"pedidos": pedidos})
+
+
+@login_required
+def detalhe(request, pk):
+    # o filtro usuario=request.user impede ver pedido de outra pessoa
+    pedido = get_object_or_404(Pedido, pk=pk, usuario=request.user)
+    return render(request, "pedidos/detalhe.html", {"pedido": pedido})`},
+     {type:"check",html:"Logado, finalize uma compra e abra <code class='inl'>/meus-pedidos/</code>: o pedido aparece com total calculado. Tente abrir o pedido de outro usuário pela URL — retorna 404."},
+     {type:"erro",html:"Sem <code class='inl'>usuario=request.user</code> no <code class='inl'>get_object_or_404</code>, qualquer um veria o pedido dos outros trocando o número na URL. É uma falha de segurança clássica."}
+    ]},
+   {t:"Acompanhar o status no admin",
+    o:"Permitir que a equipe mude o pedido de 'novo' para 'enviado'.",
+    body:[
+     {type:"code",file:"pedidos/admin.py",code:
+`from django.contrib import admin
+from .models import Pedido, ItemPedido
+
+
+class ItemInline(admin.TabularInline):
+    model = ItemPedido
+    extra = 0
+
+
+@admin.register(Pedido)
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ("id", "usuario", "status", "criado_em")
+    list_filter = ("status",)
+    inlines = [ItemInline]`},
+     {type:"check",html:"No <code class='inl'>/admin/</code> o pedido mostra seus itens embutidos (inline) e você muda o status. Fim do fluxo completo da loja! 🎉"}
+    ]}
+  ]
+ }
+];
+
+/* ============ RENDER ============ */
+const content = document.getElementById("content");
+const toclist = document.getElementById("toclist");
+const STORE_KEY = "sneakzone_manual_v1";
+
+function loadDone(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"{}"); }catch(e){ return {}; }
+}
+function saveDone(d){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }catch(e){}
+}
+let done = loadDone();
+
+function esc(s){ return s; } // code is set via textContent, no escaping needed
+
+function stepKey(pi,si){ return "p"+pi+"s"+si; }
+
+let TOTAL = 0;
+PHASES.forEach(ph=>TOTAL+=ph.steps.length);
+document.getElementById("ctotal").textContent = TOTAL;
+
+PHASES.forEach((ph,pi)=>{
+  // TOC entry
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  a.href = "#"+ph.id; a.dataset.phase = pi;
+  a.innerHTML = `<span class="num"><span>${ph.n}</span></span><span>${ph.title}</span>`;
+  li.appendChild(a); toclist.appendChild(li);
+
+  // section
+  const sec = document.createElement("section");
+  sec.className = "phase"; sec.id = ph.id; sec.dataset.phase = pi;
+
+  const head = document.createElement("div");
+  head.className = "phase-head";
+  head.innerHTML = `
+    <div class="pnum">${ph.n}</div>
+    <div class="ptitle"><h2>${ph.title}</h2><p>${ph.sub}</p></div>
+    <div class="pprog" data-pprog="${pi}"></div>
+    <div class="chev">▼</div>`;
+  sec.appendChild(head);
+
+  const body = document.createElement("div");
+  body.className = "phase-body";
+
+  const tag = document.createElement("div");
+  tag.className = "phase-tag"; tag.textContent = "📚 "+ph.tag;
+  body.appendChild(tag);
+
+  ph.steps.forEach((st,si)=>{
+    const key = stepKey(pi,si);
+    const step = document.createElement("div");
+    step.className = "step"; step.dataset.key = key;
+
+    const sh = document.createElement("div");
+    sh.className = "step-head";
+    const chk = document.createElement("input");
+    chk.type = "checkbox"; chk.className = "chk"; chk.checked = !!done[key];
+    chk.setAttribute("aria-label","Marcar passo concluído");
+    const stWrap = document.createElement("div");
+    stWrap.className = "st";
+    const h3 = document.createElement("h3"); h3.textContent = st.t;
+    const obj = document.createElement("p"); obj.className="step-objetivo";
+    obj.innerHTML = "🎯 <b>Objetivo:</b> "+st.o;
+    stWrap.appendChild(h3); stWrap.appendChild(obj);
+    sh.appendChild(chk); sh.appendChild(stWrap);
+    step.appendChild(sh);
+
+    const sb = document.createElement("div");
+    sb.className = "step-body";
+    st.body.forEach(bl=>{
+      if(bl.type==="p"){
+        const p = document.createElement("p");
+        p.className = bl.lead ? "lead":""; p.innerHTML = bl.html; sb.appendChild(p);
+      } else if(bl.type==="ul"){
+        const ul = document.createElement("ul");
+        bl.items.forEach(it=>{const li=document.createElement("li");li.innerHTML=it;ul.appendChild(li);});
+        sb.appendChild(ul);
+      } else if(bl.type==="code"){
+        const wrap = document.createElement("div"); wrap.className="codewrap";
+        const bar = document.createElement("div"); bar.className="codebar";
+        bar.innerHTML = `<span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="fname"></span>`;
+        bar.querySelector(".fname").textContent = bl.file||"";
+        const btn = document.createElement("button");
+        btn.className="copybtn"; btn.innerHTML="📋 Copiar";
+        bar.appendChild(btn);
+        const pre = document.createElement("pre");
+        const code = document.createElement("code");
+        code.textContent = bl.code;           // textContent evita parse de HTML
+        pre.appendChild(code); wrap.appendChild(bar); wrap.appendChild(pre);
+        btn._code = bl.code;
+        sb.appendChild(wrap);
+      } else if(bl.type==="check"||bl.type==="erro"||bl.type==="tip"){
+        const c = document.createElement("div"); c.className="callout "+bl.type;
+        const icon = bl.type==="check"?"✅":(bl.type==="erro"?"⚠️":"💡");
+        const label = bl.type==="check"?"Como testar":(bl.type==="erro"?"Erro comum":"Dica profissional");
+        c.innerHTML = `<span class="ci">${icon}</span><div><b>${label}</b>${bl.html}</div>`;
+        sb.appendChild(c);
+      }
+    });
+    step.appendChild(sb);
+    body.appendChild(step);
+    if(done[key]) step.classList.add("done");
+  });
+
+  sec.appendChild(body);
+  content.appendChild(sec);
+
+  // collapse toggle (click on head, but not when selecting text)
+  head.addEventListener("click", ()=> sec.classList.toggle("collapsed"));
+});
+
+/* ---- copy buttons ---- */
+document.addEventListener("click", (e)=>{
+  const btn = e.target.closest(".copybtn");
+  if(!btn) return;
+  const txt = btn._code || btn.dataset.code || "";
+  const ok = ()=>{ const old=btn.innerHTML; btn.classList.add("copied"); btn.innerHTML="✓ Copiado"; setTimeout(()=>{btn.classList.remove("copied");btn.innerHTML=old;},1400); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok).catch(()=>fallbackCopy(txt,ok));
+  } else fallbackCopy(txt,ok);
+});
+function fallbackCopy(txt,ok){
+  try{
+    const ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); ok();
+  }catch(e){}
+}
+
+/* ---- checkboxes / progress ---- */
+function refreshProgress(){
+  const n = Object.values(done).filter(Boolean).length;
+  document.getElementById("cdone").textContent = n;
+  document.querySelector("#progressbar>span").style.width = (TOTAL? (n/TOTAL*100):0)+"%";
+  // per-phase
+  PHASES.forEach((ph,pi)=>{
+    let c=0; ph.steps.forEach((s,si)=>{ if(done[stepKey(pi,si)]) c++; });
+    const el = document.querySelector(`[data-pprog="${pi}"]`);
+    if(el) el.textContent = c+"/"+ph.steps.length;
+    const sec = document.querySelector(`section.phase[data-phase="${pi}"] .phase-head`);
+    if(sec) sec.classList.toggle("allok", c===ph.steps.length);
+    const toca = document.querySelector(`nav.toc a[data-phase="${pi}"]`);
+    if(toca) toca.classList.toggle("done", c===ph.steps.length);
+  });
+}
+content.addEventListener("change",(e)=>{
+  const chk = e.target.closest(".chk"); if(!chk) return;
+  const step = chk.closest(".step"); const key = step.dataset.key;
+  done[key] = chk.checked; step.classList.toggle("done",chk.checked);
+  saveDone(done); refreshProgress();
+});
+refreshProgress();
+
+/* ---- reset ---- */
+document.getElementById("resetbtn").addEventListener("click",()=>{
+  // no window.confirm in artifacts; reset directly
+  done = {}; saveDone(done);
+  document.querySelectorAll(".chk").forEach(c=>c.checked=false);
+  document.querySelectorAll(".step.done").forEach(s=>s.classList.remove("done"));
+  refreshProgress();
+  const b=document.getElementById("resetbtn"); b.textContent="✓"; setTimeout(()=>b.textContent="↺",900);
+});
+
+/* ---- theme toggle ---- */
+const root = document.documentElement;
+const THEME_KEY="sneakzone_theme";
+(function initTheme(){ try{ const t=localStorage.getItem(THEME_KEY); if(t) root.setAttribute("data-theme",t);}catch(e){} })();
+document.getElementById("themebtn").addEventListener("click",()=>{
+  const cur = root.getAttribute("data-theme");
+  const dark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme:dark)").matches;
+  const next = dark ? "light":"dark";
+  root.setAttribute("data-theme",next);
+  try{ localStorage.setItem(THEME_KEY,next);}catch(e){}
+});
+
+/* ---- mobile nav ---- */
+const mt=document.getElementById("menutoggle"), bd=document.getElementById("backdrop");
+mt.addEventListener("click",()=>document.body.classList.toggle("navopen"));
+bd.addEventListener("click",()=>document.body.classList.remove("navopen"));
+
+/* ---- scroll-spy + smooth scroll ---- */
+toclist.addEventListener("click",(e)=>{
+  const a=e.target.closest("a"); if(!a) return;
+  e.preventDefault();
+  const sec=document.getElementById(a.getAttribute("href").slice(1));
+  if(sec){ sec.classList.remove("collapsed"); sec.scrollIntoView({behavior:"smooth",block:"start"}); }
+  document.body.classList.remove("navopen");
+});
+const spy = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const pi = en.target.dataset.phase;
+      document.querySelectorAll("nav.toc a").forEach(x=>x.classList.remove("active"));
+      const a=document.querySelector(`nav.toc a[data-phase="${pi}"]`);
+      if(a) a.classList.add("active");
+    }
+  });
+},{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("section.phase").forEach(s=>spy.observe(s));
+</script>
