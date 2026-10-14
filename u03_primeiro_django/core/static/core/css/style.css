@@ -1,7 +1,0 @@
-.produto-card {
-    transition: 0.2s;
-}
-
-.produto-card:hover {
-    transform: translateY(-5px);
-}
