@@ -40,7 +40,6 @@ def produto_novo(request):
         return HttpResponseForbidden(
             "Você não possui permissão."
         )
-
     if request.method == "POST":
 
         form = ProdutoForm(request.POST, request.FILES)

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import CadastroUsuarioForm
 
+
 def cadastro(request):
 
     if request.method == "POST":
