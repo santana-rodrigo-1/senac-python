@@ -1,3 +1,9 @@
-python -m venv .virtual ou python -m venv .venv
+python -m venv .venv ou python -m venv .virtual
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 .virtual/Script/activate
+pip install django
+pip freeze > requirements.txt
+code .
+django-admin startproject core .
+python manage.py runserver
+python manage.py migrate
