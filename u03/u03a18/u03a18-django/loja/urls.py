@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import home # ou from . import views.home
+from .views import * # usar (*) asteristico no lugar de: home, produtos, etc.
 
 urlpatterns = [
     path('', home, name="home"),
-    path('/produtos/', produtos, name="produtos")
+    path('produtos/', produtos, name="produtos")
 ]
