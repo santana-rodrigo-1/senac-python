@@ -27,4 +27,5 @@ USE_TZ = True
 
 § ver criar template?
 
+§ aplicativo (app) é igual um  modulo ir no settings e add ele em installed apps
 § 
