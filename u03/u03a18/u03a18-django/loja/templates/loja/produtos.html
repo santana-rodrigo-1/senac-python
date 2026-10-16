@@ -8,11 +8,11 @@
 <body>
     <h1>Página de Produtos</h1>
     <table>
-        <th>
-            <tr>Nome</tr>
-            <tr>Preço</tr>
-            <tr>Ativo</tr>
-        </th>
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Ativo</th>
+        </tr>
         {% for produto in produtos %}
         <tr>
             <td>{{produto.nome}}</td>
