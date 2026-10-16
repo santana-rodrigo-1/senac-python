@@ -1,5 +1,3 @@
-§§ aula 17
-
 § criar site com venv
 
 python -m venv .venv ou python -m venv .virtual
@@ -29,4 +27,4 @@ USE_TZ = True
 
 § ver criar template?
 
-
+§ 
