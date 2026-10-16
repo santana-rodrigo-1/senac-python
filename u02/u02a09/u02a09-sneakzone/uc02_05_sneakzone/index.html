@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SneakZone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+                SneakZone
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menu"
+                    aria-controls="menu"
+                    aria-expanded="false"
+                    aria-label="Abrir menu">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#produtos">
+                            Produtos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tamanho">
+                            Tamanhos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#precos">
+                            Fretes
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cadastro">
+                            Cadastro
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#carrinho">
+                            <i class="bi bi-cart3"></i> Carrinho
+                            <span id="contadorCarrinho" class="badge bg-warning text-dark rounded-pill">0</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contato">
+                            Contato
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+   
+    <main>
+            <div class="container mt-3">
+
+            <div class="alert alert-warning" role="alert">
+                <i class="bi bi-lightning-charge-fill"></i>
+                Frete grátis nas compras acima de R$ 299,00!
+            </div>
+
+        </div>       
+
+        <section id="destaque" class="container py-4">
+            <div id="banner" class="carousel slide rounded overflow-hidden shadow" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#banner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#banner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#banner" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="img/aerorun.jpg" class="d-block w-100 img-fluid" alt="AeroRun para corrida">
+                        <div class="carousel-caption d-block bg-dark bg-opacity-75 rounded p-3">
+                            <h2>Linha Corrida</h2><p>Leveza e amortecimento para bater seu recorde.</p>
+                            <a href="#produtos" class="btn btn-warning">Ver produtos</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/urbanstep.jpg" class="d-block w-100 img-fluid" alt="UrbanStep casual">
+                        <div class="carousel-caption d-block bg-dark bg-opacity-75 rounded p-3">
+                            <h2>UrbanStep</h2><p>Estilo e conforto para o seu dia a dia.</p>
+                            <a href="#produtos" class="btn btn-warning">Conhecer</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/courtpro.jpg" class="d-block w-100 img-fluid" alt="CourtPro esportivo">
+                        <div class="carousel-caption d-block bg-dark bg-opacity-75 rounded p-3">
+                            <h2>CourtPro</h2><p>Performance para seus desafios.</p>
+                            <a href="#produtos" class="btn btn-warning">Comprar agora</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#banner" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Anterior</span></button>
+                <button class="carousel-control-next" type="button" data-bs-target="#banner" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Próximo</span></button>
+            </div>
+        </section>
+
+        <section id="produtos" class="container py-4">
+            <h2>Nossos Tênis</h2>
+
+            <div class="row g-4">
+
+                <article class="col-12 col-md-4">
+                    <div class="card h-100 border-warning shadow rounded">
+                        <div class="position-relative">
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-3">Desconto</span>
+                            <img src="img/aerorun.jpg" class="card-img-top img-fluid rounded" alt="Tênis de corrida laranja modelo AeroRun">
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">AeroRun Laranja</h3>
+                            <p class="card-text">Leveza para bater seu recorde.</p>
+                            <p class="card-text">
+                                <del>R$ 399,90</del>
+                                <strong>R$ 349,90</strong>
+                            </p>
+
+                            <button type="button" class="btn btn-warning mt-auto"
+                                onclick="comprar('AeroRun Laranja', 349.90, 'img/aerorun.jpg')">
+                                <i class="bi bi-cart"></i> Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-12 col-md-4">
+                    <div class="card h-100 bg-secondary-subtle border-secondary shadow rounded">
+                        <div class="position-relative">
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-3">Desconto</span>
+                            <img src="img/urbanstep.jpg" class="card-img-top img-fluid rounded" alt="Tênis casual azul modelo UrbanStep">
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">UrbanStep Azul</h3>
+                            <p class="card-text">O casual do dia a dia.</p>
+                            <p class="card-text">
+                                <del>R$ 279,90</del>
+                                <strong>R$ 230,00</strong>
+                            </p>
+
+                            <button type="button" class="btn btn-success mt-auto"
+                                onclick="comprar('UrbanStep Azul', 230, 'img/urbanstep.jpg')">
+                                <i class="bi bi-bag-check"></i> Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="col-12 col-md-4">
+                    <div class="card h-100 bg-secondary-subtle border-secondary shadow rounded">
+                        <div class="position-relative">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Lançamento</span>
+                            <img src="img/courtpro.jpg" class="card-img-top img-fluid rounded" alt="Tênis de basquete verde modelo CourtPro">
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">CourtPro Verde</h3>
+                            <p class="card-text">Aderência para trilhas e atividades ao ar livre.</p>
+                            <p class="card-text">
+                                <strong>R$ 429,90</strong>
+                            </p>
+
+                            <button type="button" class="btn btn-outline-warning mt-auto"
+                                onclick="comprar('CourtPro Verde', 429.90, 'img/courtpro.jpg')">
+                                <i class="bi bi-cart-plus"></i> Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+
+        <section id="tamanho" class="container">
+            <h2>Guia de Tamanhos</h2>
+            <div class="table-responsive">
+                <table class="table table-dark table-striped table-hover table-bordered table-sm align-middle">
+                    <thead class="table-warning">
+                        <tr>
+                            <th>Numeração (BR)</th>
+                            <th>Tamanho do pé</th>
+                            <th>Disponibilidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>33</td>
+                            <td>22,0 cm</td>
+                            <td>Em estoque</td>
+                        </tr>
+                        <tr>
+                            <td>34</td>
+                            <td>22,7 cm</td>
+                            <td>Em estoque</td>
+                        </tr>
+                        <tr>
+                            <td>35</td>
+                            <td>23,3 cm</td>
+                            <td>Em estoque</td>
+                        </tr>
+                        <tr>
+                            <td>36</td>
+                            <td>24,0 cm</td>
+                            <td>Em estoque</td>
+                        </tr>
+                        <tr>
+                            <td>37</td>
+                            <td>24,7 cm</td>
+                            <td>Em estoque</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section id="precos" class="container">
+            <h2>Fretes e Prazos</h2>
+            <div class="table-responsive">
+                <table class="table table-dark table-striped table-hover table-bordered table-sm align-middle">
+                    <thead class="table-warning">
+                        <tr>
+                            <th scope="col">Região</th>
+                            <th scope="col">Prazo de entrega</th>
+                            <th scope="col">Frete Padrão</th>
+                            <th scope="col">Frete grátis a patir de</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sudeste</td>
+                            <td> 2 a 4 dias úteis</td>
+                            <td>R$ 19,90</td>
+                            <td>R$ 299,00</td>
+                        </tr>
+                        <tr>
+                            <td>Sul</td>
+                            <td>3 a 6 dias úteis</td>
+                            <td>R$ 24,90</td>
+                            <td> R$ 299,00</td>
+                        </tr>
+                        <tr>
+                            <td>Nordeste</td>
+                            <td>5 a 9 dias úteis</td>
+                            <td>R$ 29,90</td>
+                            <td>R$ 349,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Retirar na loja física (Centro/RJ):</td>
+                            <td>Grátis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="frete" class="container py-4">
+            <h2>Calculadora de Fretes</h2>
+            <p>Informe o valor da compra e sua região para calcular o frete.</p>
+
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label for="valorCompra" class="form-label">Valor da compra</label>
+                    <input type="number" class="form-control" id="valorCompra" placeholder="Ex.: 299.90">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="regiao" class="form-label">Região de entrega</label>
+                    <select id="regiao" class="form-select">
+                        <option value="">Selecione</option>
+                        <option value="sudeste">Sudeste</option>
+                        <option value="sul">Sul</option>
+                        <option value="nordeste">Nordeste</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <button type="button" class="btn btn-warning" onclick="calcularFrete()">
+                        <i class="bi bi-truck"></i> Calcular frete
+                    </button>
+                </div>
+
+                <div class="col-12">
+                    <div id="resultado" class="alert alert-info mb-0" role="alert">
+                        Informe os dados para calcular o frete.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="container py-4">
+            <h2>Sobre a SneakZone</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-8">
+                    <p>Nascemos em 2026 com a missão de oferecer tênis que unem conforto, desempenho e estilo.</p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <aside class="bg-warning text-dark rounded p-3 shadow">
+                        <h3><i class="bi bi-lightbulb"></i> Você sabia?</h3>
+                        <p class="mb-0">O primeiro tênis esportivo surgiu em 1917.</p>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="container py-4">
+            <h2>Dúvidas Frequentes</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Como funciona a troca?</button></h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">Você pode solicitar a troca em até 30 dias, seguindo as condições da loja.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Qual o prazo de entrega?</button></h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">O prazo varia conforme a região. Consulte a tabela de fretes e prazos.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Como funciona o frete grátis?</button></h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Nas regiões Sudeste e Sul, compras a partir de R$ 299,00 têm frete grátis. No Nordeste, o limite é R$ 349,00.</div></div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Posso retirar na loja?</button></h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Sim. A retirada na loja física, no Centro/RJ, é gratuita.</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="carrinho" class="container py-4">
+            <h2>Meu Carrinho</h2>
+            <div class="card bg-body-tertiary border-secondary">
+                <div class="card-body">
+                    <div id="listaCarrinho" class="mb-3"><p class="text-secondary mb-0">Seu carrinho está vazio.</p></div>
+                    <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                        <strong>Total: <span id="totalCarrinho">R$ 0,00</span></strong>
+                        <button type="button" class="btn btn-warning" onclick="finalizarCarrinho()"><i class="bi bi-check2-circle"></i> Finalizar compra</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cadastro" class="container py-4">
+            <h2>Cadastro do Cliente</h2>
+
+            <div id="mensagemSucesso" role="alert"></div>
+
+            <form id="formCadastro" class="bg-body-tertiary border border-secondary rounded p-4" novalidate>
+                <div class="row g-3">
+
+                    <div class="col-12 col-md-6">
+                        <label for="nome" class="form-label">Nome completo</label>
+                        <input type="text" class="form-control" id="nome" name="nome"
+                            placeholder="Ex.: Ana Paula Souza" required>
+                        <div class="invalid-feedback">Por favor, informe seu nome completo.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                            placeholder="voce@email.com" required>
+                        <div class="invalid-feedback">Por favor, informe um e-mail válido.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="telefone" class="form-label">Telefone (com DDD)</label>
+                        <input type="tel" class="form-control" id="telefone" name="telefone"
+                            placeholder="(21) 90000-0000"
+                            pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+                            title="Use o formato (21) 90000-0000" required>
+                        <div class="invalid-feedback">Use o formato (21) 90000-0000.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="idade" class="form-label">Idade</label>
+                        <input type="number" class="form-control" id="idade" name="idade"
+                            min="0" max="120" placeholder="Ex.: 25" required>
+                        <div class="invalid-feedback">Informe uma idade válida.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="numeracao" class="form-label">Numeração</label>
+                        <select id="numeracao" name="numeracao" class="form-select" required>
+                            <option value="" selected disabled>Escolha...</option>
+                            <option>36</option><option>37</option><option>38</option>
+                            <option>39</option><option>40</option><option>41</option>
+                            <option>42</option><option>43</option><option>44</option>
+                        </select>
+                        <div class="invalid-feedback">Selecione uma numeração.</div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="cor" class="form-label">Cor preferida</label>
+                        <input type="color" class="form-control form-control-color" id="cor"
+                            name="cor" value="#ff6b35" title="Escolha uma cor">
+                    </div>
+
+                    <div class="col-12">
+                        <fieldset class="border border-secondary rounded p-3">
+                            <legend class="float-none w-auto px-2 fs-6">Estilo favorito</legend>
+
+                            <div class="d-flex flex-wrap gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="estiloEsportivo"
+                                        name="estilo" value="Esportivo">
+                                    <label class="form-check-label" for="estiloEsportivo">Esportivo</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="estiloCasual"
+                                        name="estilo" value="Casual">
+                                    <label class="form-check-label" for="estiloCasual">Casual</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-12">
+                        <fieldset class="border border-secondary rounded p-3">
+                            <legend class="float-none w-auto px-2 fs-6">Tipos de tênis de interesse</legend>
+
+                            <div class="d-flex flex-wrap gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tenisCorrida">
+                                    <label class="form-check-label" for="tenisCorrida">Corrida</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tenisCasual">
+                                    <label class="form-check-label" for="tenisCasual">Casual</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tenisBasquete">
+                                    <label class="form-check-label" for="tenisBasquete">Basquete</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="tenisTrilha">
+                                    <label class="form-check-label" for="tenisTrilha">Trilha</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="mensagem" class="form-label">Alguma observação?</label>
+                        <textarea id="mensagem" name="mensagem" class="form-control" rows="3"
+                            placeholder="Conte o que você procura..."></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="termos" required>
+                            <label class="form-check-label" for="termos">
+                                Li e aceito os termos e a política de privacidade (LGPD).
+                            </label>
+                            <div class="invalid-feedback">Você precisa aceitar os termos para se cadastrar.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2">
+                        <button type="button" class="btn btn-warning" onclick="cadastrar()">
+                            <i class="bi bi-person-plus"></i> Cadastrar
+                        </button>
+
+                        <button type="reset" class="btn btn-outline-light">
+                            <i class="bi bi-eraser"></i> Limpar
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </section>
+
+        <div class="modal fade" id="modalProduto" tabindex="-1" aria-labelledby="modalProdutoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="modalProdutoLabel">Confirmar compra</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modalProdutoImagem" src="" class="img-fluid rounded mb-3" alt="Produto selecionado">
+                        <h3 id="modalProdutoNome" class="h5"></h3>
+                        <p class="mb-0">Preço: <strong id="modalProdutoPreco"></strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-warning" onclick="confirmarCompra()"><i class="bi bi-cart-check"></i> Adicionar ao carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer id="contato" class="container bg-black text-light rounded p-4 my-4">
+        <div class="row align-items-center g-3">
+            <div class="col-12 col-md-6">
+                <h3 class="h5 text-warning">SneakZone</h3>
+                <p class="mb-0">&copy; 2026 SneakZone.</p>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <address class="d-flex flex-wrap align-items-center gap-2 mb-0">
+                    <span id="emailrodape">contato@sneakzone.com.br</span>
+                    <span> - </span>
+                    <img src="img/whatsapp-logo.svg" alt="WhatsApp" width="30" height="30">
+                    <span id="whatsapp">WhatsApp (21) 90000-0000</span>
+                </address>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
