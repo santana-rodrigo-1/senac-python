@@ -28,4 +28,9 @@ USE_TZ = True
 § ver criar template?
 
 § aplicativo (app) é igual um  modulo ir no settings e add ele em installed apps
+§ html:5 ou ! em ambos depois enter
+§ estrutura de crud precisa de formulário
+§ ver o que é crud
+§ cadastrar aditar visualiuxae e excluir é o crud
+§ pip install black
 § 
