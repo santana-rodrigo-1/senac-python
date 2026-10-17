@@ -33,4 +33,6 @@ USE_TZ = True
 § ver o que é crud
 § cadastrar aditar visualiuxae e excluir é o crud
 § pip install black
+§ método html get e post . VER
+§ git init , git status, git add, commit :(create, fix, etc), git push, ver (git remote add origin), git remote -v, git branck -m main, git push -u origin main.
 § 
