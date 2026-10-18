@@ -1,7 +1,7 @@
 # Comissão
 
-venda = float (input(f"Digite o valor da venda: "))
-valor_comissao = float (input(f"Digite o porcentagem da comissão: "))
+venda = float(input(f"Digite o valor da venda: "))
+valor_comissao = float(input(f"Digite o porcentagem da comissão: "))
 comissao = venda * valor_comissao / 100
 
 print("\n" + "+" + "-" * 25 + "+" + "\n")

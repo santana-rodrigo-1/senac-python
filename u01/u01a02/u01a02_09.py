@@ -1,8 +1,8 @@
 # Holerite (RH)
 
-nome = input ("Digite o nome do funcionário: ")
-salario_bruto = float (input(f"Digite o salario_bruto: "))
-aliquota_inss = float (input(f"Digite a alíquota do INSS: "))
+nome = input("Digite o nome do funcionário: ")
+salario_bruto = float(input(f"Digite o salario_bruto: "))
+aliquota_inss = float(input(f"Digite a alíquota do INSS: "))
 
 inss = salario_bruto * aliquota_inss / 100
 liquido = salario_bruto - inss

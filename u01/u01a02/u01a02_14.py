@@ -2,8 +2,8 @@
 # • O dobro do número.
 # • O triplo do número.
 
-#import subprocess
-#subprocess.run("cls", shell=True)
+# import subprocess
+# subprocess.run("cls", shell=True)
 
 numero = float(input("\n\nDigite um número: "))
 dobro = numero * 2

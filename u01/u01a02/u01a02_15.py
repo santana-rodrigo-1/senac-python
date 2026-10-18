@@ -5,7 +5,7 @@
 # Sua idade aproximada é 28 anos.
 
 ano_atual = int(input(f"\n\nDigite o ano atual: "))
-ano_nasc  = int(input(f"Digite o ano de seu nascimento: "))
+ano_nasc = int(input(f"Digite o ano de seu nascimento: "))
 
 idade = ano_atual - ano_nasc
 

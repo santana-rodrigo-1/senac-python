@@ -1,4 +1,5 @@
 import subprocess
+
 subprocess.run("cls", shell=True)
 
 nome = input("\n\nDigite nome do funcionário: ")

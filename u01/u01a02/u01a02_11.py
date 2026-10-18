@@ -46,14 +46,18 @@ def obter_aliquota_inss() -> float:
             aliquota = float(entrada_higienizada)
             if ALIQUOTA_MINIMA <= aliquota <= ALIQUOTA_MAXIMA:
                 return aliquota
-            print(f" [ERRO] Alíquota fora do limite legal ({ALIQUOTA_MINIMA}% a {ALIQUOTA_MAXIMA}%).")
+            print(
+                f" [ERRO] Alíquota fora do limite legal ({ALIQUOTA_MINIMA}% a {ALIQUOTA_MAXIMA}%)."
+            )
         except ValueError:
-            print(" [ERRO] Entrada inválida. Utilize formato numérico (ex: 11 ou 11.5).")
+            print(
+                " [ERRO] Entrada inválida. Utilize formato numérico (ex: 11 ou 11.5)."
+            )
 
 
 def renderizar_holerite(nome: str, bruto: float, aliquota: float) -> None:
     """Realiza o processamento contábil e renderiza o layout autoexpansível do holerite.
-    
+
     A largura se adapta dinamicamente ao tamanho do nome do colaborador.
     """
     # Regras de Negócio / Cálculos Contábeis
@@ -62,12 +66,12 @@ def renderizar_holerite(nome: str, bruto: float, aliquota: float) -> None:
 
     # Base de strings para os cálculos financeiros
     str_bruto_valores = f"R$ {bruto:>10.2f}"
-    str_inss_valores  = f"R$ {desconto_inss:>10.2f}"
-    str_liq_valores   = f"R$ {salario_liquido:>10.2f}"
+    str_inss_valores = f"R$ {desconto_inss:>10.2f}"
+    str_liq_valores = f"R$ {salario_liquido:>10.2f}"
 
     # Define uma largura mínima baseada no tamanho padrão dos campos financeiros ou título
     # " Desconto INSS (00.0%):   " tem 26 caracteres + 13 do valor = 39. É a nossa base segura.
-    largura_base_financeira = 39 
+    largura_base_financeira = 39
     largura_nome_real = len(f" Colaborador: {nome} ")
 
     # A largura interna final será o maior valor entre o tamanho do nome ou a base financeira
@@ -75,18 +79,29 @@ def renderizar_holerite(nome: str, bruto: float, aliquota: float) -> None:
 
     # Engenharia de Layout Adaptativa
     string_titulo = f"{'DEMONSTRATIVO DE PAGAMENTO':^{largura_dinamica}}"
-    string_nome   = f" Colaborador: {nome}".ljust(largura_dinamica)
-    
+    string_nome = f" Colaborador: {nome}".ljust(largura_dinamica)
+
     # Alinhamento dos valores financeiros ajustados à nova largura dinâmica
-    string_bruto  = f" Vencimentos (Bruto):".ljust(largura_dinamica - len(str_bruto_valores)) + str_bruto_valores
-    string_inss   = f" Desconto INSS ({aliquota:>4.1f}%):".ljust(largura_dinamica - len(str_inss_valores)) + str_inss_valores
-    string_liq    = f" SALÁRIO LÍQUIDO:".ljust(largura_dinamica - len(str_liq_valores)) + str_liq_valores
+    string_bruto = (
+        f" Vencimentos (Bruto):".ljust(largura_dinamica - len(str_bruto_valores))
+        + str_bruto_valores
+    )
+    string_inss = (
+        f" Desconto INSS ({aliquota:>4.1f}%):".ljust(
+            largura_dinamica - len(str_inss_valores)
+        )
+        + str_inss_valores
+    )
+    string_liq = (
+        f" SALÁRIO LÍQUIDO:".ljust(largura_dinamica - len(str_liq_valores))
+        + str_liq_valores
+    )
 
     # Construção da Estrutura de Contorno (Unicode Box-Drawing)
     linha_horizontal = "─" * (largura_dinamica + 2)
-    linha_topo  = "╭" + linha_horizontal + "╮"
-    linha_meio  = "├" + linha_horizontal + "┤"
-    linha_base  = "╰" + linha_horizontal + "╯"
+    linha_topo = "╭" + linha_horizontal + "╮"
+    linha_meio = "├" + linha_horizontal + "┤"
+    linha_base = "╰" + linha_horizontal + "╯"
 
     # Saída Gráfica do Demonstrativo no Terminal
     print("\n" + linha_topo)
@@ -111,7 +126,7 @@ def main() -> None:
 
         # Geração do Artefato de Saída
         renderizar_holerite(nome, salario_bruto, aliquota_inss)
-        
+
     except KeyboardInterrupt:
         # Tratamento do encerramento forçado via terminal (Ctrl+C)
         print("\n\n [SISTEMA] Processo finalizado pelo operador. Desconectando...")

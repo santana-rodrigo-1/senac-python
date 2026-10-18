@@ -46,15 +46,19 @@ def obter_aliquota_inss() -> float:
             aliquota = float(entrada_higienizada)
             if ALIQUOTA_MINIMA <= aliquota <= ALIQUOTA_MAXIMA:
                 return aliquota
-            print(f" [ERRO] Alíquota fora do limite legal ({ALIQUOTA_MINIMA}% a {ALIQUOTA_MAXIMA}%).")
+            print(
+                f" [ERRO] Alíquota fora do limite legal ({ALIQUOTA_MINIMA}% a {ALIQUOTA_MAXIMA}%)."
+            )
         except ValueError:
-            print(" [ERRO] Entrada inválida. Utilize formato numérico (ex: 11 ou 11.5).")
+            print(
+                " [ERRO] Entrada inválida. Utilize formato numérico (ex: 11 ou 11.5)."
+            )
 
 
 def renderizar_holerite(nome: str, bruto: float, aliquota: float) -> None:
     """Realiza o processamento contábil e renderiza o layout final do holerite.
-    
-    A largura interna é controlada rigidamente por constantes para prevenir 
+
+    A largura interna é controlada rigidamente por constantes para prevenir
     erros de denteamento causados pela interpretação de caracteres Unicode.
     """
     # Regras de Negócio / Cálculos Contábeis
@@ -63,16 +67,18 @@ def renderizar_holerite(nome: str, bruto: float, aliquota: float) -> None:
 
     # Engenharia de Layout - Strings Internas com Largura Fixa Estrita (38 caracteres)
     string_titulo = f"{'DEMONSTRATIVO DE PAGAMENTO':^{LARGURA_INTERNA_CONTEUDO}}"
-    string_nome   = f" Colaborador: {nome:<25}"[:LARGURA_INTERNA_CONTEUDO].ljust(LARGURA_INTERNA_CONTEUDO)
-    string_bruto  = f" Vencimentos (Bruto):    R$ {bruto:>10.2f}"
-    string_inss   = f" Desconto INSS ({aliquota:>4.1f}%):  R$ {desconto_inss:>10.2f}"
-    string_liq    = f" SALÁRIO LÍQUIDO:        R$ {salario_liquido:>10.2f}"
+    string_nome = f" Colaborador: {nome:<25}"[:LARGURA_INTERNA_CONTEUDO].ljust(
+        LARGURA_INTERNA_CONTEUDO
+    )
+    string_bruto = f" Vencimentos (Bruto):    R$ {bruto:>10.2f}"
+    string_inss = f" Desconto INSS ({aliquota:>4.1f}%):  R$ {desconto_inss:>10.2f}"
+    string_liq = f" SALÁRIO LÍQUIDO:        R$ {salario_liquido:>10.2f}"
 
     # Construção da Estrutura de Contorno (Unicode Box-Drawing)
     linha_horizontal = "─" * (LARGURA_INTERNA_CONTEUDO + 2)
-    linha_topo  = "╭" + linha_horizontal + "╮"
-    linha_meio  = "├" + linha_horizontal + "┤"
-    linha_base  = "╰" + linha_horizontal + "╯"
+    linha_topo = "╭" + linha_horizontal + "╮"
+    linha_meio = "├" + linha_horizontal + "┤"
+    linha_base = "╰" + linha_horizontal + "╯"
 
     # Saída Gráfica do Demonstrativo no Terminal
     print("\n" + linha_topo)
@@ -97,7 +103,7 @@ def main() -> None:
 
         # Geração do Artefato de Saída
         renderizar_holerite(nome, salario_bruto, aliquota_inss)
-        
+
     except KeyboardInterrupt:
         # Tratamento do encerramento forçado via terminal (Ctrl+C)
         print("\n\n [SISTEMA] Processo finalizado pelo operador. Desconectando...")

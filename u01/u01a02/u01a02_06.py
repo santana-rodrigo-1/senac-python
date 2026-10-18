@@ -1,7 +1,7 @@
 # Conversor de moeda
 
-real = float (input(f"Digite o valor em Reais: "))
-cotacao = float (input(f"Digite a cotação: "))
+real = float(input(f"Digite o valor em Reais: "))
+cotacao = float(input(f"Digite a cotação: "))
 cotacao = real / cotacao
 
 print("\n" + "+" + "-" * 25 + "+" + "\n")
