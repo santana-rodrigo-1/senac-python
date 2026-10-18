@@ -5,7 +5,7 @@ print("==============================")
 candidatos = [
     {"numero": 1, "nome": "Ana", "votos": 0},
     {"numero": 2, "nome": "Bruno", "votos": 0},
-    {"numero": 3, "nome": "Carlos", "votos": 0}
+    {"numero": 3, "nome": "Carlos", "votos": 0},
 ]
 
 nulos = 0
