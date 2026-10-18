@@ -69,9 +69,7 @@ def consultar_quantidade():
 def excluir_cadastro():
 
     print()
-    resposta = input(
-        "Tem certeza que deseja excluir todos os produtos? (s/n): "
-    )
+    resposta = input("Tem certeza que deseja excluir todos os produtos? (s/n): ")
 
     if resposta.lower() == "s":
 
