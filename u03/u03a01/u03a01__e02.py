@@ -1,7 +1,7 @@
-'''
+"""
 Exercício2 —Calculadora JWC
 Solicite dois números.
-'''
+"""
 
 print()
 n1 = int(input("Digite o primeiro número: "))
@@ -13,7 +13,7 @@ multiplicacao = n1 * n2
 div = n1 / n2
 divint = n1 // n2
 resto = n1 % n2
-potencia = n1 ** n2
+potencia = n1**n2
 
 print()
 print(f"Soma: {soma}.")

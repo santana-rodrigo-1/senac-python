@@ -2,11 +2,13 @@ import os
 
 ARQUIVO = "teste.txt"
 
+
 def cadastrar():
     nome = input("Digite o nome a ser cadastrado: ")
     with open(ARQUIVO, "a", encoding="utf-8") as arquivo:
         arquivo.write(nome + "\n")
     print(f"Nome '{nome}' cadastrado com sucesso!")
+
 
 def listar():
     if not os.path.exists(ARQUIVO):
@@ -17,6 +19,8 @@ def listar():
         print("Nomes cadastrados:")
         for nome in nomes:
             print(nome.strip())
+
+
 def excluir():
     if os.path.exists(ARQUIVO):
         os.remove(ARQUIVO)
@@ -24,8 +28,9 @@ def excluir():
     else:
         print("Nenhum nome cadastrado ainda.")
 
+
 while True:
-    print("\nMenu de opções:")    
+    print("\nMenu de opções:")
     print("1. Cadastrar nome")
     print("2. Listar nomes")
     print("3. Excluir")

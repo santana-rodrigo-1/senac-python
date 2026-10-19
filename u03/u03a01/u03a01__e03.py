@@ -1,6 +1,6 @@
-'''
+"""
 Exercício3 —Sistema de aprovação
-'''
+"""
 
 nome = input("Digite seu nome: ").capitalize()
 n1 = float(input("Digite a primeira nota: "))

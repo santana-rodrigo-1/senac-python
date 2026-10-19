@@ -1,13 +1,14 @@
-'''
+"""
 Exercício4 —Processo seletivo JWCA JWC recebeu um candidato
 O programa deverá solicitar:
 
 Regras:
 O candidato passa para a próxima etapa se:
-•tiver 18 anos ou mais; 
-•tiver experiência; 
+•tiver 18 anos ou mais;
+•tiver experiência;
 •nota do teste for maior ou igual a 7.
-'''
+"""
+
 print()
 q1 = input("Digite nome: ").capitalize()
 q2 = int(input("Digite idade: "))

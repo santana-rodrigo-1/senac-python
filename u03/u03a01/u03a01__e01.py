@@ -1,4 +1,4 @@
-'''
+"""
 Exercício1 —Aquecimento
 "Cadastro do candidato JWC"
 Crie um programa que pergunte:
@@ -6,7 +6,7 @@ Crie um programa que pergunte:
 •Idade
 •Cidade
 •Linguagem de programação favorita
-'''
+"""
 
 print()
 
