@@ -1,20 +1,39 @@
 § criar site com venv
 
-python -m venv .venv ou python -m venv .virtual
+# criar ambiente virtual
+python -m venv .venv
+
+# liberar scripts (apenas uma vez no computador)
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
-.virtual/Script/activate
+
+# ativar ambiente
+.\.venv\Scripts\Activate
+
+# instalar Django
 pip install django
+
+# salvar dependências
 pip freeze > requirements.txt
+
+# abrir VS Code
 code .
+
+# criar projeto Django
 django-admin startproject core .
-python manage.py runserver
+
+# criar banco SQLite
 python manage.py migrate
+
+# criar usuário admin
 python manage.py createsuperuser
 
+# executar servidor
+python manage.py runserver
 
 
 § mudar idioma e fuso horário?
-no core/settings:
+
+no core/settings.py:
 
 LANGUAGE_CODE = 'pt-BR'
 
@@ -25,14 +44,32 @@ USE_I18N = True
 USE_TZ = True
 
 
-§ ver criar template?
+§ ver criação de templates
 
-§ aplicativo (app) é igual um  modulo ir no settings e add ele em installed apps
-§ html:5 ou ! em ambos depois enter
-§ estrutura de crud precisa de formulário
-§ ver o que é crud
-§ cadastrar aditar visualiuxae e excluir é o crud
+§ aplicativo (app) é como um módulo; adicionar em INSTALLED_APPS no settings.py
+
+§ html:5 ou ! e depois Enter
+
+§ estrutura CRUD precisa de formulário
+
+§ ver o que é CRUD
+
+§ cadastrar, editar, visualizar e excluir é o CRUD
+
 § pip install black
-§ método html get e post . VER
-§ git init , git status, git add, commit :(create, fix, etc), git push, ver (git remote add origin), git remote -v, git branck -m main, git push -u origin main.
-§ 
+
+§ método HTML GET e POST. VER
+
+§ Git:
+
+git init
+git status
+git add .
+git commit -m "create: mensagem"
+git push
+
+ver:
+git remote add origin
+git remote -v
+git branch -M main
+git push -u origin main
