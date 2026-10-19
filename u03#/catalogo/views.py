@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
 
 def home(request):
-    return HttpResponse("Caracol Engenharia")
+    return render(request, "catalogo/index.html")
+
+
+def escadas(request):
+    return render(request, "catalogo/escadas.html")
