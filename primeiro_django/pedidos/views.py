@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from primeiro_django.produtos.models import Produto
+from produtos.models import Produto
 
 def carrinho(request):
 

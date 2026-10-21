@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from primeiro_django.produtos.models import Produto, Categoria
+from produtos.models import Produto, Categoria
+
 
 def home(request):
     PRODUTOS = Produto.objects.all()
@@ -9,10 +10,10 @@ def home(request):
         "titulo": "Os melhores tênis para o seu estilo",
         "subtitulo": "Encontre seu próximo par.",
         "categorias": categorias,
-        "produtos": PRODUTOS
+        "produtos": PRODUTOS,
     }
     return render(request, "core/home.html", contexto)
 
+
 def sobre(request):
     return render(request, "core/sobre.html")
-

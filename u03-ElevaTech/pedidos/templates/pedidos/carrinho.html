@@ -1,21 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Carrinho</title>
-</head>
+{% block content %}
 
-<body>
+<div class="container">
 
-    <h1>Carrinho de Compras</h1>
+    <h1 class="mb-4">
+        Carrinho de Compras
+    </h1>
 
-    <p>Seu carrinho está vazio.</p>
+    <div class="card shadow border-0 rounded-4">
 
-    <a href="/produtos/">
-        Ver Catálogo
-    </a>
+        <div class="card-body">
 
-</body>
+            <h4>Seu carrinho está vazio</h4>
 
-</html>
+            <p class="text-muted">
+                Adicione elevadores ao pedido para continuar.
+            </p>
+
+            <a href="/produtos/" class="btn btn-primary">
+                Ver Catálogo
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
