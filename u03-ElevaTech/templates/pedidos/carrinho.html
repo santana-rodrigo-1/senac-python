@@ -1,173 +1,81 @@
-{% extends "core/base.html" %}
+<div class="col-lg-4">
 
-{% block content %}
+    <div class="card border-0 shadow rounded-4 sticky-top">
 
-<div class="container py-5">
+        <div class="card-body">
 
-    <div class="mb-4">
-        <h1 class="fw-bold text-primary">
-            Equipamentos Selecionados
-        </h1>
+            <h4 class="fw-bold mb-4">
+                Resumo do Pedido
+            </h4>
 
-        <p class="text-muted">
-            Revise os equipamentos antes de finalizar o pedido.
-        </p>
-    </div>
+            <div class="d-flex justify-content-between mb-2">
 
-    {% if produtos %}
+                <span>Produtos</span>
 
-    <div class="row">
-
-        <div class="col-lg-8">
-
-            {% for item in produtos %}
-
-            <div class="card border-0 shadow-sm rounded-4 mb-3">
-
-                <div class="card-body">
-
-                    <div class="row align-items-center g-3">
-
-                        <div class="col-md-2 text-center">
-
-                            {% if item.produto.imagem %}
-
-                            <img src="{{ item.produto.imagem.url }}" class="img-fluid rounded-4 shadow-sm"
-                                alt="{{ item.produto.nome }}">
-
-                            {% endif %}
-
-                        </div>
-
-                        <div class="col-md-4">
-
-                            <h5 class="fw-bold mb-1">
-                                {{ item.produto.nome }}
-                            </h5>
-
-                            <span class="badge bg-primary">
-                                {{ item.produto.categoria }}
-                            </span>
-
-                            <p class="text-muted small mt-2 mb-0">
-                                Solução profissional em mobilidade vertical.
-                            </p>
-
-                        </div>
-
-                        <div class="col-md-2 text-center">
-
-                            <small class="d-block text-muted mb-2">
-                                Quantidade
-                            </small>
-
-                            <div class="d-inline-flex align-items-center border rounded-pill">
-
-                                <a href="{% url 'remover_carrinho' item.produto.id %}" class="btn btn-light border-0">
-                                    −
-                                </a>
-
-                                <span class="px-3 fw-bold">
-                                    {{ item.quantidade }}
-                                </span>
-
-                                <a href="{% url 'adicionar_carrinho' item.produto.id %}" class="btn btn-light border-0">
-                                    +
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4 text-md-end">
-
-                            <small class="text-muted d-block">
-                                Subtotal
-                            </small>
-
-                            <h5 class="fw-bold text-success">
-                                R$ {{ item.subtotal|floatformat:2 }}
-                            </h5>
-
-                            <a href="{% url 'excluir_carrinho' item.produto.id %}"
-                                class="btn btn-outline-danger btn-sm">
-
-                                Remover
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <span>
+                    R$ {{ total|floatformat:2 }}
+                </span>
 
             </div>
 
-            {% endfor %}
+            <div class="d-flex justify-content-between mb-2">
+
+                <span>Frete</span>
+
+                <span>
+                    R$ 500,00
+                </span>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <strong>Total</strong>
+
+                <strong class="fs-4 text-primary">
+                    R$ {{ total|floatformat:2 }}
+                </strong>
+
+            </div>
+
+            <button class="btn btn-primary w-100">
+                Finalizar Compra
+            </button>
 
         </div>
 
-        <div class="col-lg-4">
+    </div>
 
-            <div class="card border-0 shadow rounded-4 sticky-top">
+</div>
 
-                <div class="card-body">
+</div>
 
-                    <h4 class="fw-bold mb-4">
-                        Resumo do Pedido
-                    </h4>
+{% else %}
 
-                    <div class="d-flex justify-content-between mb-2">
+<div class="card border-0 shadow-sm rounded-4">
 
-                        <span>Produtos</span>
+    <div class="card-body text-center py-5">
 
-                        <span>
-                            R$ {{ total|floatformat:2 }}
-                        </span>
+        <h3>
+            Seu carrinho está vazio
+        </h3>
 
-                    </div>
+        <p class="text-muted">
+            Adicione equipamentos ao pedido para continuar.
+        </p>
 
-                    <div class="d-flex justify-content-between mb-2">
+        <a href="{% url 'catalogo' %}" class="btn btn-primary">
+            Ver Catálogo
+        </a>
 
-                        <span>Frete</span>
+    </div>
 
-                        <span>
-                            R$ 500,00
-                        </span>
+</div>
 
-                    </div>
+{% endif %}
 
-                    <hr>
+</div>
 
-                    <div class="d-flex justify-content-between align-items-center">
-
-                        <strong>Total</strong>
-
-                        <strong class="fs-4 text-primary">
-                            R$ {{ total|floatformat:2 }}
-                        </strong>
-
-                        <h3>
-                            Seu carrinho está vazio
-                        </h3>
-
-                        <p class="text-muted">
-                            Adicione equipamentos ao pedido para continuar.
-                        </p>
-
-                        {% url 'catalogo' %}
-
-                        Ver Catálogo
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-                {% endif %}
-
-            </div>
-
-            {% endblock %}
+{% endblock %}
