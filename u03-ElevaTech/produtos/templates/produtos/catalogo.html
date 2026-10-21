@@ -1,1 +1,18 @@
-<h1>Catálogo ElevaTech</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>ElevaTech</title>
+</head>
+<body>
+
+<h1>Catálogo de Elevadores</h1>
+
+{% for produto in produtos %}
+    <p>{{ produto.nome }}</p>
+{% empty %}
+    <p>Nenhum produto cadastrado.</p>
+{% endfor %}
+
+</body>
+</html>
