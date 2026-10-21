@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from produtos.models import Produto, Categoria
+from primeiro_django.produtos.models import Produto, Categoria
 
 def home(request):
     PRODUTOS = Produto.objects.all()
