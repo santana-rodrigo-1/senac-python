@@ -1,0 +1,127 @@
+:root {
+    --laranja-marca: #ff6b35;
+    --grafite: #1a1a1a;
+    --grafite-medio: #2b2b2b;
+    --grafite-claro: #3a3a3a;
+    --texto-claro: #e8e8e8;
+    --texto-muted: #a0a0a0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    background: var(--grafite);
+    color: var(--texto-claro);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.titulo-secao {
+    font-size: 26px;
+    border-bottom: 3px solid var(--laranja-marca);
+    padding-bottom: 8px;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+/* Navbar */
+.navbar-marca {
+    background: #000 !important;
+}
+
+.marca {
+    color: var(--laranja-marca);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+}
+
+.marca span {
+    color: #fff;
+}
+
+/* Cards de elevador */
+.card-elevador {
+    background: var(--grafite-medio);
+    border: 1px solid var(--grafite-claro);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.card-elevador:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+}
+
+.card-elevador .card-img-top {
+    height: 220px;
+    object-fit: cover;
+    background: var(--grafite-claro);
+}
+
+.card-elevador .card-title {
+    color: #fff;
+}
+
+/* Ficha técnica */
+.ficha-tecnica {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-size: 0.9rem;
+}
+
+.ficha-tecnica dt {
+    color: var(--texto-muted);
+    font-weight: 500;
+}
+
+.ficha-tecnica dd {
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Badge de tipo */
+.badge-tipo {
+    background: var(--laranja-marca);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Botões */
+.btn-laranja {
+    background: var(--laranja-marca);
+    border-color: var(--laranja-marca);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-laranja:hover {
+    background: #e55a2b;
+    border-color: #e55a2b;
+    color: #fff;
+}
+
+/* Footer */
+.rodape {
+    background: #000;
+    color: var(--texto-muted);
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.rodape a {
+    color: var(--texto-muted);
+    text-decoration: none;
+}
+
+.rodape a:hover {
+    color: var(--laranja-marca);
+}
