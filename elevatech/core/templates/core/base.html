@@ -13,7 +13,6 @@
   <meta name="author" content="ElevaTech">
   <meta name="theme-color" content="#ff6b35">
 
-  <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ElevaTech">
   <meta property="og:locale" content="pt_BR">
@@ -46,22 +45,101 @@
       </button>
       <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Início</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'sobre' %}">Sobre</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'orcamento' %}">Orçamento</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+
           <li class="nav-item">
-            <a class="nav-link" href="/admin/" target="_blank" rel="noopener">
-              <i class="bi bi-person-lock" aria-hidden="true"></i> Admin
-            </a>
+            <a class="nav-link" href="{% url 'home' %}">Início</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'orcamento' %}">Orçamento</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#contato">Contato</a>
+          </li>
+
+          {% if user.is_authenticated %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle" aria-hidden="true"></i> {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+
+              <li>
+                <a class="dropdown-item" href="{% url 'meus_orcamentos' %}">
+                  <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus orçamentos
+                </a>
+              </li>
+
+              {% if user.is_staff %}
+              <li>
+                <a class="dropdown-item" href="{% url 'painel_lista' %}">
+                  <i class="bi bi-gear" aria-hidden="true"></i> Painel de elevadores
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/admin/" target="_blank" rel="noopener">
+                  <i class="bi bi-shield-lock" aria-hidden="true"></i> Admin Django
+                </a>
+              </li>
+              {% endif %}
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">
+                    <i class="bi bi-box-arrow-right" aria-hidden="true"></i> Sair
+                  </button>
+                </form>
+              </li>
+
+            </ul>
+          </li>
+
+          {% else %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Entrar</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Cadastrar</a>
+          </li>
+
+          {% endif %}
+
         </ul>
       </div>
     </div>
   </nav>
 
   <main id="conteudo-principal">
+    {% if messages %}
+    <div class="container messages-container mt-3">
+      {% for message in messages %}
+      <div class="alert alert-msg alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <i class="bi bi-{% if message.tags == 'success' %}check-circle-fill{% elif message.tags == 'error' %}exclamation-triangle-fill{% elif message.tags == 'warning' %}exclamation-circle-fill{% else %}info-circle-fill{% endif %}"
+          aria-hidden="true"></i>
+        <span>{{ message }}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% block content %}{% endblock %}
   </main>
 
@@ -96,6 +174,13 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     })();
+  </script>
+  <script>
+    document.querySelectorAll('.alert-msg').forEach(function (el) {
+      setTimeout(function () {
+        bootstrap.Alert.getOrCreateInstance(el).close();
+      }, 6000);
+    });
   </script>
   {% block extra_js %}{% endblock %}
 </body>

@@ -263,3 +263,77 @@ h6 {
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+
+/* ============ Banner de mensagens (Django messages) ============ */
+.messages-container {
+    max-width: 900px;
+}
+
+.alert-msg {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1rem 1.25rem;
+    border: none;
+    border-left: 4px solid;
+    border-radius: 10px;
+    background: var(--grafite-medio);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+    animation: msgSlideIn .35s ease-out;
+}
+
+.alert-msg > i {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.alert-msg > span {
+    flex: 1;
+}
+
+.alert-msg .btn-close {
+    filter: invert(1);
+    opacity: .55;
+    flex-shrink: 0;
+}
+
+.alert-msg .btn-close:hover {
+    opacity: 1;
+}
+
+/* Cores por tipo de mensagem */
+.alert-msg.alert-success {
+    border-left-color: #2ecc71;
+    background: linear-gradient(135deg, var(--grafite-medio), rgba(46, 204, 113, .14));
+}
+.alert-msg.alert-success > i { color: #2ecc71; }
+
+.alert-msg.alert-error {
+    border-left-color: #e74c3c;
+    background: linear-gradient(135deg, var(--grafite-medio), rgba(231, 76, 60, .14));
+}
+.alert-msg.alert-error > i { color: #e74c3c; }
+
+.alert-msg.alert-warning {
+    border-left-color: var(--laranja-marca);
+    background: linear-gradient(135deg, var(--grafite-medio), rgba(255, 107, 53, .14));
+}
+.alert-msg.alert-warning > i { color: var(--laranja-marca); }
+
+.alert-msg.alert-info {
+    border-left-color: #3498db;
+    background: linear-gradient(135deg, var(--grafite-medio), rgba(52, 152, 219, .14));
+}
+.alert-msg.alert-info > i { color: #3498db; }
+
+@keyframes msgSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

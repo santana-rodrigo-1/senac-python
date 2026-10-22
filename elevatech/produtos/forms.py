@@ -2,11 +2,12 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
-from .models import SolicitacaoOrcamento
+from .models import SolicitacaoOrcamento, Elevador
 
 # ----------------------------------------------------------------------------
-# Normalização e validação de telefone brasileiro
+# Validação de telefone BR
 # ----------------------------------------------------------------------------
 
 
@@ -15,27 +16,14 @@ def _digitos(valor: str) -> str:
 
 
 def normalizar_telefone_br(valor: str) -> str:
-    """
-    Aceita:
-        (21) 90000-0000
-        21 90000-0000
-        21900000000
-        +55 21 90000-0000
-        (21) 3000-1234       (fixo)
-    Retorna sempre:
-        "(21) 90000-0000"    (celular - 11 dígitos)
-        "(21) 3000-1234"     (fixo    - 10 dígitos)
-    Levanta ValidationError se não for um telefone brasileiro válido.
-    """
     digitos = _digitos(valor)
 
-    # remove +55 se vier colado
     if digitos.startswith("55") and len(digitos) > 11:
         digitos = digitos[2:]
 
     if len(digitos) not in (10, 11):
         raise ValidationError(
-            "Informe um telefone com DDD (10 ou 11 dígitos). " "Ex.: (21) 90000-0000."
+            "Informe um telefone com DDD (10 ou 11 dígitos). Ex.: (21) 90000-0000."
         )
 
     ddd = int(digitos[:2])
@@ -43,18 +31,15 @@ def normalizar_telefone_br(valor: str) -> str:
         raise ValidationError("DDD inválido. Use um DDD entre 11 e 99.")
 
     if len(digitos) == 11:
-        # celular: 9XXXX-XXXX
         if digitos[2] != "9":
             raise ValidationError(
                 "Celular deve começar com 9 após o DDD. Ex.: (21) 90000-0000."
             )
         return f"({digitos[:2]}) {digitos[2:7]}-{digitos[7:]}"
 
-    # fixo: XXXX-XXXX começando com 2, 3, 4 ou 5
     if digitos[2] not in "2345":
         raise ValidationError(
-            "Telefone fixo deve começar com 2, 3, 4 ou 5 após o DDD. "
-            "Ex.: (21) 3000-1234."
+            "Telefone fixo deve começar com 2, 3, 4 ou 5 após o DDD. Ex.: (21) 3000-1234."
         )
     return f"({digitos[:2]}) {digitos[2:6]}-{digitos[6:]}"
 
@@ -98,15 +83,12 @@ class OrcamentoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # aplica a classe CSS padrão de cada campo
         for campo in self.fields.values():
             eh_select = isinstance(campo.widget, forms.Select)
             classe = "form-select" if eh_select else "form-control"
             atuais = campo.widget.attrs.get("class", "")
             if classe not in atuais:
                 campo.widget.attrs["class"] = f"{atuais} {classe}".strip()
-
         self.fields["elevador"].empty_label = (
             "Orçamento geral (nenhum modelo específico)"
         )
@@ -122,8 +104,6 @@ class OrcamentoForm(forms.ModelForm):
                             classes + " is-invalid"
                         ).strip()
         return ok
-
-    # ---- validações específicas ----
 
     def clean_nome(self):
         nome = (self.cleaned_data.get("nome") or "").strip()
@@ -157,3 +137,70 @@ class OrcamentoForm(forms.ModelForm):
                 "Se for escrever uma mensagem, use pelo menos 10 caracteres."
             )
         return msg
+
+
+# ----------------------------------------------------------------------------
+# Formulário do painel de elevadores (staff)
+# ----------------------------------------------------------------------------
+
+
+class ElevadorForm(forms.ModelForm):
+    class Meta:
+        model = Elevador
+        fields = [
+            "nome",
+            "slug",
+            "tipo",
+            "categoria",
+            "descricao_curta",
+            "descricao",
+            "capacidade_kg",
+            "velocidade",
+            "pavimentos",
+            "imagem",
+            "imagem_secundaria",
+            "destaque",
+            "ativo",
+        ]
+        widgets = {
+            "nome": forms.TextInput(attrs={"class": "form-control"}),
+            "slug": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "preenchido automaticamente se vazio",
+                }
+            ),
+            "tipo": forms.Select(attrs={"class": "form-select"}),
+            "categoria": forms.Select(attrs={"class": "form-select"}),
+            "descricao_curta": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Uma frase (máx. 200 caracteres)",
+                }
+            ),
+            "descricao": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 5,
+                    "placeholder": "Descrição completa do elevador",
+                }
+            ),
+            "capacidade_kg": forms.NumberInput(attrs={"class": "form-control"}),
+            "velocidade": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                }
+            ),
+            "pavimentos": forms.NumberInput(attrs={"class": "form-control"}),
+            "imagem": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "imagem_secundaria": forms.ClearableFileInput(
+                attrs={"class": "form-control"}
+            ),
+        }
+
+    def clean_slug(self):
+        slug = (self.cleaned_data.get("slug") or "").strip()
+        if not slug:
+            slug = slugify(self.cleaned_data.get("nome", ""))
+        return slug

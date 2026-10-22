@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Categoria(models.Model):
@@ -59,6 +60,15 @@ class SolicitacaoOrcamento(models.Model):
         EM_ANALISE = "analise", "Em análise"
         RESPONDIDO = "respondido", "Respondido"
         FECHADO = "fechado", "Fechado"
+
+    usuario = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="orcamentos",
+        help_text="Preenchido automaticamente quando o cliente está logado.",
+    )
 
     elevador = models.ForeignKey(
         Elevador,

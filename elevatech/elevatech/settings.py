@@ -1,29 +1,11 @@
-import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- Segurança / ambiente ---
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-dev-key-troque-em-producao-123456",
-)
+SECRET_KEY = "django-insecure-dev-key-troque-em-producao-123456"
+DEBUG = True
+ALLOWED_HOSTS = []
 
-DEBUG = os.environ.get("DEBUG", "True").lower() in ("1", "true", "yes")
-
-ALLOWED_HOSTS = [
-    h.strip()
-    for h in os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-    if h.strip()
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if o.strip()
-]
-
-# --- Apps ---
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -37,7 +19,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   # <-- NOVO
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -78,25 +59,14 @@ TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
 
-# --- Estáticos e mídia ---
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"          # <-- NOVO (destino do collectstatic)
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# --- Segurança em produção (só roda quando DEBUG=False) ---
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
 
-# Arquivos enviados por usuários (imagens dos elevadores)
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# --- Login / logout ---
+LOGIN_URL = "login"  # para onde mandar quem não está logado
+LOGIN_REDIRECT_URL = "home"  # para onde ir após login
+LOGOUT_REDIRECT_URL = "home"  # para onde ir após logout
