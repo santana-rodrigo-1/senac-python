@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            {% if produto.imagem %}
+
+            <img
+                src="{{ produto.imagem.url }}"
+                class="img-fluid rounded shadow">
+
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-6">
+
+            <h1>
+                {{ produto.nome }}
+            </h1>
+
+            <p class="text-muted">
+                {{ produto.categoria }}
+            </p>
+
+            <h2 class="text-primary mb-4">
+                R$ {{ produto.preco }}
+            </h2>
+
+            <p>
+                {{ produto.descricao }}
+            </p>
+
+            <button class="btn btn-primary btn-lg">
+                Adicionar ao Carrinho
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
