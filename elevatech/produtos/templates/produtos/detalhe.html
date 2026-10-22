@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ elevador.nome }} — ElevaTech{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb small mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" style="color: var(--laranja-marca); text-decoration: none;">Início</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'catalogo' %}"
+                        style="color: var(--laranja-marca); text-decoration: none;">Catálogo</a>
+                </li>
+                <li class="breadcrumb-item active" style="color: var(--texto-muted);">{{ elevador.nome }}</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                {% if elevador.imagem %}
+                <img src="{{ elevador.imagem.url }}" class="img-fluid rounded shadow-sm" alt="{{ elevador.nome }}"
+                    style="width: 100%; max-height: 480px; object-fit: cover;">
+                {% else %}
+                <div class="rounded d-flex align-items-center justify-content-center"
+                    style="height: 400px; background: var(--grafite-medio);">
+                    <i class="bi bi-buildings" style="font-size: 6rem; color: var(--texto-muted);"></i>
+                </div>
+                {% endif %}
+
+                {% if elevador.imagem_secundaria %}
+                <img src="{{ elevador.imagem_secundaria.url }}" class="img-fluid rounded mt-3"
+                    alt="{{ elevador.nome }} — detalhe">
+                {% endif %}
+            </div>
+
+            <div class="col-lg-5">
+                <span class="badge badge-tipo mb-3">{{ elevador.get_tipo_display }}</span>
+                <h1 class="mb-3" style="color: #fff;">{{ elevador.nome }}</h1>
+                <p class="lead mb-4" style="color: #c8c8c8;">{{ elevador.descricao_curta }}</p>
+
+                <div class="p-4 rounded mb-4" style="background: var(--grafite-medio);">
+                    <h2 class="h6 text-uppercase mb-3" style="color: var(--laranja-marca); letter-spacing: 1px;">
+                        Ficha técnica
+                    </h2>
+                    <dl class="ficha-tecnica mb-0">
+                        <dt>Categoria</dt>
+                        <dd>{{ elevador.categoria.nome }}</dd>
+                        <dt>Tipo</dt>
+                        <dd>{{ elevador.get_tipo_display }}</dd>
+                        <dt>Capacidade</dt>
+                        <dd>{{ elevador.capacidade_kg }} kg</dd>
+                        <dt>Velocidade</dt>
+                        <dd>{{ elevador.velocidade }} m/s</dd>
+                        <dt>Pavimentos</dt>
+                        <dd>Até {{ elevador.pavimentos }} paradas</dd>
+                    </dl>
+                </div>
+
+                <a href="{% url 'orcamento' %}?elevador={{ elevador.pk }}" class="btn btn-laranja btn-lg w-100 mb-2">
+                    <i class="bi bi-envelope-paper"></i> Solicitar orçamento
+                </a>
+                <a href="{% url 'catalogo' %}" class="btn btn-outline-light w-100">
+                    <i class="bi bi-arrow-left"></i> Voltar ao catálogo
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="titulo-secao">Sobre este elevador</h2>
+            <div style="color: #c8c8c8; max-width: 75ch;">
+                {{ elevador.descricao|linebreaks }}
+            </div>
+        </div>
+
+        {% if relacionados %}
+        <div class="mt-5">
+            <h2 class="titulo-secao">Modelos relacionados</h2>
+            <div class="row g-4">
+                {% for rel in relacionados %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card card-elevador h-100">
+                        {% if rel.imagem %}
+                        <img src="{{ rel.imagem.url }}" class="card-img-top" alt="{{ rel.nome }}">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center">
+                            <i class="bi bi-buildings" style="font-size: 4rem; color: var(--texto-muted);"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge badge-tipo align-self-start mb-2">{{ rel.get_tipo_display }}</span>
+                            <h3 class="card-title h6">{{ rel.nome }}</h3>
+                            <p class="small mb-3" style="color: var(--texto-muted);">
+                                {{ rel.descricao_curta }}
+                            </p>
+                            <a href="{{ rel.get_absolute_url }}" class="btn btn-outline-light btn-sm mt-auto">
+                                Ver detalhes
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
