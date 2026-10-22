@@ -127,3 +127,7 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Arquivos enviados por usuários (imagens dos elevadores)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
