@@ -236,3 +236,30 @@ h6 {
     text-align: center;
   }
 }
+
+/* ============ Estados de erro do formulário ============ */
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: #dc3545 !important;
+  background-image: none;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.invalid-feedback.d-block {
+  color: #f7a0a8;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ícone vermelho ao lado do campo com erro (opcional, fica bonito) */
+.form-control.is-invalid {
+  padding-right: calc(1.5em + 0.75rem);
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}

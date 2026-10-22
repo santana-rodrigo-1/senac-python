@@ -2,6 +2,8 @@
 
 {% block title %}Solicitar orçamento — ElevaTech{% endblock %}
 
+{% block description %}Solicite um orçamento de elevador ElevaTech. Resposta em até 1 dia útil.{% endblock %}
+
 {% block content %}
 <section class="py-5">
     <div class="container" style="max-width: 820px;">
@@ -26,32 +28,44 @@
                     <div class="form-text" style="color: var(--texto-muted);">
                         Deixe em branco para um orçamento geral.
                     </div>
+                    {% if form.elevador.errors %}
+                    <div class="invalid-feedback d-block">{{ form.elevador.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label form-label-escuro" for="{{ form.nome.id_for_label }}">Nome</label>
                     {{ form.nome }}
-                    {% if form.nome.errors %}<div class="text-danger small">{{ form.nome.errors.0 }}</div>{% endif %}
+                    {% if form.nome.errors %}
+                    <div class="invalid-feedback d-block">{{ form.nome.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label form-label-escuro" for="{{ form.email.id_for_label }}">E-mail</label>
                     {{ form.email }}
-                    {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors.0 }}</div>{% endif %}
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label form-label-escuro" for="{{ form.telefone.id_for_label }}">Telefone</label>
                     {{ form.telefone }}
-                    {% if form.telefone.errors %}<div class="text-danger small">{{ form.telefone.errors.0 }}</div>{%
-                    endif %}
+                    <div class="form-text" style="color: var(--texto-muted);">
+                        Com DDD. Ex.: (21) 90000-0000 (celular) ou (21) 3000-1234 (fixo).
+                    </div>
+                    {% if form.telefone.errors %}
+                    <div class="invalid-feedback d-block">{{ form.telefone.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label form-label-escuro" for="{{ form.cidade.id_for_label }}">Cidade</label>
                     {{ form.cidade }}
-                    {% if form.cidade.errors %}<div class="text-danger small">{{ form.cidade.errors.0 }}</div>{% endif
-                    %}
+                    {% if form.cidade.errors %}
+                    <div class="invalid-feedback d-block">{{ form.cidade.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-md-6">
@@ -59,8 +73,9 @@
                         Nº de pavimentos do prédio
                     </label>
                     {{ form.pavimentos }}
-                    {% if form.pavimentos.errors %}<div class="text-danger small">{{ form.pavimentos.errors.0 }}</div>{%
-                    endif %}
+                    {% if form.pavimentos.errors %}
+                    <div class="invalid-feedback d-block">{{ form.pavimentos.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12">
@@ -68,9 +83,12 @@
                         Mensagem (opcional)
                     </label>
                     {{ form.mensagem }}
+                    {% if form.mensagem.errors %}
+                    <div class="invalid-feedback d-block">{{ form.mensagem.errors.0 }}</div>
+                    {% endif %}
                 </div>
 
-                <div class="col-12 d-flex gap-2 mt-2">
+                <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
                     <button type="submit" class="btn btn-laranja">
                         <i class="bi bi-send"></i> Enviar solicitação
                     </button>
@@ -80,4 +98,39 @@
         </form>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    (function () {
+        const tel = document.getElementById("{{ form.telefone.id_for_label }}");
+        if (!tel) return;
+
+        function formatar(valor) {
+            const d = valor.replace(/\D/g, "").slice(0, 11);
+            if (!d) return "";
+            if (d.length <= 2) return "(" + d;
+            if (d.length <= 6) return "(" + d.slice(0, 2) + ") " + d.slice(2);
+            if (d.length <= 10) {
+                return "(" + d.slice(0, 2) + ") " + d.slice(2, 6) + "-" + d.slice(6);
+            }
+            return "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
+        }
+
+        tel.addEventListener("input", function () {
+            const pos = this.selectionStart;
+            const antes = this.value.length;
+            this.value = formatar(this.value);
+            // reposiciona o cursor no fim quando o usuário digita no meio
+            const diff = this.value.length - antes;
+            if (diff !== 0 && pos !== null) {
+                this.setSelectionRange(pos + diff, pos + diff);
+            }
+        });
+
+        tel.addEventListener("blur", function () {
+            this.value = formatar(this.value);
+        });
+    })();
+</script>
 {% endblock %}

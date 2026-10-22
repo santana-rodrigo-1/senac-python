@@ -2,6 +2,9 @@
 
 {% block title %}{{ elevador.nome }} — ElevaTech{% endblock %}
 
+{% block description %}{{ elevador.descricao_curta }} — {{ elevador.capacidade_kg }} kg, {{ elevador.velocidade }} m/s,
+até {{ elevador.pavimentos }} pavimentos.{% endblock %}
+
 {% block content %}
 <section class="py-5">
     <div class="container">
