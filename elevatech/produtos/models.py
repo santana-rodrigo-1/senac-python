@@ -34,7 +34,7 @@ class Elevador(models.Model):
         max_digits=4, decimal_places=2, help_text="Velocidade em m/s"
     )
     pavimentos = models.PositiveIntegerField(help_text="Nº máximo de paradas")
-    imagem = models.ImageField(upload_to="elevadores/")
+    imagem = models.ImageField(upload_to="elevadores/", blank=True, null=True)
     imagem_secundaria = models.ImageField(
         upload_to="elevadores/", blank=True, null=True
     )
