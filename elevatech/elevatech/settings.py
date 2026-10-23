@@ -71,3 +71,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"  # para onde mandar quem não está logado
 LOGIN_REDIRECT_URL = "home"  # para onde ir após login
 LOGOUT_REDIRECT_URL = "home"  # para onde ir após logout
+
+
+# E-mail no console (para desenvolvimento e apresentação)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'contato@elevatech.com.br'

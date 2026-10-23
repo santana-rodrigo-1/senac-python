@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-# ATUALIZADO: Incluído Pedido e ItemPedido na importação do topo
 from .models import Categoria, Elevador, SolicitacaoOrcamento, Pedido, ItemPedido
+
 
 # =============================================================
 # Branding global do admin (aparece no topo e no título da aba)
@@ -32,14 +32,8 @@ class CategoriaAdmin(admin.ModelAdmin):
 @admin.register(Elevador)
 class ElevadorAdmin(admin.ModelAdmin):
     list_display = (
-        "nome",
-        "tipo_badge",
-        "categoria",
-        "capacidade_kg",
-        "velocidade",
-        "destaque_badge",
-        "ativo_badge",
-        "criado_em",
+        "nome", "tipo_badge", "categoria", "capacidade_kg",
+        "velocidade", "preco", "destaque_badge", "ativo_badge", "criado_em",
     )
     list_filter = ("tipo", "categoria", "destaque", "ativo")
     search_fields = ("nome", "slug", "descricao_curta", "descricao")
@@ -48,14 +42,21 @@ class ElevadorAdmin(admin.ModelAdmin):
     list_per_page = 20
     date_hierarchy = "criado_em"
     fieldsets = (
-        ("Identificação", {"fields": ("nome", "slug", "tipo", "categoria")}),
-        ("Descrição", {"fields": ("descricao_curta", "descricao")}),
-        (
-            "Especificações técnicas",
-            {"fields": ("capacidade_kg", "velocidade", "pavimentos")},
-        ),
-        ("Imagens", {"fields": ("imagem", "imagem_secundaria")}),
-        ("Visibilidade", {"fields": ("destaque", "ativo", "criado_em")}),
+        ("Identificação", {
+            "fields": ("nome", "slug", "tipo", "categoria")
+        }),
+        ("Descrição", {
+            "fields": ("descricao_curta", "descricao")
+        }),
+        ("Especificações técnicas", {
+            "fields": ("capacidade_kg", "velocidade", "pavimentos", "preco")
+        }),
+        ("Imagens", {
+            "fields": ("imagem", "imagem_secundaria")
+        }),
+        ("Visibilidade", {
+            "fields": ("destaque", "ativo", "criado_em")
+        }),
     )
 
     @admin.display(description="Tipo", ordering="tipo")
@@ -69,8 +70,7 @@ class ElevadorAdmin(admin.ModelAdmin):
         return format_html(
             '<span style="background:{};color:#fff;padding:3px 9px;'
             'border-radius:10px;font-size:11px;font-weight:600;">{}</span>',
-            cor,
-            obj.get_tipo_display(),
+            cor, obj.get_tipo_display(),
         )
 
     @admin.display(description="Destaque", boolean=True)
@@ -88,13 +88,8 @@ class ElevadorAdmin(admin.ModelAdmin):
 @admin.register(SolicitacaoOrcamento)
 class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
-        "id_link",
-        "nome",
-        "elevador",
-        "telefone",
-        "cidade",
-        "status_badge",
-        "criado_em",
+        "id_link", "nome", "elevador", "telefone",
+        "cidade", "status_badge", "criado_em",
     )
     list_filter = ("status", "elevador__tipo", "criado_em")
     search_fields = ("nome", "email", "telefone", "cidade")
@@ -103,9 +98,15 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     date_hierarchy = "criado_em"
     list_select_related = ("elevador", "usuario")
     fieldsets = (
-        ("Solicitante", {"fields": ("nome", "email", "telefone", "cidade", "usuario")}),
-        ("Sobre o projeto", {"fields": ("elevador", "pavimentos", "mensagem")}),
-        ("Atendimento", {"fields": ("status", "criado_em")}),
+        ("Solicitante", {
+            "fields": ("nome", "email", "telefone", "cidade", "usuario")
+        }),
+        ("Sobre o projeto", {
+            "fields": ("elevador", "pavimentos", "mensagem")
+        }),
+        ("Atendimento", {
+            "fields": ("status", "criado_em")
+        }),
     )
 
     @admin.display(description="#", ordering="id")
@@ -124,13 +125,12 @@ class SolicitacaoAdmin(admin.ModelAdmin):
         return format_html(
             '<span style="background:{};color:#fff;padding:3px 9px;'
             'border-radius:10px;font-size:11px;font-weight:600;">{}</span>',
-            cor,
-            obj.get_status_display(),
+            cor, obj.get_status_display(),
         )
 
 
 # =============================================================
-# Configuração de Pedidos (Inlines e ModelAdmin)
+# Pedidos (Carrinho)
 # =============================================================
 class ItemInline(admin.TabularInline):
     model = ItemPedido

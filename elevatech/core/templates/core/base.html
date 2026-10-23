@@ -39,35 +39,41 @@
       <a class="navbar-brand marca" href="{% url 'home' %}" aria-label="ElevaTech — página inicial">
         <i class="bi bi-buildings" aria-hidden="true"></i> Eleva<span>Tech</span>
       </a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu"
         aria-expanded="false" aria-label="Abrir menu">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="menu">
-        <ul class="navbar-nav ms-auto">
 
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+
+          <!-- Links de Navegação -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Início</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}#contato">Contato</a>
           </li>
 
+          <!-- Linha divisória elegante (só aparece no PC) -->
+          <li class="nav-item d-none d-lg-block mx-3"
+            style="border-left: 1px solid rgba(255,255,255,0.2); height: 20px;"></li>
+
+          <!-- Ações do Usuário -->
           <li class="nav-item">
-            <a class="nav-link position-relative" href="{% url 'carrinho_ver' %}">
-              <i class="bi bi-cart3" aria-hidden="true"></i> Carrinho
+            <a class="nav-link d-flex align-items-center gap-2" href="{% url 'carrinho_ver' %}">
+              <i class="bi bi-cart3" aria-hidden="true"></i>
+              <span>Carrinho</span>
               {% if carrinho_quantidade %}
-              <span class="badge bg-warning text-dark rounded-pill position-absolute top-0 start-100 translate-middle"
-                style="font-size: 10px;">
+              <span class="badge rounded-pill"
+                style="background-color: var(--laranja-marca); color: #fff; font-size: 11px;">
                 {{ carrinho_quantidade }}
               </span>
               {% endif %}
@@ -75,35 +81,29 @@
           </li>
 
           {% if user.is_authenticated %}
-
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown ms-lg-2">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-person-circle" aria-hidden="true"></i> {{ user.username }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-
               <li>
                 <a class="dropdown-item" href="{% url 'orcamento' %}">
                   <i class="bi bi-envelope-paper" aria-hidden="true"></i> Solicitar orçamento
                 </a>
               </li>
-
               <li>
                 <hr class="dropdown-divider">
               </li>
-
               <li>
                 <a class="dropdown-item" href="{% url 'meus_orcamentos' %}">
                   <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus orçamentos
                 </a>
               </li>
-
               <li>
                 <a class="dropdown-item" href="{% url 'meus_pedidos' %}">
                   <i class="bi bi-box" aria-hidden="true"></i> Meus pedidos
                 </a>
               </li>
-
               {% if user.is_staff %}
               <li>
                 <hr class="dropdown-divider">
@@ -119,11 +119,9 @@
                 </a>
               </li>
               {% endif %}
-
               <li>
                 <hr class="dropdown-divider">
               </li>
-
               <li>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                   {% csrf_token %}
@@ -132,16 +130,14 @@
                   </button>
                 </form>
               </li>
-
             </ul>
           </li>
-
           {% else %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Entrar</a>
+          <li class="nav-item ms-lg-2">
+            <a class="nav-link" href="{% url 'login' %}">
+              <i class="bi bi-box-arrow-in-right"></i> Entrar
+            </a>
           </li>
-
           {% endif %}
 
         </ul>

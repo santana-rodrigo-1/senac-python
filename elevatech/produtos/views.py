@@ -2,27 +2,22 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from functools import wraps
-
-from .models import Categoria, Elevador, SolicitacaoOrcamento
-from .forms import OrcamentoForm, ElevadorForm
-
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from django.http import HttpResponseForbidden
-from . import carrinho as cart
-from .forms import OrcamentoForm, ElevadorForm, CheckoutForm
-from .models import (
-    Categoria,
-    Elevador,
-    SolicitacaoOrcamento,
-    Pedido,
-    ItemPedido,
-)
+from django.core.mail import send_mail  # <-- IMPORT ADICIONADO
 
+from .models import Categoria, Elevador, SolicitacaoOrcamento, Pedido, ItemPedido
+from .forms import OrcamentoForm, ElevadorForm, CheckoutForm
+from . import carrinho as cart
+
+# =============================================================
+# Catálogo e Detalhes
+# =============================================================
 
 def catalogo(request):
     elevadores = Elevador.objects.filter(ativo=True)
+    todos_nomes = Elevador.objects.filter(ativo=True).values_list("nome", flat=True).order_by("nome")
 
     tipo = request.GET.get("tipo", "").strip()
     categoria_slug = request.GET.get("categoria", "").strip()
@@ -37,34 +32,31 @@ def catalogo(request):
             Q(nome__icontains=busca) | Q(descricao_curta__icontains=busca)
         )
 
-    return render(
-        request,
-        "produtos/catalogo.html",
-        {
-            "elevadores": elevadores,
-            "categorias": Categoria.objects.all(),
-            "tipos": Elevador.Tipo.choices,
-            "tipo_atual": tipo,
-            "categoria_atual": categoria_slug,
-            "busca": busca,
-        },
-    )
+    return render(request, "produtos/catalogo.html", {
+        "elevadores": elevadores,
+        "categorias": Categoria.objects.all(),
+        "tipos": Elevador.Tipo.choices,
+        "todos_nomes": todos_nomes,
+        "tipo_atual": tipo,
+        "categoria_atual": categoria_slug,
+        "busca": busca,
+    })
 
 
 def detalhe(request, slug):
     elevador = get_object_or_404(Elevador, slug=slug, ativo=True)
-    relacionados = Elevador.objects.filter(
-        ativo=True, categoria=elevador.categoria
-    ).exclude(pk=elevador.pk)[:3]
-    return render(
-        request,
-        "produtos/detalhe.html",
-        {
-            "elevador": elevador,
-            "relacionados": relacionados,
-        },
+    relacionados = (
+        Elevador.objects.filter(ativo=True, categoria=elevador.categoria)
+        .exclude(pk=elevador.pk)[:3]
     )
+    return render(request, "produtos/detalhe.html", {
+        "elevador": elevador,
+        "relacionados": relacionados,
+    })
 
+# =============================================================
+# Orçamento
+# =============================================================
 
 def orcamento(request):
     if request.method == "POST":
@@ -74,10 +66,21 @@ def orcamento(request):
             if request.user.is_authenticated:
                 solicitacao.usuario = request.user
             solicitacao.save()
+
+            # --- INÍCIO DO E-MAIL DE ORÇAMENTO ---
+            send_mail(
+                f"[ElevaTech] Novo Orçamento #{solicitacao.pk}",
+                f"Cliente: {solicitacao.nome}\nE-mail: {solicitacao.email}\nTelefone: {solicitacao.telefone}\nCidade: {solicitacao.cidade}\nPavimentos: {solicitacao.pavimentos}\nMensagem: {solicitacao.mensagem}",
+                'contato@elevatech.com.br',
+                ['vendas@elevatech.com.br'],
+                fail_silently=True,
+            )
+            # --- FIM DO E-MAIL DE ORÇAMENTO ---
+
             messages.success(
                 request,
                 f"Orçamento #{solicitacao.pk} enviado! "
-                f"Entraremos em contato em até 1 dia útil.",
+                f"Entraremos em contato em até 1 dia útil."
             )
             return redirect("catalogo")
 
@@ -94,97 +97,8 @@ def orcamento(request):
 
     return render(request, "produtos/orcamento.html", {"form": form})
 
-
 # =============================================================
-# Painel de elevadores — só para staff
-# =============================================================
-
-
-def staff_required(view_func):
-    """
-    Exige login + is_staff.
-    - Não logado → redireciona para tela de login
-    - Logado mas não staff → home com mensagem de erro
-    - Staff → executa a view
-    """
-
-    @login_required
-    @wraps(view_func)
-    def wrapper(request, *args, **kwargs):
-        if not request.user.is_staff:
-            messages.error(request, "Acesso restrito à equipe ElevaTech.")
-            return redirect("home")
-        return view_func(request, *args, **kwargs)
-
-    return wrapper
-
-
-@staff_required
-def painel_lista(request):
-    elevadores = Elevador.objects.all().order_by("nome")
-    return render(request, "produtos/painel/lista.html", {"elevadores": elevadores})
-
-
-@staff_required
-def painel_novo(request):
-    if request.method == "POST":
-        form = ElevadorForm(request.POST, request.FILES)
-        if form.is_valid():
-            elevador = form.save()
-            messages.success(request, f"Elevador '{elevador.nome}' criado!")
-            return redirect("painel_lista")
-    else:
-        form = ElevadorForm()
-    return render(
-        request,
-        "produtos/painel/form.html",
-        {
-            "form": form,
-            "modo": "novo",
-        },
-    )
-
-
-@staff_required
-def painel_editar(request, slug):
-    elevador = get_object_or_404(Elevador, slug=slug)
-    if request.method == "POST":
-        form = ElevadorForm(request.POST, request.FILES, instance=elevador)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Elevador '{elevador.nome}' atualizado!")
-            return redirect("painel_lista")
-    else:
-        form = ElevadorForm(instance=elevador)
-    return render(
-        request,
-        "produtos/painel/form.html",
-        {
-            "form": form,
-            "modo": "editar",
-            "elevador": elevador,
-        },
-    )
-
-
-@staff_required
-def painel_excluir(request, slug):
-    elevador = get_object_or_404(Elevador, slug=slug)
-    if request.method == "POST":
-        nome = elevador.nome
-        elevador.delete()
-        messages.success(request, f"Elevador '{nome}' excluído.")
-        return redirect("painel_lista")
-    return render(
-        request,
-        "produtos/painel/confirmar_exclusao.html",
-        {
-            "elevador": elevador,
-        },
-    )
-
-# =============================================================
-# Carrinho de compras
+# Carrinho
 # =============================================================
 
 def carrinho_ver(request):
@@ -222,6 +136,9 @@ def carrinho_remover(request, pk):
         messages.success(request, "Item removido do carrinho.")
     return redirect("carrinho_ver")
 
+# =============================================================
+# Checkout e Pedidos
+# =============================================================
 
 @login_required
 def checkout(request):
@@ -246,6 +163,16 @@ def checkout(request):
                         preco_unitario=item["elevador"].preco,
                     )
 
+            # --- INÍCIO DO E-MAIL DE PEDIDO ---
+            send_mail(
+                f"[ElevaTech] Novo Pedido #{pedido.pk}",
+                f"Cliente: {pedido.nome}\nE-mail: {pedido.email}\nTelefone: {pedido.telefone}\nTotal: R$ {pedido.total:.2f}",
+                'contato@elevatech.com.br',
+                ['vendas@elevatech.com.br'],
+                fail_silently=True,
+            )
+            # --- FIM DO E-MAIL DE PEDIDO ---
+
             cart.limpar(request)
             messages.success(
                 request,
@@ -253,7 +180,6 @@ def checkout(request):
             )
             return redirect("meus_pedidos")
     else:
-        # pré-preenche com dados do usuário logado
         form = CheckoutForm(initial={
             "nome": request.user.get_full_name() or request.user.username,
             "email": request.user.email,
@@ -282,3 +208,60 @@ def pedido_detalhe(request, pk):
         Pedido, pk=pk, usuario=request.user
     )
     return render(request, "produtos/pedido_detalhe.html", {"pedido": pedido})
+
+# =============================================================
+# Painel de elevadores (Staff)
+# =============================================================
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def painel_lista(request):
+    elevadores = Elevador.objects.all().order_by("nome")
+    return render(request, "produtos/painel/lista.html", {"elevadores": elevadores})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def painel_novo(request):
+    if request.method == "POST":
+        form = ElevadorForm(request.POST, request.FILES)
+        if form.is_valid():
+            elevador = form.save()
+            messages.success(request, f"Elevador '{elevador.nome}' criado!")
+            return redirect("painel_lista")
+    else:
+        form = ElevadorForm()
+    return render(request, "produtos/painel/form.html", {
+        "form": form, "modo": "novo",
+    })
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def painel_editar(request, slug):
+    elevador = get_object_or_404(Elevador, slug=slug)
+    if request.method == "POST":
+        form = ElevadorForm(request.POST, request.FILES, instance=elevador)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Elevador '{elevador.nome}' atualizado!")
+            return redirect("painel_lista")
+    else:
+        form = ElevadorForm(instance=elevador)
+    return render(request, "produtos/painel/form.html", {
+        "form": form, "modo": "editar", "elevador": elevador,
+    })
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def painel_excluir(request, slug):
+    elevador = get_object_or_404(Elevador, slug=slug)
+    if request.method == "POST":
+        nome = elevador.nome
+        elevador.delete()
+        messages.success(request, f"Elevador '{nome}' excluído.")
+        return redirect("painel_lista")
+    return render(request, "produtos/painel/confirmar_exclusao.html", {
+        "elevador": elevador,
+    })

@@ -148,55 +148,39 @@ class ElevadorForm(forms.ModelForm):
     class Meta:
         model = Elevador
         fields = [
-            "nome",
-            "slug",
-            "tipo",
-            "categoria",
-            "descricao_curta",
-            "descricao",
-            "capacidade_kg",
-            "velocidade",
-            "pavimentos",
-            "imagem",
-            "imagem_secundaria",
-            "destaque",
-            "ativo",
+            "nome", "slug", "tipo", "categoria",
+            "descricao_curta", "descricao",
+            "capacidade_kg", "velocidade", "pavimentos",
+            "preco",  # <-- ADICIONADO AQUI
+            "imagem", "imagem_secundaria",
+            "destaque", "ativo",
         ]
         widgets = {
             "nome": forms.TextInput(attrs={"class": "form-control"}),
-            "slug": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "preenchido automaticamente se vazio",
-                }
-            ),
+            "slug": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "preenchido automaticamente se vazio",
+            }),
             "tipo": forms.Select(attrs={"class": "form-select"}),
             "categoria": forms.Select(attrs={"class": "form-select"}),
-            "descricao_curta": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Uma frase (máx. 200 caracteres)",
-                }
-            ),
-            "descricao": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "rows": 5,
-                    "placeholder": "Descrição completa do elevador",
-                }
-            ),
+            "descricao_curta": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Uma frase (máx. 200 caracteres)",
+            }),
+            "descricao": forms.Textarea(attrs={
+                "class": "form-control", "rows": 5,
+                "placeholder": "Descrição completa do elevador",
+            }),
             "capacidade_kg": forms.NumberInput(attrs={"class": "form-control"}),
-            "velocidade": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "step": "0.01",
-                }
-            ),
+            "velocidade": forms.NumberInput(attrs={
+                "class": "form-control", "step": "0.01",
+            }),
             "pavimentos": forms.NumberInput(attrs={"class": "form-control"}),
+            "preco": forms.NumberInput(attrs={
+                "class": "form-control", "step": "0.01", "placeholder": "Ex: 45000.00"
+            }), # <-- ADICIONADO AQUI
             "imagem": forms.ClearableFileInput(attrs={"class": "form-control"}),
-            "imagem_secundaria": forms.ClearableFileInput(
-                attrs={"class": "form-control"}
-            ),
+            "imagem_secundaria": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }
 
     def clean_slug(self):
