@@ -99,9 +99,11 @@
                   <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus Orçamentos
                 </a>
               </li>
-              
+
               {% if user.is_staff %}
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li>
                 <a class="dropdown-item" href="{% url 'painel_lista' %}">
                   <i class="bi bi-gear" aria-hidden="true"></i> Painel de Elevadores
@@ -113,8 +115,10 @@
                 </a>
               </li>
               {% endif %}
-              
-              <li><hr class="dropdown-divider"></li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                   {% csrf_token %}
@@ -158,46 +162,63 @@
   <footer id="contato" class="rodape py-5" style="border-top: 1px solid rgba(255,255,255,0.08);">
     <div class="container">
       <div class="row g-4 align-items-start">
-        
-        <!-- Bloco 1: Contato (Com links e alinhamento corrigidos) -->
+
+        <!-- Bloco 1: Contato -->
         <div class="col-12 col-md-4 mb-4 mb-md-0">
           <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
-          <ul class="list-unstyled mb-0 ps-0">
-            <li class="mb-2 small">
+
+          <ul class="list-unstyled mb-4 ps-0">
+            <li class="d-flex align-items-center mb-3 small">
               <i class="bi bi-envelope me-2" style="color: var(--laranja-marca);"></i>
-              <a href="mailto:contato@elevatech.com.br" class="text-decoration-none" style="color: var(--texto-muted);">contato@elevatech.com.br</a>
+              <a href="mailto:contato@elevatech.com.br" class="text-decoration-none"
+                style="color: var(--texto-muted);">contato@elevatech.com.br</a>
             </li>
-            <li class="small mb-3">
+
+            <li class="d-flex align-items-center mb-3 small">
               <i class="bi bi-whatsapp me-2" style="color: var(--laranja-marca);"></i>
               <span style="color: var(--texto-muted);">(21) 90000-0000</span>
             </li>
-            <li class="small">
+
+            <li class="d-flex align-items-center small">
+              <!-- Usei o ícone de relógio, mas ele alinha perfeitamente agora -->
               <i class="bi bi-clock me-2" style="color: var(--laranja-marca);"></i>
               <span style="color: var(--texto-muted);">Seg a Sex, 8h às 18h</span>
             </li>
           </ul>
 
-          <!-- REDES SOCIAIS CORRIGIDAS E ALINHADAS -->
-          <div class="d-flex gap-3 mt-4" style="padding-left: 2px;">
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="Instagram" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
-              <i class="bi bi-instagram"></i>
+          <!-- REDES SOCIAIS EM CÍRCULOS -->
+          <div class="d-flex gap-2">
+            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"
+              style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--texto-muted); text-decoration: none; transition: 0.2s;"
+              onmouseover="this.style.background='var(--laranja-marca)'; this.style.color='#fff'; this.style.borderColor='var(--laranja-marca)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='var(--texto-muted)'; this.style.borderColor='rgba(255,255,255,0.1)'">
+              <i class="bi bi-instagram" style="font-size: 1rem;"></i>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="LinkedIn" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
-              <i class="bi bi-linkedin"></i>
+
+            <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"
+              style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--texto-muted); text-decoration: none; transition: 0.2s;"
+              onmouseover="this.style.background='var(--laranja-marca)'; this.style.color='#fff'; this.style.borderColor='var(--laranja-marca)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='var(--texto-muted)'; this.style.borderColor='rgba(255,255,255,0.1)'">
+              <i class="bi bi-linkedin" style="font-size: 1rem;"></i>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="YouTube" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
-              <i class="bi bi-youtube"></i>
+
+            <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube"
+              style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--texto-muted); text-decoration: none; transition: 0.2s;"
+              onmouseover="this.style.background='var(--laranja-marca)'; this.style.color='#fff'; this.style.borderColor='var(--laranja-marca)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='var(--texto-muted)'; this.style.borderColor='rgba(255,255,255,0.1)'">
+              <i class="bi bi-youtube" style="font-size: 1rem;"></i>
             </a>
           </div>
         </div>
 
         <!-- Bloco 2: Institucional -->
         <div class="col-12 col-md-4 mb-4 mb-md-0">
-          <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Institucional</h6>
+          <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Institucional
+          </h6>
           <ul class="list-unstyled mb-0 ps-0">
             <li class="small mb-2">
               <a href="{% url 'sobre' %}" class="text-decoration-none" style="color: var(--texto-muted);">
-                <i class="bi bi-building me-2" style="color: var(--laranja-marca);"></i> Sobre a Empresa
+                <i class="bi bi-building me-2" style="color: var(--laranja-marca);"></i> Sobre a ElevaTech
               </a>
             </li>
             <li class="small mb-2">
@@ -206,12 +227,14 @@
               </a>
             </li>
             <li class="small mb-2">
-              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none" style="color: var(--texto-muted);">
+              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none"
+                style="color: var(--texto-muted);">
                 <i class="bi bi-file-earmark-text me-2" style="color: var(--laranja-marca);"></i> Termos de Uso
               </a>
             </li>
             <li class="small">
-              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none" style="color: var(--texto-muted);">
+              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none"
+                style="color: var(--texto-muted);">
                 <i class="bi bi-shield-check me-2" style="color: var(--laranja-marca);"></i> Política de Privacidade
               </a>
             </li>
@@ -225,9 +248,10 @@
             Tecnologia em mobilidade vertical.<br>
             Oferecendo segurança e inovação.
           </p>
-          
+
           <!-- SELO DE SEGURANÇA -->
-          <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-2 rounded" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+          <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-2 rounded"
+            style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
             <i class="bi bi-shield-lock-fill" style="color: var(--laranja-marca); font-size: 1.2rem;"></i>
             <span class="small text-start" style="color: var(--texto-muted); line-height: 1.1; font-size: 0.75rem;">
               <strong style="color: #fff;">Ambiente Seguro</strong><br>
