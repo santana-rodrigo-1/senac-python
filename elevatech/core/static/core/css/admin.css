@@ -1,0 +1,326 @@
+/* ============================================
+   ElevaTech — tema do admin
+   ============================================ */
+
+:root {
+  --laranja: #ff6b35;
+  --laranja-escuro: #e55a2b;
+  --grafite: #1a1a1a;
+  --grafite-medio: #2b2b2b;
+  --grafite-claro: #3a3a3a;
+  --texto: #e8e8e8;
+  --texto-muted: #a0a0a0;
+}
+
+/* Header superior */
+#header {
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+  color: #fff;
+  border-bottom: 3px solid var(--laranja);
+  padding: 14px 24px;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.3px;
+}
+
+#branding h1 a:hover {
+  color: var(--laranja);
+}
+
+#user-tools {
+  font-size: 12px;
+  color: #ccc;
+}
+
+#user-tools a {
+  color: var(--laranja);
+  font-weight: 600;
+}
+
+#user-tools a:hover {
+  color: #ff9567;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+  background: var(--grafite-medio);
+  color: var(--texto);
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--grafite-claro);
+}
+
+div.breadcrumbs a {
+  color: var(--laranja);
+}
+
+div.breadcrumbs a:hover {
+  color: #ff9567;
+  text-decoration: underline;
+}
+
+/* Sidebar */
+#changelist-filter h2 {
+  background: var(--laranja);
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}
+
+#changelist-filter h3 {
+  color: var(--texto);
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+#changelist-filter ul {
+  padding-left: 4px;
+}
+
+#changelist-filter li.selected a {
+  color: var(--laranja);
+  font-weight: 700;
+}
+
+/* Botões principais */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  background: var(--laranja) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  transition: background 0.15s;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+  background: var(--laranja-escuro) !important;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+  background: var(--laranja) !important;
+}
+
+/* Módulos (cards do index) */
+.module {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.module caption,
+.inline-group h2 {
+  background: var(--grafite) !important;
+  color: #fff !important;
+  padding: 12px 16px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 3px solid var(--laranja);
+}
+
+.module table {
+  border-collapse: collapse;
+}
+
+.module table th {
+  background: #f8f8f8;
+  color: var(--grafite);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.module table tr:hover {
+  background: #fff8f4;
+}
+
+.module table a {
+  color: var(--laranja-escuro);
+  font-weight: 600;
+}
+
+.module table a:hover {
+  color: var(--laranja);
+}
+
+/* Tabelas da listagem */
+#result_list {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+#result_list thead th {
+  background: var(--grafite) !important;
+  color: #fff !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 12px 10px;
+  border-bottom: 3px solid var(--laranja) !important;
+}
+
+#result_list thead th a {
+  color: #fff !important;
+}
+
+#result_list tbody tr {
+  transition: background 0.1s;
+}
+
+#result_list tbody tr:hover {
+  background: #fff8f4;
+}
+
+#result_list tbody td {
+  padding: 10px;
+  vertical-align: middle;
+}
+
+/* Badges de booleanos do Django */
+img[src*="icon-yes.svg"] {
+  filter: hue-rotate(240deg) saturate(1.5);
+}
+
+/* Action bar */
+.actions {
+  background: #f8f8f8;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.actions select {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+}
+
+/* Paginação */
+.paginator {
+  background: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 0 0 8px 8px;
+}
+
+.paginator a,
+.paginator .this-page {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.paginator a {
+  color: var(--laranja-escuro);
+  text-decoration: none;
+}
+
+.paginator a:hover {
+  background: var(--laranja);
+  color: #fff;
+}
+
+.paginator .this-page {
+  background: var(--laranja);
+  color: #fff;
+}
+
+/* Formulários */
+.form-row {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.form-row label {
+  font-weight: 600;
+  color: var(--grafite);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  border-radius: 6px !important;
+  border: 1px solid #ccc !important;
+  padding: 8px 12px !important;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--laranja) !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15) !important;
+  outline: none;
+}
+
+/* Login page */
+.login {
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+  min-height: 100vh;
+}
+
+.login #container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.login #header {
+  border-radius: 0;
+  padding: 24px;
+}
+
+.login .form-row label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login .submit-row {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.login .submit-row input {
+  width: 100%;
+  padding: 12px !important;
+  font-size: 14px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

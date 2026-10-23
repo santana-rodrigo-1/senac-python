@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
 
 
 class Categoria(models.Model):
@@ -35,6 +35,10 @@ class Elevador(models.Model):
         max_digits=4, decimal_places=2, help_text="Velocidade em m/s"
     )
     pavimentos = models.PositiveIntegerField(help_text="Nº máximo de paradas")
+    preco = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Preço de venda em R$",
+    )
     imagem = models.ImageField(upload_to="elevadores/", blank=True, null=True)
     imagem_secundaria = models.ImageField(
         upload_to="elevadores/", blank=True, null=True
@@ -61,15 +65,6 @@ class SolicitacaoOrcamento(models.Model):
         RESPONDIDO = "respondido", "Respondido"
         FECHADO = "fechado", "Fechado"
 
-    usuario = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="orcamentos",
-        help_text="Preenchido automaticamente quando o cliente está logado.",
-    )
-
     elevador = models.ForeignKey(
         Elevador,
         on_delete=models.SET_NULL,
@@ -77,6 +72,14 @@ class SolicitacaoOrcamento(models.Model):
         blank=True,
         related_name="solicitacoes",
         help_text="Deixe em branco para orçamento geral",
+    )
+    usuario = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="orcamentos",
+        help_text="Preenchido automaticamente quando o cliente está logado.",
     )
     nome = models.CharField(max_length=120)
     email = models.EmailField()
@@ -97,3 +100,59 @@ class SolicitacaoOrcamento(models.Model):
     def __str__(self):
         alvo = self.elevador.nome if self.elevador else "Orçamento geral"
         return f"{self.nome} — {alvo}"
+
+
+class Pedido(models.Model):
+    class Status(models.TextChoices):
+        NOVO = "novo", "Novo"
+        PAGO = "pago", "Pago"
+        ENVIADO = "enviado", "Enviado"
+        ENTREGUE = "entregue", "Entregue"
+        CANCELADO = "cancelado", "Cancelado"
+
+    usuario = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="pedidos"
+    )
+    nome = models.CharField(max_length=120)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=20)
+    endereco = models.TextField(help_text="Endereço completo de entrega")
+    status = models.CharField(
+        max_length=20, choices=Status.choices, default=Status.NOVO
+    )
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-criado_em"]
+        verbose_name_plural = "Pedidos"
+
+    def __str__(self):
+        return f"Pedido #{self.pk} — {self.nome}"
+
+    @property
+    def total(self):
+        return sum(item.subtotal for item in self.itens.all())
+
+    @property
+    def total_itens(self):
+        return sum(item.quantidade for item in self.itens.all())
+
+
+class ItemPedido(models.Model):
+    pedido = models.ForeignKey(
+        Pedido, related_name="itens", on_delete=models.CASCADE
+    )
+    elevador = models.ForeignKey(Elevador, on_delete=models.PROTECT)
+    quantidade = models.PositiveIntegerField(default=1)
+    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = "Item do pedido"
+        verbose_name_plural = "Itens do pedido"
+
+    def __str__(self):
+        return f"{self.quantidade}x {self.elevador.nome}"
+
+    @property
+    def subtotal(self):
+        return self.quantidade * self.preco_unitario

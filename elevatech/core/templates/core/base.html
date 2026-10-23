@@ -59,11 +59,19 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'orcamento' %}">Orçamento</a>
+            <a class="nav-link" href="{% url 'home' %}#contato">Contato</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#contato">Contato</a>
+            <a class="nav-link position-relative" href="{% url 'carrinho_ver' %}">
+              <i class="bi bi-cart3" aria-hidden="true"></i> Carrinho
+              {% if carrinho_quantidade %}
+              <span class="badge bg-warning text-dark rounded-pill position-absolute top-0 start-100 translate-middle"
+                style="font-size: 10px;">
+                {{ carrinho_quantidade }}
+              </span>
+              {% endif %}
+            </a>
           </li>
 
           {% if user.is_authenticated %}
@@ -75,12 +83,31 @@
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
 
               <li>
+                <a class="dropdown-item" href="{% url 'orcamento' %}">
+                  <i class="bi bi-envelope-paper" aria-hidden="true"></i> Solicitar orçamento
+                </a>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
                 <a class="dropdown-item" href="{% url 'meus_orcamentos' %}">
                   <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus orçamentos
                 </a>
               </li>
 
+              <li>
+                <a class="dropdown-item" href="{% url 'meus_pedidos' %}">
+                  <i class="bi bi-box" aria-hidden="true"></i> Meus pedidos
+                </a>
+              </li>
+
               {% if user.is_staff %}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li>
                 <a class="dropdown-item" href="{% url 'painel_lista' %}">
                   <i class="bi bi-gear" aria-hidden="true"></i> Painel de elevadores
@@ -113,10 +140,6 @@
 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Entrar</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Cadastrar</a>
           </li>
 
           {% endif %}

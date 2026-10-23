@@ -38,6 +38,7 @@ ELEVADORES = [
         "capacidade_kg": 300,
         "velocidade": "0.63",
         "pavimentos": 3,
+        "preco": "45000.00",
         "destaque": True,
     },
     {
@@ -54,6 +55,7 @@ ELEVADORES = [
         "capacidade_kg": 500,
         "velocidade": "1.00",
         "pavimentos": 8,
+        "preco": "65000.00",
         "destaque": False,
     },
     {
@@ -70,6 +72,7 @@ ELEVADORES = [
         "capacidade_kg": 800,
         "velocidade": "1.75",
         "pavimentos": 15,
+        "preco": "95000.00",
         "destaque": True,
     },
     {
@@ -86,6 +89,7 @@ ELEVADORES = [
         "capacidade_kg": 1600,
         "velocidade": "2.50",
         "pavimentos": 25,
+        "preco": "145000.00",
         "destaque": False,
     },
     {
@@ -102,6 +106,7 @@ ELEVADORES = [
         "capacidade_kg": 1000,
         "velocidade": "1.00",
         "pavimentos": 12,
+        "preco": "125000.00",
         "destaque": True,
     },
     {
@@ -119,6 +124,7 @@ ELEVADORES = [
         "capacidade_kg": 1800,
         "velocidade": "1.50",
         "pavimentos": 18,
+        "preco": "185000.00",
         "destaque": False,
     },
 ]
@@ -176,6 +182,7 @@ class Command(BaseCommand):
                     "capacidade_kg": item["capacidade_kg"],
                     "velocidade": item["velocidade"],
                     "pavimentos": item["pavimentos"],
+                    "preco": item["preco"],
                     "destaque": item["destaque"],
                     "ativo": True,
                 },

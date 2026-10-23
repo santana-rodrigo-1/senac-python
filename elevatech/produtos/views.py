@@ -2,9 +2,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+from functools import wraps
 
 from .models import Categoria, Elevador, SolicitacaoOrcamento
 from .forms import OrcamentoForm, ElevadorForm
+
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.http import HttpResponseForbidden
+from . import carrinho as cart
+from .forms import OrcamentoForm, ElevadorForm, CheckoutForm
+from .models import (
+    Categoria,
+    Elevador,
+    SolicitacaoOrcamento,
+    Pedido,
+    ItemPedido,
+)
 
 
 def catalogo(request):
@@ -86,15 +100,32 @@ def orcamento(request):
 # =============================================================
 
 
-@login_required
-@user_passes_test(lambda u: u.is_staff)
+def staff_required(view_func):
+    """
+    Exige login + is_staff.
+    - Não logado → redireciona para tela de login
+    - Logado mas não staff → home com mensagem de erro
+    - Staff → executa a view
+    """
+
+    @login_required
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_staff:
+            messages.error(request, "Acesso restrito à equipe ElevaTech.")
+            return redirect("home")
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
+
+@staff_required
 def painel_lista(request):
     elevadores = Elevador.objects.all().order_by("nome")
     return render(request, "produtos/painel/lista.html", {"elevadores": elevadores})
 
 
-@login_required
-@user_passes_test(lambda u: u.is_staff)
+@staff_required
 def painel_novo(request):
     if request.method == "POST":
         form = ElevadorForm(request.POST, request.FILES)
@@ -114,8 +145,7 @@ def painel_novo(request):
     )
 
 
-@login_required
-@user_passes_test(lambda u: u.is_staff)
+@staff_required
 def painel_editar(request, slug):
     elevador = get_object_or_404(Elevador, slug=slug)
     if request.method == "POST":
@@ -137,8 +167,7 @@ def painel_editar(request, slug):
     )
 
 
-@login_required
-@user_passes_test(lambda u: u.is_staff)
+@staff_required
 def painel_excluir(request, slug):
     elevador = get_object_or_404(Elevador, slug=slug)
     if request.method == "POST":
@@ -153,3 +182,103 @@ def painel_excluir(request, slug):
             "elevador": elevador,
         },
     )
+
+# =============================================================
+# Carrinho de compras
+# =============================================================
+
+def carrinho_ver(request):
+    return render(request, "produtos/carrinho.html", {
+        "itens": cart.itens(request),
+        "total": cart.total(request),
+    })
+
+
+def carrinho_adicionar(request, pk):
+    elevador = get_object_or_404(Elevador, pk=pk, ativo=True)
+    qtd = request.POST.get("quantidade", 1)
+    try:
+        qtd = max(1, int(qtd))
+    except (TypeError, ValueError):
+        qtd = 1
+    cart.adicionar(request, pk, qtd)
+    messages.success(
+        request,
+        f"{qtd}x {elevador.nome} adicionado ao carrinho."
+    )
+    return redirect("carrinho_ver")
+
+
+def carrinho_atualizar(request, pk):
+    if request.method == "POST":
+        cart.atualizar(request, pk, request.POST.get("quantidade", 1))
+        messages.success(request, "Carrinho atualizado.")
+    return redirect("carrinho_ver")
+
+
+def carrinho_remover(request, pk):
+    if request.method == "POST":
+        cart.remover(request, pk)
+        messages.success(request, "Item removido do carrinho.")
+    return redirect("carrinho_ver")
+
+
+@login_required
+def checkout(request):
+    itens = cart.itens(request)
+    if not itens:
+        messages.error(request, "Seu carrinho está vazio.")
+        return redirect("carrinho_ver")
+
+    if request.method == "POST":
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            with transaction.atomic():
+                pedido = form.save(commit=False)
+                pedido.usuario = request.user
+                pedido.save()
+
+                for item in itens:
+                    ItemPedido.objects.create(
+                        pedido=pedido,
+                        elevador=item["elevador"],
+                        quantidade=item["quantidade"],
+                        preco_unitario=item["elevador"].preco,
+                    )
+
+            cart.limpar(request)
+            messages.success(
+                request,
+                f"Pedido #{pedido.pk} confirmado! Acompanhe o status em 'Meus pedidos'."
+            )
+            return redirect("meus_pedidos")
+    else:
+        # pré-preenche com dados do usuário logado
+        form = CheckoutForm(initial={
+            "nome": request.user.get_full_name() or request.user.username,
+            "email": request.user.email,
+        })
+
+    return render(request, "produtos/checkout.html", {
+        "form": form,
+        "itens": itens,
+        "total": cart.total(request),
+    })
+
+
+@login_required
+def meus_pedidos(request):
+    pedidos = (
+        Pedido.objects.filter(usuario=request.user)
+        .prefetch_related("itens__elevador")
+        .order_by("-criado_em")
+    )
+    return render(request, "produtos/meus_pedidos.html", {"pedidos": pedidos})
+
+
+@login_required
+def pedido_detalhe(request, pk):
+    pedido = get_object_or_404(
+        Pedido, pk=pk, usuario=request.user
+    )
+    return render(request, "produtos/pedido_detalhe.html", {"pedido": pedido})

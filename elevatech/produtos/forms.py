@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
-from .models import SolicitacaoOrcamento, Elevador
+from .models import SolicitacaoOrcamento, Elevador, Pedido
 
 # ----------------------------------------------------------------------------
 # Validação de telefone BR
@@ -204,3 +204,40 @@ class ElevadorForm(forms.ModelForm):
         if not slug:
             slug = slugify(self.cleaned_data.get("nome", ""))
         return slug
+
+
+class CheckoutForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = ["nome", "email", "telefone", "endereco"]
+        widgets = {
+            "nome": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Nome completo",
+                }
+            ),
+            "email": forms.EmailInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "voce@email.com",
+                }
+            ),
+            "telefone": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "(21) 90000-0000",
+                    "inputmode": "tel",
+                }
+            ),
+            "endereco": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "Rua, número, complemento, bairro, cidade/UF, CEP",
+                }
+            ),
+        }
+
+    def clean_telefone(self):
+        return normalizar_telefone_br(self.cleaned_data.get("telefone", ""))

@@ -6,6 +6,15 @@ urlpatterns = [
     path("elevadores/<slug:slug>/", views.detalhe, name="produto_detalhe"),
     path("orcamento/", views.orcamento, name="orcamento"),
 
+    # carrinho
+    path("carrinho/", views.carrinho_ver, name="carrinho_ver"),
+    path("carrinho/adicionar/<int:pk>/", views.carrinho_adicionar, name="carrinho_adicionar"),
+    path("carrinho/atualizar/<int:pk>/", views.carrinho_atualizar, name="carrinho_atualizar"),
+    path("carrinho/remover/<int:pk>/", views.carrinho_remover, name="carrinho_remover"),
+    path("checkout/", views.checkout, name="checkout"),
+    path("meus-pedidos/", views.meus_pedidos, name="meus_pedidos"),
+    path("meus-pedidos/<int:pk>/", views.pedido_detalhe, name="pedido_detalhe"),
+
     # painel de elevadores (staff)
     path("painel/elevadores/", views.painel_lista, name="painel_lista"),
     path("painel/elevadores/novo/", views.painel_novo, name="painel_novo"),
