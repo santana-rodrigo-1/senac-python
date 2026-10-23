@@ -155,11 +155,11 @@
     {% block content %}{% endblock %}
   </main>
 
-  <footer id="contato" class="rodape py-5">
+  <footer id="contato" class="rodape py-5" style="border-top: 1px solid rgba(255,255,255,0.08);">
     <div class="container">
       <div class="row g-4 align-items-start">
         
-        <!-- Bloco 1: Contato (Agora na Esquerda) -->
+        <!-- Bloco 1: Contato (Com links e alinhamento corrigidos) -->
         <div class="col-12 col-md-4 mb-4 mb-md-0">
           <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
           <ul class="list-unstyled mb-0 ps-0">
@@ -176,9 +176,22 @@
               <span style="color: var(--texto-muted);">Seg a Sex, 8h às 18h</span>
             </li>
           </ul>
+
+          <!-- REDES SOCIAIS CORRIGIDAS E ALINHADAS -->
+          <div class="d-flex gap-3 mt-4" style="padding-left: 2px;">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="Instagram" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="LinkedIn" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener" class="text-decoration-none" aria-label="YouTube" style="color: var(--texto-muted); font-size: 1.1rem; transition: 0.2s;" onmouseover="this.style.color='var(--laranja-marca)'" onmouseout="this.style.color='var(--texto-muted)'">
+              <i class="bi bi-youtube"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Bloco 2: Institucional (Agora no Centro) -->
+        <!-- Bloco 2: Institucional -->
         <div class="col-12 col-md-4 mb-4 mb-md-0">
           <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Institucional</h6>
           <ul class="list-unstyled mb-0 ps-0">
@@ -205,13 +218,23 @@
           </ul>
         </div>
 
-        <!-- Bloco 3: Marca e Direitos (Agora na Direita, alinhado à direita) -->
+        <!-- Bloco 3: Marca, Selo e Direitos -->
         <div class="col-12 col-md-4 text-center text-md-end">
-          <div class="marca mb-3" style="font-size: 1.5rem;">Eleva<span>Tech</span></div>
-          <p class="small mb-2" style="color: var(--texto-muted);">
+          <div class="marca mb-3 mt-1" style="font-size: 1.5rem;">Eleva<span>Tech</span></div>
+          <p class="small mb-3" style="color: var(--texto-muted);">
             Tecnologia em mobilidade vertical.<br>
             Oferecendo segurança e inovação.
           </p>
+          
+          <!-- SELO DE SEGURANÇA -->
+          <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-2 rounded" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <i class="bi bi-shield-lock-fill" style="color: var(--laranja-marca); font-size: 1.2rem;"></i>
+            <span class="small text-start" style="color: var(--texto-muted); line-height: 1.1; font-size: 0.75rem;">
+              <strong style="color: #fff;">Ambiente Seguro</strong><br>
+              Dados Protegidos
+            </span>
+          </div>
+
           <p class="small mb-0" style="color: var(--texto-muted); opacity: 0.7;">
             &copy; 2026 ElevaTech — Todos os direitos reservados.
           </p>
