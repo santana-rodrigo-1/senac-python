@@ -1,8 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block title %}{{ elevador.nome }} — ElevaTech{% endblock %}
-{% block description %}{{ elevador.descricao_curta }} — {{ elevador.capacidade_kg }} kg, {{ elevador.velocidade }} m/s,
-até {{ elevador.pavimentos }} pavimentos.{% endblock %}
+{% block description %}{{ elevador.descricao_curta }} — {{ elevador.capacidade_kg }} kg, {{ elevador.velocidade }} m/s, até {{ elevador.pavimentos }} pavimentos.{% endblock %}
 
 {% block content %}
 <section class="py-5">
@@ -14,8 +13,7 @@ até {{ elevador.pavimentos }} pavimentos.{% endblock %}
                     <a href="{% url 'home' %}" style="color: var(--laranja-marca); text-decoration: none;">Início</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{% url 'catalogo' %}"
-                        style="color: var(--laranja-marca); text-decoration: none;">Catálogo</a>
+                    <a href="{% url 'catalogo' %}" style="color: var(--laranja-marca); text-decoration: none;">Catálogo</a>
                 </li>
                 <li class="breadcrumb-item active" style="color: var(--texto-muted);">{{ elevador.nome }}</li>
             </ol>
@@ -44,8 +42,9 @@ até {{ elevador.pavimentos }} pavimentos.{% endblock %}
                 <h1 class="mb-2" style="color: #fff;">{{ elevador.nome }}</h1>
                 <p class="lead mb-4" style="color: #c8c8c8;">{{ elevador.descricao_curta }}</p>
 
+                <!-- CAIXA DE PREÇO -->
                 <div class="caixa-filtro p-4 mb-4">
-                    <p class="small mb-1" style="color: var(--texto-muted);">A partir de</p>
+                    <p class="small mb-1" style="color: var(--texto-muted);">Preço de tabela</p>
                     <p class="mb-0"
                         style="color: var(--laranja-marca); font-size: 2.2rem; font-weight: 700; line-height: 1;">
                         R$ {{ elevador.preco|floatformat:2 }}
@@ -55,22 +54,32 @@ até {{ elevador.pavimentos }} pavimentos.{% endblock %}
                     </p>
                 </div>
 
-                <form method="post" action="{% url 'carrinho_adicionar' elevador.pk %}" class="mb-2">
-                    {% csrf_token %}
-                    <div class="d-flex gap-2">
-                        <input type="number" name="quantidade" value="1" min="1" max="10" class="form-control"
-                            style="max-width:100px;" aria-label="Quantidade">
-                        <button type="submit" class="btn btn-laranja flex-grow-1">
-                            <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-                        </button>
-                    </div>
-                </form>
+                <!-- BLOCO DE DECISÃO DO CLIENTE -->
+                <div class="mb-4">
+                    <h6 class="text-light mb-3"><i class="bi bi-arrow-down-circle"></i> Como deseja prosseguir?</h6>
+                    
+                    <!-- Opção 1: Comprar -->
+                    <form method="post" action="{% url 'carrinho_adicionar' elevador.pk %}" class="mb-3">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2">
+                            <input type="number" name="quantidade" value="1" min="1" max="10"
+                                   class="form-control" style="max-width:90px;" aria-label="Quantidade">
+                            <button type="submit" class="btn btn-laranja flex-grow-1">
+                                <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
+                            </button>
+                        </div>
+                    </form>
 
-                <a href="{% url 'orcamento' %}?elevador={{ elevador.pk }}"
-                    class="btn btn-outline-light btn-lg w-100 mb-2">
-                    <i class="bi bi-envelope-paper"></i> Solicitar orçamento
-                </a>
+                    <div class="text-center text-muted small my-2">— OU —</div>
 
+                    <!-- Opção 2: Orçamento -->
+                    <a href="{% url 'orcamento' %}?elevador={{ elevador.pk }}"
+                       class="btn btn-outline-light w-100">
+                        <i class="bi bi-envelope-paper"></i> Solicitar Orçamento Personalizado
+                    </a>
+                </div>
+
+                <!-- FICHA TÉCNICA -->
                 <div class="caixa-filtro p-4 mt-4">
                     <h2 class="h6 text-uppercase mb-3" style="color: var(--laranja-marca); letter-spacing: 1px;">
                         Ficha técnica

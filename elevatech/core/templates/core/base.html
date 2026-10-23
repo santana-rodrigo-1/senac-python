@@ -56,9 +56,6 @@
             <a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}#contato">Contato</a>
           </li>
 
@@ -80,6 +77,7 @@
             </a>
           </li>
 
+          <!-- DROPDOWN DO USUÁRIO -->
           {% if user.is_authenticated %}
           <li class="nav-item dropdown ms-lg-2">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,30 +85,26 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
               <li>
-                <a class="dropdown-item" href="{% url 'orcamento' %}">
-                  <i class="bi bi-envelope-paper" aria-hidden="true"></i> Solicitar orçamento
-                </a>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'meus_orcamentos' %}">
-                  <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus orçamentos
+                <a class="dropdown-item" href="{% url 'editar_perfil' %}">
+                  <i class="bi bi-person-gear" aria-hidden="true"></i> Meu Perfil
                 </a>
               </li>
               <li>
                 <a class="dropdown-item" href="{% url 'meus_pedidos' %}">
-                  <i class="bi bi-box" aria-hidden="true"></i> Meus pedidos
+                  <i class="bi bi-box" aria-hidden="true"></i> Meus Pedidos
                 </a>
               </li>
-              {% if user.is_staff %}
               <li>
-                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="{% url 'meus_orcamentos' %}">
+                  <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Meus Orçamentos
+                </a>
               </li>
+              
+              {% if user.is_staff %}
+              <li><hr class="dropdown-divider"></li>
               <li>
                 <a class="dropdown-item" href="{% url 'painel_lista' %}">
-                  <i class="bi bi-gear" aria-hidden="true"></i> Painel de elevadores
+                  <i class="bi bi-gear" aria-hidden="true"></i> Painel de Elevadores
                 </a>
               </li>
               <li>
@@ -119,9 +113,8 @@
                 </a>
               </li>
               {% endif %}
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+              
+              <li><hr class="dropdown-divider"></li>
               <li>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                   {% csrf_token %}
@@ -162,18 +155,68 @@
     {% block content %}{% endblock %}
   </main>
 
-  <footer id="contato" class="rodape">
+  <footer id="contato" class="rodape py-5">
     <div class="container">
-      <div class="row g-4 align-items-center">
-        <div class="col-md-6">
-          <div class="marca mb-2">Eleva<span>Tech</span></div>
-          <p class="mb-0 small">Tecnologia em mobilidade vertical.<br>
-            &copy; 2026 ElevaTech — Todos os direitos reservados.</p>
+      <div class="row g-4 align-items-start">
+        
+        <!-- Bloco 1: Contato (Agora na Esquerda) -->
+        <div class="col-12 col-md-4 mb-4 mb-md-0">
+          <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
+          <ul class="list-unstyled mb-0 ps-0">
+            <li class="mb-2 small">
+              <i class="bi bi-envelope me-2" style="color: var(--laranja-marca);"></i>
+              <a href="mailto:contato@elevatech.com.br" class="text-decoration-none" style="color: var(--texto-muted);">contato@elevatech.com.br</a>
+            </li>
+            <li class="small mb-3">
+              <i class="bi bi-whatsapp me-2" style="color: var(--laranja-marca);"></i>
+              <span style="color: var(--texto-muted);">(21) 90000-0000</span>
+            </li>
+            <li class="small">
+              <i class="bi bi-clock me-2" style="color: var(--laranja-marca);"></i>
+              <span style="color: var(--texto-muted);">Seg a Sex, 8h às 18h</span>
+            </li>
+          </ul>
         </div>
-        <div class="col-md-6 text-md-end small">
-          <p class="mb-1"><i class="bi bi-envelope" aria-hidden="true"></i> contato@elevatech.com.br</p>
-          <p class="mb-0"><i class="bi bi-whatsapp" aria-hidden="true"></i> (21) 90000-0000</p>
+
+        <!-- Bloco 2: Institucional (Agora no Centro) -->
+        <div class="col-12 col-md-4 mb-4 mb-md-0">
+          <h6 class="text-uppercase mb-3" style="color: #fff; letter-spacing: 1px; font-size: 0.85rem;">Institucional</h6>
+          <ul class="list-unstyled mb-0 ps-0">
+            <li class="small mb-2">
+              <a href="{% url 'sobre' %}" class="text-decoration-none" style="color: var(--texto-muted);">
+                <i class="bi bi-building me-2" style="color: var(--laranja-marca);"></i> Sobre a Empresa
+              </a>
+            </li>
+            <li class="small mb-2">
+              <a href="#" class="text-decoration-none" style="color: var(--texto-muted);">
+                <i class="bi bi-question-circle me-2" style="color: var(--laranja-marca);"></i> Perguntas Frequentes
+              </a>
+            </li>
+            <li class="small mb-2">
+              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none" style="color: var(--texto-muted);">
+                <i class="bi bi-file-earmark-text me-2" style="color: var(--laranja-marca);"></i> Termos de Uso
+              </a>
+            </li>
+            <li class="small">
+              <a href="{% url 'termos' %}" target="_blank" class="text-decoration-none" style="color: var(--texto-muted);">
+                <i class="bi bi-shield-check me-2" style="color: var(--laranja-marca);"></i> Política de Privacidade
+              </a>
+            </li>
+          </ul>
         </div>
+
+        <!-- Bloco 3: Marca e Direitos (Agora na Direita, alinhado à direita) -->
+        <div class="col-12 col-md-4 text-center text-md-end">
+          <div class="marca mb-3" style="font-size: 1.5rem;">Eleva<span>Tech</span></div>
+          <p class="small mb-2" style="color: var(--texto-muted);">
+            Tecnologia em mobilidade vertical.<br>
+            Oferecendo segurança e inovação.
+          </p>
+          <p class="small mb-0" style="color: var(--texto-muted); opacity: 0.7;">
+            &copy; 2026 ElevaTech — Todos os direitos reservados.
+          </p>
+        </div>
+
       </div>
     </div>
   </footer>

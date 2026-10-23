@@ -14,6 +14,8 @@ urlpatterns = [
     path("checkout/", views.checkout, name="checkout"),
     path("meus-pedidos/", views.meus_pedidos, name="meus_pedidos"),
     path("meus-pedidos/<int:pk>/", views.pedido_detalhe, name="pedido_detalhe"),
+    path("carrinho/orcamento/", views.carrinho_orcamento, name="carrinho_orcamento"),
+    path("carrinho/limpar/", views.carrinho_limpar, name="carrinho_limpar"),
 
     # painel de elevadores (staff)
     path("painel/elevadores/", views.painel_lista, name="painel_lista"),

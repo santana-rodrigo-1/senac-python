@@ -6,6 +6,11 @@ SECRET_KEY = "django-insecure-dev-key-troque-em-producao-123456"
 DEBUG = True
 ALLOWED_HOSTS = []
 
+# OPÇÃO: ALLOWED_HOSTS = ['*']
+# '*' desativa a checagem de Host Header do Django.
+# Útil para rodar o "runserver 0.0.0.0:8001" e acessar pelo IP local.
+# ATENÇÃO: Não utilizar em ambiente de produção por questões de segurança.
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -74,5 +79,5 @@ LOGOUT_REDIRECT_URL = "home"  # para onde ir após logout
 
 
 # E-mail no console (para desenvolvimento e apresentação)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'contato@elevatech.com.br'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "contato@elevatech.com.br"

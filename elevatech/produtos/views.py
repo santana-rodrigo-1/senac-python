@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from django.core.mail import send_mail  # <-- IMPORT ADICIONADO
+from django.core.mail import send_mail
 
 from .models import Categoria, Elevador, SolicitacaoOrcamento, Pedido, ItemPedido
 from .forms import OrcamentoForm, ElevadorForm, CheckoutForm
@@ -58,44 +58,72 @@ def detalhe(request, slug):
 # Orçamento
 # =============================================================
 
+@login_required
+def carrinho_orcamento(request):
+    """Botão 'Solicitar Orçamento' no carrinho: exige login e vai para o form."""
+    itens = cart.itens(request)
+    if not itens:
+        messages.error(request, "Adicione elevadores ao carrinho antes de pedir orçamento.")
+        return redirect("carrinho_ver")
+    return redirect("orcamento")
+
+
+@login_required
 def orcamento(request):
+    # Pega os itens do carrinho para listar na tela
+    itens_carrinho = cart.itens(request)
+    
     if request.method == "POST":
         form = OrcamentoForm(request.POST)
         if form.is_valid():
             solicitacao = form.save(commit=False)
-            if request.user.is_authenticated:
-                solicitacao.usuario = request.user
+            solicitacao.usuario = request.user
+            
+            # Se veio do carrinho, salva a lista de itens na mensagem
+            if itens_carrinho:
+                lista_itens = "\n".join([f"- {item['quantidade']}x {item['elevador'].nome}" for item in itens_carrinho])
+                # Concatena com a mensagem que o usuário digitou (se houver)
+                solicitacao.mensagem = f"ITENS DE INTERESSE:\n{lista_itens}\n\nOBSERVAÇÕES:\n{solicitacao.mensagem}"
+            
             solicitacao.save()
 
-            # --- INÍCIO DO E-MAIL DE ORÇAMENTO ---
+            # E-mail de Orçamento
             send_mail(
                 f"[ElevaTech] Novo Orçamento #{solicitacao.pk}",
-                f"Cliente: {solicitacao.nome}\nE-mail: {solicitacao.email}\nTelefone: {solicitacao.telefone}\nCidade: {solicitacao.cidade}\nPavimentos: {solicitacao.pavimentos}\nMensagem: {solicitacao.mensagem}",
+                f"Cliente: {solicitacao.nome}\nE-mail: {solicitacao.email}\nTelefone: {solicitacao.telefone}\nMensagem:\n{solicitacao.mensagem}",
                 'contato@elevatech.com.br',
                 ['vendas@elevatech.com.br'],
                 fail_silently=True,
             )
-            # --- FIM DO E-MAIL DE ORÇAMENTO ---
 
-            messages.success(
-                request,
-                f"Orçamento #{solicitacao.pk} enviado! "
-                f"Entraremos em contato em até 1 dia útil."
-            )
-            return redirect("catalogo")
+            # Limpa o carrinho após o orçamento ser enviado
+            if itens_carrinho:
+                cart.limpar(request)
 
-        messages.error(request, "Verifique os campos destacados em vermelho.")
+            messages.success(request, f"Orçamento #{solicitacao.pk} enviado! Entraremos em contato.")
+            return redirect("meus_orcamentos")
     else:
+        # Se for GET, pré-preenche o form
+        initial = {
+            "nome": request.user.get_full_name() or request.user.username,
+            "email": request.user.email,
+        }
+        
+        # Se veio um único elevador pela URL (ex: botão da página do produto)
         elevador_pk = request.GET.get("elevador")
-        initial = {}
         if elevador_pk:
             try:
                 initial["elevador"] = int(elevador_pk)
             except (TypeError, ValueError):
                 pass
+                
         form = OrcamentoForm(initial=initial)
 
-    return render(request, "produtos/orcamento.html", {"form": form})
+    return render(request, "produtos/orcamento.html", {
+        "form": form,
+        "itens_carrinho": itens_carrinho,
+    })
+
 
 # =============================================================
 # Carrinho
@@ -136,6 +164,12 @@ def carrinho_remover(request, pk):
         messages.success(request, "Item removido do carrinho.")
     return redirect("carrinho_ver")
 
+def carrinho_limpar(request):
+    if request.method == "POST":
+        cart.limpar(request)
+        messages.success(request, "Seu carrinho foi esvaziado.")
+    return redirect("carrinho_ver")
+
 # =============================================================
 # Checkout e Pedidos
 # =============================================================
@@ -163,7 +197,6 @@ def checkout(request):
                         preco_unitario=item["elevador"].preco,
                     )
 
-            # --- INÍCIO DO E-MAIL DE PEDIDO ---
             send_mail(
                 f"[ElevaTech] Novo Pedido #{pedido.pk}",
                 f"Cliente: {pedido.nome}\nE-mail: {pedido.email}\nTelefone: {pedido.telefone}\nTotal: R$ {pedido.total:.2f}",
@@ -171,7 +204,6 @@ def checkout(request):
                 ['vendas@elevatech.com.br'],
                 fail_silently=True,
             )
-            # --- FIM DO E-MAIL DE PEDIDO ---
 
             cart.limpar(request)
             messages.success(
@@ -180,10 +212,19 @@ def checkout(request):
             )
             return redirect("meus_pedidos")
     else:
-        form = CheckoutForm(initial={
+        # --- INÍCIO DA ALTERAÇÃO: Puxando dados do Perfil ---
+        initial_data = {
             "nome": request.user.get_full_name() or request.user.username,
             "email": request.user.email,
-        })
+        }
+        
+        # Se o usuário tiver perfil, puxa os dados de lá
+        if hasattr(request.user, 'perfil'):
+            initial_data["telefone"] = request.user.perfil.telefone
+            initial_data["endereco"] = request.user.perfil.endereco
+
+        form = CheckoutForm(initial=initial_data)
+        # --- FIM DA ALTERAÇÃO ---
 
     return render(request, "produtos/checkout.html", {
         "form": form,
