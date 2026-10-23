@@ -7,6 +7,9 @@ from django.views.generic import TemplateView
 from .forms import UserUpdateForm, CustomUserCreationForm
 from produtos.models import Elevador, SolicitacaoOrcamento
 
+from django.core.mail import send_mail
+from .forms import ContatoForm, UserUpdateForm, CustomUserCreationForm
+
 def home(request):
     destaques = Elevador.objects.filter(ativo=True, destaque=True)[:3]
     return render(request, "core/home.html", {"destaques": destaques})
@@ -51,3 +54,28 @@ def editar_perfil(request):
         form = UserUpdateForm(instance=request.user)
     
     return render(request, "core/editar_perfil.html", {"form": form})
+
+def contato(request):
+    if request.method == "POST":
+        form = ContatoForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            email = form.cleaned_data['email']
+            mensagem = form.cleaned_data['mensagem']
+
+            send_mail(
+                f"[ElevaTech] Contato do Site - {nome}",
+                f"Mensagem de: {nome} ({email})\n\n{mensagem}",
+                'contato@elevatech.com.br',
+                ['vendas@elevatech.com.br'],
+                fail_silently=True,
+            )
+            messages.success(request, "Mensagem enviada com sucesso! Retornaremos em breve.")
+            return redirect("contato")
+    else:
+        form = ContatoForm()
+    
+    return render(request, "core/contato.html", {"form": form})
+
+def faq(request):
+    return render(request, "core/faq.html")

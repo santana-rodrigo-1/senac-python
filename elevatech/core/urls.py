@@ -9,4 +9,6 @@ urlpatterns = [
     path("meus-orcamentos/", views.meus_orcamentos, name="meus_orcamentos"),
     path("meu-perfil/", views.editar_perfil, name="editar_perfil"),
     path("termos/", TemplateView.as_view(template_name="core/termos.html"), name="termos"), # <-- ESSA LINHA
+    path("contato/", views.contato, name="contato"),
+    path("faq/", views.faq, name="faq"),
 ]
