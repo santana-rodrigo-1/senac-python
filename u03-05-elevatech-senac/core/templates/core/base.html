@@ -35,7 +35,13 @@
                                 <a class="nav-link fw-bold text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                     <i class="bi bi-person-circle texto-laranja"></i> {{ user.username }}
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                    {% if user.is_staff %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'painel' %}">Painel de Elevadores</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    {% endif %}
                                     <li>
                                         <form method="post" action="{% url 'logout' %}">
                                             {% csrf_token %}

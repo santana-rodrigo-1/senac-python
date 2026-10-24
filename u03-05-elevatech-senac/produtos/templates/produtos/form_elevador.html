@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block title %}Formulário de Elevador — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark border-secondary shadow p-4">
+                <h2 class="fw-bold mb-4">Cadastrar / Editar Elevador</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-laranja fw-bold px-4">Salvar</button>
+                        <a href="{% url 'painel' %}" class="btn btn-outline-light">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
