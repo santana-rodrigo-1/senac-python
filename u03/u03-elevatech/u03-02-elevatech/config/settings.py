@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-im*ke+2e%z&fi52_u1^zi%#+-#0!q6xw+$%kq0m_wchp$6o42n'
+SECRET_KEY = 'django-insecure-aq+kk5pjuuli%4y5ed^!u!7d+%dn&axo)vc5d$jc0=d=srshnr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'produtos',
+    'pedidos',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.carrinho',  # <-- ADICIONE ESTA LINHA
             ],
         },
     },
@@ -132,3 +134,7 @@ MAILERS = {
 LOGIN_URL = "login"              # Para onde mandar quem não está logado
 LOGIN_REDIRECT_URL = "home"      # Para onde ir após o login
 LOGOUT_REDIRECT_URL = "home"     # Para onde ir após o logout
+
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
