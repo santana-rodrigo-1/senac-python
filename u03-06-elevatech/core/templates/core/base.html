@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ElevaTech{% endblock %}</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark" style="background:#0d1b2a">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <span style="color:#ff6b35">◆</span> ElevaTech
+      </a>
+      <div>
+        <a class="text-light me-3" href="{% url 'home' %}">Início</a>
+        <a class="text-light" href="{% url 'sobre' %}">Sobre</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-muted py-4">
+    © ElevaTech 2026 — Projeto SENAC
+  </footer>
+</body>
+</html>
