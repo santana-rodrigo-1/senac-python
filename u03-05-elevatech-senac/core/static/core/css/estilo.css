@@ -99,3 +99,8 @@ main {
         color: var(--laranja) !important;
     }
 }
+
+/* Corrige o cinza escuro do Bootstrap no fundo dark */
+.text-muted {
+    color: #a0aab5 !important; /* Cinza claro e legível */
+}
