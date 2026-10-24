@@ -132,3 +132,7 @@ MAILERS = {
 LOGIN_URL = "login"              # Para onde mandar quem não está logado
 LOGIN_REDIRECT_URL = "home"      # Para onde ir após o login
 LOGOUT_REDIRECT_URL = "home"     # Para onde ir após o logout
+
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
