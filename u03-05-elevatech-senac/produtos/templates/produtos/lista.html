@@ -22,7 +22,16 @@
     <div class="row g-4">
         {% for elevador in elevadores %}
         <div class="col-md-4">
-            <div class="card h-100 bg-dark border-secondary text-white shadow" style="transition: transform 0.2s;">
+            <div class="card h-100 bg-dark border-secondary text-white shadow">
+                <!-- Imagem do Produto (Fase 8) -->
+                {% if elevador.imagem %}
+                    <img src="{{ elevador.imagem.url }}" class="card-img-top" alt="{{ elevador.nome }}" style="height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px; border-radius: 8px 8px 0 0;">
+                        <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                    </div>
+                {% endif %}
+                
                 <div class="card-body p-4 d-flex flex-column">
                     <span class="badge bg-secondary mb-2 align-self-start">{{ elevador.categoria.nome }}</span>
                     <h4 class="card-title fw-bold">{{ elevador.nome }}</h4>
@@ -30,10 +39,20 @@
                     
                     <h5 class="texto-laranja fw-bold mb-4">R$ {{ elevador.preco }}</h5>
                     
-                    <!-- BOTÃO PROFISSIONAL -->
-                    <a href="#" class="btn btn-outline-light w-100 mt-auto">
-                        <i class="bi bi-eye"></i> Ver Detalhes
-                    </a>
+                    <!-- BOTÕES HÍBRIDOS -->
+                                        <div class="d-grid gap-2 mt-auto">
+                        <!-- FORMULÁRIO DE COMPRA -->
+                        <form method="post" action="{% url 'carrinho_adicionar' elevador.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-laranja fw-bold w-100">
+                                <i class="bi bi-cart-plus"></i> Comprar
+                            </button>
+                        </form>
+                        
+                        <a href="#" class="btn btn-outline-light">
+                            <i class="bi bi-envelope-paper"></i> Solicitar Orçamento
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
