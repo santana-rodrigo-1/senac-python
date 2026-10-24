@@ -1,0 +1,32 @@
+:root {
+    --laranja: #ff6b35;
+    --azul-escuro: #0d1b2a;
+    --grafite: #1a1a1a;
+    --texto-claro: #e8eef5;
+    --texto-muted: #a0a0b0;
+}
+
+body {
+    background-color: var(--azul-escuro);
+    color: var(--texto-claro);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Hero em tela cheia */
+.hero-full {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, #000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.texto-laranja { color: var(--laranja); }
+.bg-laranja { background-color: var(--laranja); color: white; border: none; }
+.bg-laranja:hover { background-color: #e55a2b; color: white; }
+
+/* Ajustes do Rodapé */
+.rodape { background-color: #050a0f; border-top: 1px solid rgba(255,255,255,0.05); }
+.rodape a { color: var(--texto-muted); text-decoration: none; transition: 0.2s; }
+.rodape a:hover { color: var(--laranja); }
