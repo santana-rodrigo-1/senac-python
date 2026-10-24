@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Entrar — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card bg-dark border-secondary text-white shadow-lg">
+                <div class="card-body p-5">
+                    <h2 class="text-center fw-bold mb-4">Acessar Conta</h2>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Mensagem de erro caso a senha esteja errada -->
+                        {% if form.errors %}
+                            <div class="alert alert-danger small">Usuário ou senha incorretos.</div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Usuário</label>
+                            <input type="text" name="username" class="form-control bg-transparent text-white border-secondary" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label text-muted small">Senha</label>
+                            <input type="password" name="password" class="form-control bg-transparent text-white border-secondary" required>
+                        </div>
+
+                        <button type="submit" class="btn bg-laranja w-100 fw-bold py-2">Entrar</button>
+                    </form>
+                    
+                    <p class="text-center text-muted small mt-4 mb-0">
+                        Esqueceu a senha? <a href="#" class="texto-laranja text-decoration-none">Recuperar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
