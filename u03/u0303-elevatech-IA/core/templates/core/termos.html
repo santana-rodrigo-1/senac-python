@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block title %}Termos de Uso — ElevaTech{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container" style="max-width: 800px;">
+    <h1 class="titulo-secao">Termos de Uso e Privacidade</h1>
+    
+    <div class="caixa-filtro p-4" style="color: #c8c8c8;">
+      <h5 class="text-light mb-3">1. Coleta de Dados</h5>
+      <p>Ao se cadastrar na ElevaTech, coletamos seu nome, e-mail, telefone e endereço para fins exclusivos de processamento de pedidos e emissão de orçamentos de elevadores.</p>
+      
+      <h5 class="text-light mb-3 mt-4">2. Privacidade (LGPD)</h5>
+      <p>Seus dados não serão compartilhados com terceiros sem o seu consentimento. Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você pode solicitar a exclusão ou alteração dos seus dados a qualquer momento através da página "Meu Perfil".</p>
+      
+      <h5 class="text-light mb-3 mt-4">3. Segurança</h5>
+      <p>Utilizamos criptografia para armazenamento de senhas e conexões seguras para garantir a integridade dos seus dados. O uso do sistema implica na concordância com estes termos.</p>
+    </div>
+    
+    <div class="mt-4">
+      <a href="{% url 'register' %}" class="btn btn-laranja">Voltar para o Cadastro</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

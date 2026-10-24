@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block title %}Fale Conosco — ElevaTech{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container" style="max-width: 700px;">
+    <h1 class="titulo-secao mb-4">Fale Conosco</h1>
+    
+    <div class="caixa-filtro p-4 p-md-5">
+      <p style="color: var(--texto-muted);" class="mb-4">
+        Tem alguma dúvida sobre nossos elevadores ou precisa de um projeto especial? Envie sua mensagem.
+      </p>
+      
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label form-label-escuro">Nome</label>
+          {{ form.nome }}
+          {% if form.nome.errors %}<div class="text-danger small">{{ form.nome.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="mb-3">
+          <label class="form-label form-label-escuro">E-mail</label>
+          {{ form.email }}
+          {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="mb-4">
+          <label class="form-label form-label-escuro">Mensagem</label>
+          {{ form.mensagem }}
+          {% if form.mensagem.errors %}<div class="text-danger small">{{ form.mensagem.errors.0 }}</div>{% endif %}
+        </div>
+        <button type="submit" class="btn btn-laranja w-100">
+          <i class="bi bi-send"></i> Enviar Mensagem
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

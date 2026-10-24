@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% block title %}Cadastro — ElevaTech{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container" style="max-width: 520px;">
+        <div class="caixa-filtro p-4 p-md-5 mt-4">
+            <h1 class="h3 mb-4" style="color:#fff;">Criar conta</h1>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label form-label-escuro">Usuário</label>
+                    <input type="text" name="username" id="{{ form.username.id_for_label }}" class="form-control"
+                        value="{{ form.username.value|default:'' }}" required autofocus
+                        placeholder="mínimo 3 caracteres">
+                    {% if form.username.errors %}
+                    <div class="invalid-feedback d-block">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                    <div class="form-text" style="color: var(--texto-muted);">
+                        Letras, números e @/./+/-/_ — máximo 150 caracteres.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label form-label-escuro">Senha</label>
+                    <input type="password" name="password1" id="{{ form.password1.id_for_label }}" class="form-control"
+                        required placeholder="••••••••">
+                    {% if form.password1.errors %}
+                    <div class="invalid-feedback d-block">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label form-label-escuro">Confirmar
+                        senha</label>
+                    <input type="password" name="password2" id="{{ form.password2.id_for_label }}" class="form-control"
+                        required placeholder="••••••••">
+                    {% if form.password2.errors %}
+                    <div class="invalid-feedback d-block">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-laranja w-100">
+                    <i class="bi bi-person-plus"></i> Cadastrar
+                </button>
+            </form>
+
+            <hr class="my-4" style="border-color: var(--grafite-claro);">
+
+            <p class="small text-center mb-0" style="color: var(--texto-muted);">
+                Já tem conta?
+                <a href="{% url 'login' %}" style="color: var(--laranja-marca);">Entrar</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
