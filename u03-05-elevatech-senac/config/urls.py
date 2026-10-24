@@ -3,5 +3,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("core.urls")),  # Delega as rotas para o app core
+    path("contas/", include("django.contrib.auth.urls")),
+    path("", include("core.urls")),
+    path("", include("produtos.urls")),
 ]

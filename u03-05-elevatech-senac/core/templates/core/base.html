@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <!-- HEADER FIXO (Adendo 3: Sempre no topo) -->
+    <!-- HEADER FIXO -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">
@@ -26,13 +26,29 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
                     <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}">Início</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'catalogo' %}">Catálogo</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="{% url 'sobre' %}">Sobre</a></li>
                     
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link fw-bold texto-laranja" href="#">
-                            Entrar <i class="bi bi-box-arrow-in-right"></i>
-                        </a>
+                                        <li class="nav-item ms-lg-3">
+                        {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <a class="nav-link fw-bold text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle texto-laranja"></i> {{ user.username }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                    <li>
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger">Sair</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a class="nav-link fw-bold texto-laranja" href="{% url 'login' %}">
+                                Entrar <i class="bi bi-box-arrow-in-right"></i>
+                            </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
