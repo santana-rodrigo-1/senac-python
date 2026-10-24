@@ -73,3 +73,8 @@ git remote add origin
 git remote -v
 git branch -M main
 git push -u origin main
+
+# LIMPAR O HISTÓRICO DE COMANDOS DO TERMINAL (POWERSHELL)
+# Clear-History
+# Remove-Item (Get-PSReadlineOption).HistorySavePath
+# FIM
