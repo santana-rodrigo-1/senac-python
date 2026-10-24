@@ -16,5 +16,8 @@ class Elevador(models.Model):
     estoque = models.PositiveIntegerField(default=0)
     ativo = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name_plural = "Elevadores"
+
     def __str__(self):
         return self.nome

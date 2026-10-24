@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Catálogo — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5"> <!-- mt-5 para não bater no menu transparente -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="text-white fw-bold">Nossos Elevadores</h1>
+            <p class="text-muted">Encontre a solução ideal para o seu projeto.</p>
+        </div>
+        <div class="col-md-6">
+            <!-- O form de busca (igual ao manual) -->
+            <form method="get" class="d-flex gap-2">
+                <input type="text" name="q" class="form-control bg-dark text-white border-secondary" placeholder="Buscar elevador...">
+                <button type="submit" class="btn bg-laranja">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for elevador in elevadores %}
+            <div class="col-md-4">
+                <div class="card h-100 bg-dark border-secondary text-white">
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">{{ elevador.categoria.nome }}</span>
+                        <h4 class="card-title fw-bold">{{ elevador.nome }}</h4>
+                        <p class="text-muted small">Estoque disponível: {{ elevador.estoque }} unidades</p>
+                        <h5 class="texto-laranja fw-bold mb-4">R$ {{ elevador.preco }}</h5>
+                        
+                        <!-- BOTÃO PROFISSIONAL (Conforme sua observação) -->
+                        <a href="#" class="btn btn-outline-light w-100">
+                            <i class="bi bi-file-earmark-text"></i> Solicitar Orçamento
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <h4 class="text-muted">Nenhum elevador encontrado.</h4>
+                <a href="{% url 'catalogo' %}" class="btn btn-outline-light mt-3">Ver todos</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
