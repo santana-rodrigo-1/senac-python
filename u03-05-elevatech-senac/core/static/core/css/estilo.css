@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --laranja: #ff6b35;
+    --laranja-escuro: #e55a2b;
+    --azul-escuro: #0d1b2a;
+    --azul-medio: #1b263b;
+    --cinza-texto: #a0aab5;
+    --branco: #ffffff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Obriga o body a ter no mínimo a altura da tela */
+}
+
+/* Faz o conteúdo empurrar o footer para baixo */
+main {
+    flex: 1;
+}
+
+/* Header Fixo */
+.navbar-custom {
+    background-color: rgba(13, 27, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Hero da Home */
+.hero-section {
+    padding: 120px 0;
+    background: radial-gradient(circle at 100% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 50%);
+}
+
+.texto-laranja {
+    color: var(--laranja);
+}
+
+.btn-laranja {
+    background-color: var(--laranja);
+    color: var(--branco);
+    font-weight: 600;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-laranja:hover {
+    background-color: var(--laranja-escuro);
+    color: var(--branco);
+    transform: translateY(-2px);
+}
+
+.btn-outline-custom {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--branco);
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-outline-custom:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--branco);
+}
+
+/* Footer */
+.footer-custom {
+    background-color: #050a0f;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 0 30px;
+}
+
+/* Menu Mobile Elegante */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: var(--azul-medio); /* Cor de fundo escura */
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 15px;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .navbar-nav {
+        gap: 8px !important;
+    }
+    .nav-link {
+        padding: 10px 15px !important;
+        border-radius: 8px;
+        transition: 0.2s;
+    }
+    .nav-link:hover, .nav-link:focus {
+        background-color: rgba(255,255,255,0.05);
+        color: var(--laranja) !important;
+    }
+}
