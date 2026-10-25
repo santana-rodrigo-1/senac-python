@@ -40,7 +40,14 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-laranja w-100">Comprar</button>
                 </form>
-                
+            
+                <!-- BOTÃO DE EDITAR (SÓ APARECE PARA STAFF) -->
+                {% if user.is_staff %}
+                    <a href="{% url 'elevador_editar' elevador.pk %}" class="btn btn-outline-dark w-100 mt-2">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                {% endif %}
+
             </div>
         </div>
         {% empty %}

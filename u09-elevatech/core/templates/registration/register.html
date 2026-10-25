@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Criar Conta — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+                <h3 class="fw-bold text-center mb-4">Criar Conta</h3>
+                <p class="text-center text-muted small mb-4">Faça seu cadastro para comprar na ElevaTech.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-laranja w-100 mt-2">Cadastrar</button>
+                </form>
+
+                <hr class="my-4">
+                <p class="text-center small text-muted mb-0">
+                    Já tem conta? <a href="{% url 'login' %}" class="text-decoration-none"
+                        style="color: var(--laranja);">Entrar</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

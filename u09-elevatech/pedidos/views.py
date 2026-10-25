@@ -60,3 +60,23 @@ def finalizar(request):
 def meus_pedidos(request):
     pedidos = Pedido.objects.filter(usuario=request.user).order_by("-criado_em")
     return render(request, "pedidos/meus_pedidos.html", {"pedidos": pedidos})
+
+
+@require_POST
+def atualizar_carrinho(request, pk):
+    carrinho = request.session.get("carrinho", {})
+    chave = str(pk)
+    qtd = int(request.POST.get("quantidade", 1))
+
+    if qtd > 0:
+        carrinho[chave] = qtd
+    else:
+        carrinho.pop(chave, None)  # Se for 0, remove
+
+    request.session["carrinho"] = carrinho
+    return redirect("ver_carrinho")
+
+
+def limpar_carrinho(request):
+    request.session["carrinho"] = {}
+    return redirect("ver_carrinho")
