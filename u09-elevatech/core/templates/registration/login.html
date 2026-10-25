@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Entrar — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+                <h3 class="fw-bold text-center mb-4">Acessar Conta</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-laranja w-100 mt-2">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

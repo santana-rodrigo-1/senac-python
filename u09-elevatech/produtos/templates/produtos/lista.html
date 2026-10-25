@@ -1,10 +1,50 @@
-<!-- Exibe a foto se ela existir -->
-{% if elevador.imagem %}
-<img src="{{ elevador.imagem.url }}" class="card-img-top rounded" alt="{{ elevador.nome }}"
-    style="height: 200px; object-fit: cover;">
-{% else %}
-<div class="bg-secondary mb-3 d-flex align-items-center justify-content-center rounded"
-    style="height: 150px; color: white;">
-    <i class="bi bi-image fs-1 opacity-50"></i>
+{% extends 'core/base.html' %}
+
+{% block title %}Catálogo — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="fw-bold">Nossos <span style="color: var(--laranja);">Elevadores</span></h1>
+        </div>
+        <div class="col-md-6">
+            <form method="get" class="d-flex gap-2">
+                <input type="text" name="q" class="form-control" placeholder="Buscar elevador...">
+                <button type="submit" class="btn btn-laranja">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for elevador in elevadores %}
+        <div class="col-md-4">
+            <div class="card h-100 p-3">
+
+                {% if elevador.imagem %}
+                <img src="{{ elevador.imagem.url }}" class="card-img-top rounded mb-3" alt="{{ elevador.nome }}"
+                    style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-secondary mb-3 d-flex align-items-center justify-content-center rounded"
+                    style="height: 200px; color: white;">
+                    <i class="bi bi-image fs-1 opacity-50"></i>
+                </div>
+                {% endif %}
+
+                <span class="badge bg-dark mb-2 align-self-start">{{ elevador.categoria }}</span>
+                <h5 class="fw-bold">{{ elevador.nome }}</h5>
+                <p class="text-muted small">Estoque: {{ elevador.estoque }} un.</p>
+
+                <h4 class="fw-bold mt-auto" style="color: var(--laranja);">R$ {{ elevador.preco }}</h4>
+
+                <button class="btn btn-laranja w-100 mt-3">Comprar</button>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h4 class="text-muted">Nenhum elevador encontrado.</h4>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endif %}
+{% endblock %}
