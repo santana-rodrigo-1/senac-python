@@ -1,23 +1,69 @@
 {% extends 'core/base.html' %}
+
 {% block title %}Criar Conta — ElevaTech{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card p-4 shadow-sm">
-                <h3 class="fw-bold text-center mb-4">Criar Conta</h3>
-                <p class="text-center text-muted small mb-4">Faça seu cadastro para comprar na ElevaTech.</p>
+        <div class="col-md-6 col-lg-5">
+            <!-- Card Branco Limpo -->
+            <div class="card p-5 shadow-sm border-0 mt-4" style="border-radius: 12px;">
 
-                <form method="post">
+                <h2 class="fw-bold mb-4" style="color: #0f172a;">Criar conta</h2>
+
+                <form method="post" novalidate>
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-laranja w-100 mt-2">Cadastrar</button>
+
+                    <!-- Mensagens de erro gerais -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <!-- CAMPO USUÁRIO -->
+                    <div class="mb-4">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fw-bold small"
+                            style="color: #475569;">Usuário</label>
+                        <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}"
+                            class="form-control form-control-lg bg-light border-0" placeholder="mínimo 3 caracteres"
+                            required style="font-size: 0.95rem;">
+                        {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- CAMPO SENHA -->
+                    <div class="mb-4">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label fw-bold small"
+                            style="color: #475569;">Senha</label>
+                        <input type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}"
+                            class="form-control form-control-lg bg-light border-0" placeholder="••••••••" required
+                            style="font-size: 0.95rem;">
+                        {% if form.password1.errors %}
+                        <div class="text-danger small mt-1">{{ form.password1.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- CAMPO CONFIRMAR SENHA -->
+                    <div class="mb-4">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label fw-bold small"
+                            style="color: #475569;">Confirmar senha</label>
+                        <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}"
+                            class="form-control form-control-lg bg-light border-0" placeholder="••••••••" required
+                            style="font-size: 0.95rem;">
+                        {% if form.password2.errors %}
+                        <div class="text-danger small mt-1">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-laranja w-100 py-3 fw-bold mt-2" style="font-size: 1rem;">
+                        <i class="bi bi-person-plus me-2"></i> Cadastrar
+                    </button>
                 </form>
 
-                <hr class="my-4">
-                <p class="text-center small text-muted mb-0">
-                    Já tem conta? <a href="{% url 'login' %}" class="text-decoration-none"
+                <hr class="my-4" style="border-color: #e2e8f0;">
+
+                <p class="text-center small mb-0" style="color: #475569;">
+                    Já tem conta? <a href="{% url 'login' %}" class="text-decoration-none fw-bold"
                         style="color: var(--laranja);">Entrar</a>
                 </p>
             </div>
