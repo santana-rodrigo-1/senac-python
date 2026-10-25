@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ElevaTech{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS Local -->
+    <link rel="stylesheet" href="{% static 'core/css/estilo.css' %}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold fs-4 mb-0" href="{% url 'home' %}">
+                <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a class="nav-link text-white p-0" href="{% url 'home' %}">Início</a>
+                <a class="nav-link text-white p-0" href="#">Catálogo</a>
+                <a class="nav-link text-white p-0" href="#">Carrinho</a>
+                <a class="btn btn-sm btn-outline-light ms-2" href="#">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="navbar navbar-dark navbar-custom py-3 mt-auto"
+        style="border-top: 2px solid #ff6b35; border-bottom: none;">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <a class="navbar-brand fw-bold fs-4 mb-0" href="{% url 'home' %}">
+                <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a class="nav-link text-white p-0" href="#" data-bs-toggle="modal" data-bs-target="#modalContato">Fale
+                    Conosco</a>
+                <span class="text-white-50 small"><i class="bi bi-envelope"></i> comercial@elevatech.com.br</span>
+                <span class="text-white-50 small"><i class="bi bi-whatsapp"></i> (99) 99999-9999</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Contato -->
+    <div class="modal fade" id="modalContato" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white border-0">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-buildings" style="color: #ff6b35;"></i> Fale Conosco
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="text-muted mb-4">Nossa equipe está pronta para atender você.</p>
+                    <p><i class="bi bi-whatsapp fs-5 me-2" style="color: #0d9488;"></i> <strong>WhatsApp:</strong> (99)
+                        99999-9999</p>
+                    <p><i class="bi bi-envelope fs-5 me-2" style="color: #ff6b35;"></i> <strong>E-mail:</strong>
+                        comercial@elevatech.com.br</p>
+                    <p><i class="bi bi-clock fs-5 me-2" style="color: #1e293b;"></i> <strong>Horário:</strong> Seg a
+                        Sex, 8h às 18h</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <a href="https://wa.me/5599999999999" target="_blank" class="btn btn-laranja w-100">Chamar no
+                        WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

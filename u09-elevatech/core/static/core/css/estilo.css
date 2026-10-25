@@ -1,0 +1,29 @@
+/* Fundo do site */
+body {
+    background-color: #f4f4f5;
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+/* Menu do topo */
+.navbar-custom {
+    background-color: #0d1b2a !important;
+    border-bottom: 2px solid #ff6b35;
+}
+
+/* Botões Laranjas */
+.btn-laranja {
+    background-color: #ff6b35 !important;
+    color: white !important;
+    font-weight: bold;
+}
+.btn-laranja:hover {
+    background-color: #e55a2b !important;
+}
+
+/* Cards */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
