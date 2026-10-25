@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'produtos',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,11 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LOGIN_URL = "login"              # para onde manda quem não está logado
+LOGIN_REDIRECT_URL = "home"      # para onde vai depois de entrar
+LOGOUT_REDIRECT_URL = "home"
+
+import os
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
