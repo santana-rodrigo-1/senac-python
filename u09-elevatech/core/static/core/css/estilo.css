@@ -16,19 +16,19 @@ html, body {
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-main {
-    background-color: transparent !important;
-}
-
 /* Header e Footer */
 .navbar-custom {
     background-color: #0d1b2a !important;
-    border-bottom: 2px solid var(--laranja);
+    border-bottom: 3px solid var(--laranja);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 footer.navbar-custom {
     border-bottom: none;
-    border-top: 2px solid var(--laranja);
+    border-top: 3px solid var(--laranja);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 /* Cards */
@@ -55,6 +55,8 @@ footer.navbar-custom {
     border-color: var(--laranja) !important;
     color: #ffffff !important;
     font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
 }
 
 .btn-laranja:hover {
