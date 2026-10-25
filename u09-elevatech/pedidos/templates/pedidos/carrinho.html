@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% block title %}Meu Carrinho — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="fw-bold mb-4">Meu Carrinho</h1>
+
+    {% if itens %}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            {% for item in itens %}
+            <div class="card mb-3 p-3">
+                <div class="d-flex align-items-center gap-3">
+                    {% if item.elevador.imagem %}
+                    <img src="{{ item.elevador.imagem.url }}" style="width:80px; height:80px; object-fit:cover;"
+                        class="rounded">
+                    {% endif %}
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1">{{ item.elevador.nome }}</h5>
+                        <p class="text-muted small mb-0">Qtd: {{ item.quantidade }}</p>
+                    </div>
+                    <div class="text-end">
+                        <h5 class="fw-bold" style="color: var(--laranja);">R$ {{ item.subtotal }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-4">
+            <div class="card p-4">
+                <h4 class="fw-bold mb-3">Resumo</h4>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Total:</span>
+                    <span class="fw-bold fs-4" style="color: var(--laranja);">R$ {{ total }}</span>
+                </div>
+                <a href="{% url 'finalizar' %}" class="btn btn-laranja w-100 mb-2">Finalizar Pedido</a>
+                <a href="{% url 'catalogo' %}" class="btn btn-outline-dark w-100">Continuar Comprando</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <h4 class="text-muted mb-4">Seu carrinho está vazio.</h4>
+        <a href="{% url 'catalogo' %}" class="btn btn-laranja">Ver Elevadores</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

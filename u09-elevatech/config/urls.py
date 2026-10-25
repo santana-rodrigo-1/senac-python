@@ -25,6 +25,7 @@ urlpatterns = [
     path("contas/", include("django.contrib.auth.urls")),
     path("", include("core.urls")),
     path("", include("produtos.urls")),
+    path("", include("pedidos.urls")),
 ]
 
 if settings.DEBUG:
