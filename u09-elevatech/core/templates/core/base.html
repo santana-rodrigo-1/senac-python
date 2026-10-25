@@ -45,48 +45,62 @@
     </main>
 
     <!-- Footer -->
-    <!-- Footer -->
     <footer class="py-5 mt-auto" style="background-color: #0d1b2a; border-top: 3px solid #ff6b35;">
         <div class="container">
-            <div class="row g-4">
-                
-                <!-- Coluna 1: Logo e Descrição -->
-                <div class="col-12 col-md-4 mb-4 mb-md-0 ps-0">
-                    <a class="navbar-brand fw-bold fs-3 mb-0 text-white text-decoration-none" href="{% url 'home' %}">
+            <!-- Flexbox para empurrar as colunas para os extremos -->
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-5">
+
+                <!-- Bloco 1: Logo -->
+                <div>
+                    <a class="text-white text-decoration-none fw-bold fs-3" href="{% url 'home' %}">
                         <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
                     </a>
-                    <p class="text-white-50 small mt-3">
-                        Tecnologia em mobilidade vertical.<br>Segurança e inovação para o seu projeto.
-                    </p>
+                    <p class="text-white-50 small mt-3 mb-2">Tecnologia em mobilidade vertical.</p>
+                    <p class="text-white-50 small mb-0 opacity-75">&copy; 2026 ElevaTech.</p>
                 </div>
 
-                <!-- Coluna 2: Contato -->
-                <div class="col-12 col-md-4 mb-4 mb-md-0">
-                    <h6 class="text-uppercase fw-bold mb-3" style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
-                    <ul class="list-unstyled small text-white-50">
-                        <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> (99) 99999-9999</li>
-                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> comercial@elevatech.com.br</li>
-                        <li><i class="bi bi-clock me-2"></i> Seg a Sex, das 8h às 18h</li>
-                    </ul>
-                </div>
+                <!-- Bloco 2 e 3: Contato e Institucional (Juntos à direita) -->
+                <div class="d-flex flex-column flex-sm-row gap-5">
 
-                <!-- Coluna 3: Institucional -->
-                <div class="col-12 col-md-4">
-                    <h6 class="text-uppercase fw-bold mb-3" style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Institucional</h6>
-                    <ul class="list-unstyled small">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Fale Conosco</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Sobre a Empresa</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Termos de Uso</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Política de Privacidade</a></li>
-                    </ul>
-                </div>
+                    <!-- Contato -->
+                    <div>
+                        <h6 class="text-uppercase fw-bold mb-3"
+                            style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
+                        <ul class="list-unstyled small text-white-50 mb-3">
+                            <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@elevatech.com.br</li>
+                            <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> (21) 90000-0000</li>
+                            <li><i class="bi bi-clock me-2"></i> Seg a Sex, 8h às 18h</li>
+                        </ul>
 
-            </div>
-            
-            <hr class="border-secondary mt-4 mb-3">
-            
-            <div class="text-center text-white-50 small">
-                &copy; 2026 ElevaTech - Todos os direitos reservados.
+                        <!-- Redes Sociais -->
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Instagram"><i
+                                    class="bi bi-instagram"></i></a>
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="LinkedIn"><i
+                                    class="bi bi-linkedin"></i></a>
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="YouTube"><i
+                                    class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Institucional -->
+                    <div>
+                        <h6 class="text-uppercase fw-bold mb-3"
+                            style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Institucional</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-laranja">Sobre
+                                    a ElevaTech</a></li>
+                            <li class="mb-2"><a href="#"
+                                    class="text-white-50 text-decoration-none hover-laranja">Perguntas Frequentes</a>
+                            </li>
+                            <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-laranja">Termos
+                                    de Uso</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none hover-laranja">Política de
+                                    Privacidade</a></li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div>
     </footer>

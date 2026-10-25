@@ -1,0 +1,10 @@
+<!-- Exibe a foto se ela existir -->
+{% if elevador.imagem %}
+<img src="{{ elevador.imagem.url }}" class="card-img-top rounded" alt="{{ elevador.nome }}"
+    style="height: 200px; object-fit: cover;">
+{% else %}
+<div class="bg-secondary mb-3 d-flex align-items-center justify-content-center rounded"
+    style="height: 150px; color: white;">
+    <i class="bi bi-image fs-1 opacity-50"></i>
+</div>
+{% endif %}
