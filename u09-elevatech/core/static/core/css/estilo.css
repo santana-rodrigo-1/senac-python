@@ -10,10 +10,14 @@
 }
 
 /* Geral */
-body {
+html, body {
     background-color: var(--bg-site) !important;
     color: var(--texto-principal) !important;
     font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+main {
+    background-color: transparent !important;
 }
 
 /* Header e Footer */
@@ -21,6 +25,7 @@ body {
     background-color: #0d1b2a !important;
     border-bottom: 2px solid var(--laranja);
 }
+
 footer.navbar-custom {
     border-bottom: none;
     border-top: 2px solid var(--laranja);
