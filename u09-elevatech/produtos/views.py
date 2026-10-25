@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .models import Elevador
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Elevador
@@ -8,15 +7,26 @@ from .forms import ElevadorForm
 
 
 def lista_elevadores(request):
-    # Busca os elevadores ativos no banco e ordena por nome
     elevadores = Elevador.objects.filter(ativo=True).order_by("nome")
-
-    # Lógica de busca (opcional)
+    
+    # Busca por nome
     termo = request.GET.get("q")
     if termo:
         elevadores = elevadores.filter(nome__icontains=termo)
+        
+    # Filtro por Categoria
+    cat = request.GET.get("categoria")
+    if cat:
+        elevadores = elevadores.filter(categoria=cat)
 
-    return render(request, "produtos/lista.html", {"elevadores": elevadores})
+    # Pega as categorias únicas para montar os botões
+    categorias = Elevador.objects.values_list("categoria", flat=True).distinct()
+
+    return render(request, "produtos/lista.html", {
+        "elevadores": elevadores, 
+        "categorias": categorias,
+        "categoria_atual": cat
+    })
 
 
 # Verifica se o usuário é da equipe
@@ -49,3 +59,8 @@ def elevador_editar(request, pk):
     else:
         form = ElevadorForm(instance=elevador)
     return render(request, "produtos/form.html", {"form": form})
+
+
+def detalhe_elevador(request, pk):
+    elevador = get_object_or_404(Elevador, pk=pk)
+    return render(request, "produtos/detalhe.html", {"elevador": elevador})
