@@ -1,29 +1,58 @@
-/* Fundo do site */
-body {
-    background-color: #f4f4f5;
-    color: #1e293b;
-    font-family: Arial, sans-serif;
+/* Variáveis de Cor */
+:root {
+    --bg-site: #e2e8f0;
+    --bg-card: #ffffff;
+    --texto-principal: #0f172a;
+    --texto-secundario: #475569;
+    --cor-borda: #cbd5e1;
+    --laranja: #ff6b35;
+    --laranja-hover: #e55a2b;
 }
 
-/* Menu do topo */
+/* Geral */
+body {
+    background-color: var(--bg-site) !important;
+    color: var(--texto-principal) !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header e Footer */
 .navbar-custom {
     background-color: #0d1b2a !important;
-    border-bottom: 2px solid #ff6b35;
+    border-bottom: 2px solid var(--laranja);
 }
-
-/* Botões Laranjas */
-.btn-laranja {
-    background-color: #ff6b35 !important;
-    color: white !important;
-    font-weight: bold;
-}
-.btn-laranja:hover {
-    background-color: #e55a2b !important;
+footer.navbar-custom {
+    border-bottom: none;
+    border-top: 2px solid var(--laranja);
 }
 
 /* Cards */
 .card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--cor-borda) !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card p, .card small {
+    color: var(--texto-secundario) !important;
+}
+
+/* Botões */
+.btn-laranja {
+    background-color: var(--laranja) !important;
+    border-color: var(--laranja) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.btn-laranja:hover {
+    background-color: var(--laranja-hover) !important;
+    border-color: var(--laranja-hover) !important;
 }
