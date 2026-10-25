@@ -15,3 +15,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, "registration/register.html", {"form": form})
+
+def sobre(request):
+    return render(request, "core/sobre.html")

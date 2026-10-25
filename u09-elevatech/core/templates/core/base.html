@@ -22,54 +22,56 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top py-2">
         <div class="container d-flex justify-content-between align-items-center">
+
+            <!-- Logo -->
             <a class="navbar-brand fw-bold fs-3 mb-0" href="{% url 'home' %}">
                 <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
             </a>
 
-            <div class="d-flex align-items-center gap-4">
+            <!-- Menu Direita -->
+            <div class="d-flex align-items-center gap-3">
                 <a class="nav-link text-white p-0 fw-medium" href="{% url 'home' %}">Início</a>
                 <a class="nav-link text-white p-0 fw-medium" href="{% url 'catalogo' %}">Catálogo</a>
+                <a class="nav-link text-white p-0 fw-medium" href="{% url 'sobre' %}">Sobre</a>
 
-                <!-- LINK DO CARRINHO -->
+                <!-- Carrinho com Contador -->
                 <a class="nav-link text-white p-0 fw-medium" href="{% url 'ver_carrinho' %}">
-                    <i class="bi bi-cart3 fs-5"></i> Carrinho
+                    <i class="bi bi-cart3"></i> Carrinho
                     {% if carrinho_quantidade %}
-                    <span class="badge rounded-pill" style="background-color: #ff6b35; color: white;">{{ carrinho_quantidade }}</span>
+                    <span class="badge rounded-pill" style="background-color: #ff6b35; color: white;">{{
+                        carrinho_quantidade }}</span>
                     {% endif %}
                 </a>
 
-                <!-- ÁREA DE LOGIN/LOGOUT -->
                 {% if user.is_authenticated %}
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle text-white fw-medium" href="#" role="button"
-                        data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle"></i> {{ user.username }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                        <!-- BOTÃO NOVO ELEVADOR (SÓ APARECE PARA STAFF) -->
-                        {% if user.is_staff %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'elevador_novo' %}">Novo Elevador</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        {% endif %}
+                <!-- SE ESTIVER LOGADO -->
+                <span class="text-white fw-medium ms-2">Olá, {{ user.username }}</span>
 
-                        <!-- BOTÃO SAIR -->
-                        <li>
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item text-danger">Sair</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                {% if user.is_staff %}
+                <!-- BOTÕES DE ADMIN -->
+                <a href="/admin/" class="btn btn-sm btn-outline-light fw-medium ms-2">
+                    <i class="bi bi-gear"></i> Administração
+                </a>
+                <a href="{% url 'elevador_novo' %}" class="btn btn-sm btn-laranja fw-bold ms-2">
+                    <i class="bi bi-plus-lg"></i> Novo Elevador
+                </a>
+                {% endif %}
+
+                <!-- BOTÃO SAIR -->
+                <form method="post" action="{% url 'logout' %}" class="d-inline ms-2 mb-0">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="btn btn-sm btn-link text-white-50 text-decoration-none fw-medium">Sair</button>
+                </form>
+
                 {% else %}
-                <a class="btn btn-sm btn-outline-light px-4 py-2 ms-2" href="{% url 'login' %}">Entrar</a>
+                <!-- SE NÃO ESTIVER LOGADO -->
+                <a class="nav-link text-white p-0 fw-medium ms-2" href="{% url 'login' %}">Entrar</a>
+                <a class="nav-link text-white p-0 fw-medium" href="{% url 'register' %}">Criar conta</a>
                 {% endif %}
             </div>
         </div>
@@ -84,7 +86,7 @@
     <footer class="py-5 mt-auto" style="background-color: #0d1b2a; border-top: 3px solid #ff6b35;">
         <div class="container">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
-                
+
                 <!-- Bloco 1: Logo -->
                 <div>
                     <a class="text-white text-decoration-none fw-bold fs-3" href="{% url 'home' %}">
@@ -96,17 +98,21 @@
 
                 <!-- Bloco 2: Contato (Agora na direita) -->
                 <div class="text-md-end">
-                    <h6 class="text-uppercase fw-bold mb-3" style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
+                    <h6 class="text-uppercase fw-bold mb-3"
+                        style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
                     <ul class="list-unstyled small text-white-50 mb-3">
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@elevatech.com.br</li>
                         <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> (21) 90000-0000</li>
                         <li><i class="bi bi-clock me-2"></i> Seg a Sex, 8h às 18h</li>
                     </ul>
-                    
+
                     <div class="d-flex gap-2 justify-content-md-end">
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Instagram"><i
+                                class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="LinkedIn"><i
+                                class="bi bi-linkedin"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="YouTube"><i
+                                class="bi bi-youtube"></i></a>
                     </div>
                 </div>
 

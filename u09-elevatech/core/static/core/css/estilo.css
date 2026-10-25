@@ -86,3 +86,11 @@ main {
 .icone-destaque:hover {
   transform: scale(1.05);
 }
+
+/* Ajuste do menu para telas grandes */
+.navbar-custom .nav-link {
+    padding: 8px 12px !important;
+}
+.navbar-custom .nav-link:hover {
+    color: var(--laranja) !important;
+}
