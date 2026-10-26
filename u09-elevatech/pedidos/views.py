@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 from django.db import transaction
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import (
+    require_POST,
+)
 from produtos.models import Elevador
-from .models import Pedido, ItemPedido
+from .models import ItemPedido, Pedido
 
 
 @require_POST
@@ -11,8 +14,22 @@ def adicionar(request, pk):
     elevador = get_object_or_404(Elevador, pk=pk)
     carrinho = request.session.get("carrinho", {})
     chave = str(pk)
-    carrinho[chave] = carrinho.get(chave, 0) + 1
-    request.session["carrinho"] = carrinho
+
+    # Quantidade atual no carrinho + 1 que está tentando adicionar
+    quantidade_atual_no_carrinho = carrinho.get(chave, 0)
+    nova_quantidade = quantidade_atual_no_carrinho + 1
+
+    # Valida se há estoque suficiente
+    if elevador.estoque < nova_quantidade:
+        messages.error(
+            request,
+            f"Desculpe, estoque insuficiente para '{elevador.nome}'. Disponível: {elevador.estoque}.",
+        )
+    else:
+        carrinho[chave] = nova_quantidade
+        request.session["carrinho"] = carrinho
+        messages.success(request, f"'{elevador.nome}' adicionado ao carrinho!")
+
     return redirect("ver_carrinho")
 
 
@@ -39,21 +56,35 @@ def finalizar(request):
     if not carrinho:
         return redirect("catalogo")
 
-    with transaction.atomic():
-        pedido = Pedido.objects.create(usuario=request.user)
-        for pk, qtd in carrinho.items():
-            elevador = Elevador.objects.select_for_update().get(pk=pk)
-            ItemPedido.objects.create(
-                pedido=pedido,
-                elevador=elevador,
-                quantidade=qtd,
-                preco=elevador.preco,
-            )
-            elevador.estoque -= qtd
-            elevador.save()
+    try:
+        with transaction.atomic():
+            pedido = Pedido.objects.create(usuario=request.user)
+            for pk, qtd in carrinho.items():
+                elevador = Elevador.objects.select_for_update().get(pk=pk)
 
-    request.session["carrinho"] = {}
-    return redirect("meus_pedidos")
+                # Validação final antes de abater do banco
+                if elevador.estoque < qtd:
+                    messages.error(
+                        request,
+                        f"Estoque insuficiente para '{elevador.nome}'. Disponível: {elevador.estoque}, Solicitado: {qtd}.",
+                    )
+                    raise ValueError("Estoque insuficiente")
+
+                ItemPedido.objects.create(
+                    pedido=pedido,
+                    elevador=elevador,
+                    quantidade=qtd,
+                    preco=elevador.preco,
+                )
+                elevador.estoque -= qtd
+                elevador.save()
+
+        request.session["carrinho"] = {}
+        messages.success(request, "Pedido realizado com sucesso!")
+        return redirect("meus_pedidos")
+
+    except ValueError:
+        return redirect("ver_carrinho")
 
 
 @login_required
@@ -64,14 +95,30 @@ def meus_pedidos(request):
 
 @require_POST
 def atualizar_carrinho(request, pk):
+    elevador = get_object_or_404(Elevador, pk=pk)
     carrinho = request.session.get("carrinho", {})
     chave = str(pk)
-    qtd = int(request.POST.get("quantidade", 1))
+    
+    try:
+        qtd = int(request.POST.get("quantidade", 1))
+    except (ValueError, TypeError):
+        qtd = 1
 
     if qtd > 0:
-        carrinho[chave] = qtd
+        # Valida se a nova quantidade digitada no carrinho ultrapassa o estoque
+        if elevador.estoque < qtd:
+            messages.error(
+                request,
+                f"Quantidade solicitada indisponível para '{elevador.nome}'. Estoque máximo: {elevador.estoque}.",
+            )
+            # PARADA OBRIGATÓRIA AQUI: Evita que salve o valor errado e limpa o fluxo
+            return redirect("ver_carrinho")
+        else:
+            carrinho[chave] = qtd
+            messages.success(request, "Carrinho atualizado com sucesso!")
     else:
         carrinho.pop(chave, None)  # Se for 0, remove
+        messages.info(request, f"'{elevador.nome}' foi removido do carrinho.")
 
     request.session["carrinho"] = carrinho
     return redirect("ver_carrinho")
@@ -79,4 +126,5 @@ def atualizar_carrinho(request, pk):
 
 def limpar_carrinho(request):
     request.session["carrinho"] = {}
+    messages.info(request, "Carrinho limpo.")
     return redirect("ver_carrinho")
