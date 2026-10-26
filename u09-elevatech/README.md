@@ -68,8 +68,8 @@ Acesse o site em: **http://127.0.0.1:8000/**
 Em respeito à ética acadêmica e à transparência, declaro que este projeto utilizou recursos de Inteligência Artificial durante o seu desenvolvimento.
 
 **Ferramenta utilizada:**
-- **ChatGPT** (desenvolvido pela **OpenAI**)
-- **Versão:** GPT-4 (Acessado via interface web oficial)
+- **DeepSeek** (desenvolvido pela DeepSeek)
+- **Gemini** (desenvolvido pelo Google)
 
 **Como a IA foi utilizada:**
 A IA foi empregada estritamente como uma **ferramenta de mentoria técnica e apoio ao aprendizado** (Pair Programming), atuando nos seguintes aspectos:
