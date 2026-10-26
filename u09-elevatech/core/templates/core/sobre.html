@@ -1,15 +1,13 @@
 {% extends 'core/base.html' %}
-
 {% block title %}Sobre — ElevaTech{% endblock %}
 
 {% block content %}
 <div class="container py-5">
-
-    <!-- Cabeçalho -->
+    
     <div class="row mb-5">
         <div class="col-lg-8">
-            <h1 class="fw-bold mb-3">Sobre a <span style="color: var(--laranja);">ElevaTech</span></h1>
-            <p class="lead text-muted">
+            <h1 class="fw-bold mb-3">Sobre a <span class="texto-destaque">ElevaTech</span></h1>
+            <p class="lead">
                 Soluções em mobilidade vertical que unem tecnologia, segurança e acessibilidade.
             </p>
         </div>
@@ -18,39 +16,35 @@
     <!-- Seção 1: O Produto -->
     <div class="row mb-5">
         <div class="col-12">
-            <h2 class="h4 fw-bold border-bottom pb-2 mb-4" style="border-color: var(--cor-borda) !important;">Nossos
-                Elevadores</h2>
+            <h2 class="h4 fw-bold border-bottom pb-2 mb-4" style="border-color: var(--cor-borda) !important;">Nossos Elevadores</h2>
         </div>
-
+        
         <div class="col-md-4 mb-4">
             <div class="card h-100 p-4 border-0 shadow-sm">
-                <i class="bi bi-house-door fs-1 mb-3" style="color: var(--laranja);"></i>
+                <i class="bi bi-house-door fs-1 mb-3 texto-destaque"></i>
                 <h3 class="h5 fw-bold">Linha Residencial</h3>
                 <p class="text-muted small mb-0">
-                    Elevadores compactos e silenciosos, projetados para casas e condomínios de médio porte. Priorizam o
-                    conforto e o design discreto.
+                    Elevadores compactos e silenciosos, projetados para casas e condomínios de médio porte. Priorizam o conforto e o design discreto.
                 </p>
             </div>
         </div>
 
         <div class="col-md-4 mb-4">
             <div class="card h-100 p-4 border-0 shadow-sm">
-                <i class="bi bi-building fs-1 mb-3" style="color: var(--laranja);"></i>
+                <i class="bi bi-building fs-1 mb-3 texto-destaque"></i>
                 <h3 class="h5 fw-bold">Linha Comercial</h3>
                 <p class="text-muted small mb-0">
-                    Equipamentos de alta performance para escritórios e edifícios corporativos, com foco em velocidade e
-                    fluxo intenso de pessoas.
+                    Equipamentos de alta performance para escritórios e edifícios corporativos, com foco em velocidade e fluxo intenso de pessoas.
                 </p>
             </div>
         </div>
 
         <div class="col-md-4 mb-4">
             <div class="card h-100 p-4 border-0 shadow-sm">
-                <i class="bi bi-hospital fs-1 mb-3" style="color: var(--laranja);"></i>
+                <i class="bi bi-hospital fs-1 mb-3 texto-destaque"></i>
                 <h3 class="h5 fw-bold">Linha Hospitalar</h3>
                 <p class="text-muted small mb-0">
-                    Elevadores de grande porte para macas e equipamentos médicos. Todos incluem recursos de
-                    acessibilidade (PCD), como avisos sonoros e botoeiras em braille.
+                    Elevadores de grande porte para macas e equipamentos médicos. Todos incluem recursos de acessibilidade (PCD), como avisos sonoros e botoeiras em braille.
                 </p>
             </div>
         </div>
@@ -59,53 +53,37 @@
     <!-- Seção 2: O Projeto (Estilo README) -->
     <div class="row">
         <div class="col-12">
-            <div class="card p-4 p-md-5 border-0 shadow-sm" style="background-color: #f8fafc;">
+            <!-- Removi o style="background-color: #f8fafc;" e usei a variável do card -->
+            <div class="card p-4 p-md-5 border-0 shadow-sm">
                 <div class="d-flex align-items-center mb-3">
-                    <i class="bi bi-code-slash fs-3 me-3" style="color: #0f172a;"></i>
+                    <i class="bi bi-code-slash fs-3 me-3"></i>
                     <h2 class="h4 fw-bold mb-0">Sobre o Projeto</h2>
                 </div>
-
+                
                 <p class="text-muted mb-4">
-                    Este e-commerce é o projeto final do curso de <strong>Programação em Python (UC3) do SENAC</strong>.
-                    A aplicação foi construída do zero simulando uma empresa real de engenharia, com o objetivo de
-                    aplicar os conhecimentos de back-end e front-end adquiridos em aula.
+                    Este e-commerce é o projeto final do curso de <strong>Programação em Python (UC3) do SENAC</strong>. A aplicação foi construída do zero simulando uma empresa real de engenharia, com o objetivo de aplicar os conhecimentos de back-end e front-end adquiridos em aula.
                 </p>
 
                 <div class="row g-4">
                     <div class="col-md-6">
                         <h3 class="h6 fw-bold text-uppercase" style="letter-spacing: 1px;">Tecnologias Utilizadas</h3>
                         <ul class="list-unstyled text-muted small">
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                <strong>Python 3.14</strong> e <strong>Django 6.1</strong> (Back-end)</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                <strong>SQLite</strong> (Banco de dados relacional)</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                <strong>Bootstrap 5.3</strong> (Design responsivo)</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                <strong>Pillow</strong> (Processamento de imagens)</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> <strong>Python 3.14</strong> e <strong>Django 6.1</strong> (Back-end)</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> <strong>SQLite</strong> (Banco de dados relacional)</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> <strong>Bootstrap 5.3</strong> (Design responsivo)</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> <strong>Pillow</strong> (Processamento de imagens)</li>
                         </ul>
                     </div>
-
+                    
                     <div class="col-md-6">
                         <h3 class="h6 fw-bold text-uppercase" style="letter-spacing: 1px;">Funcionalidades</h3>
                         <ul class="list-unstyled text-muted small">
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                Catálogo dinâmico com busca e filtros por categoria</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                Sistema de carrinho de compras e checkout com controle de estoque</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                Autenticação de usuários (Login, Cadastro e Logout)</li>
-                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--laranja);"></i>
-                                Painel administrativo com CRUD de produtos e permissões de acesso</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> Catálogo dinâmico com busca e filtros por categoria</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> Sistema de carrinho de compras e checkout com controle de estoque</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> Autenticação de usuários (Login, Cadastro e Logout)</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill me-2 texto-destaque"></i> Painel administrativo com CRUD de produtos e permissões de acesso</li>
                         </ul>
                     </div>
-                </div>
-
-                <hr class="my-4" style="border-color: #cbd5e1;">
-
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <span class="text-muted small">Desenvolvido como projeto acadêmico.</span>
-                    
                 </div>
             </div>
         </div>

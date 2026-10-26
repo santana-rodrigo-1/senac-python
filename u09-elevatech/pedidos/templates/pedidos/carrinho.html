@@ -27,7 +27,8 @@
                     <!-- Nome e Detalhes -->
                     <div class="flex-grow-1">
                         <h5 class="fw-bold mb-1">{{ item.elevador.nome }}</h5>
-                        <p class="text-muted small mb-1">{{ item.elevador.categoria }} · Estoque: {{item.elevador.estoque }}</p>
+                        <p class="text-muted small mb-1">{{ item.elevador.categoria }} · Estoque:
+                            {{item.elevador.estoque }}</p>
                         <p class="small mb-0" style="color: var(--laranja);">R$ {{ item.elevador.preco }} cada</p>
                     </div>
 
@@ -37,7 +38,7 @@
                         {% csrf_token %}
                         <input type="number" name="quantidade" value="{{ item.quantidade }}" min="1" max="99"
                             class="form-control form-control-sm bg-light" style="width: 70px;">
-                        <button type="submit" class="btn btn-sm btn-outline-dark">Atualizar</button>
+                        <button type="submit" class="btn btn-sm btn-secundario">Atualizar</button>
                     </form>
 
                     <!-- Subtotal e Remover -->
@@ -85,7 +86,7 @@
                 </a>
 
                 <!-- Botões Secundários -->
-                <a href="{% url 'catalogo' %}" class="btn btn-outline-dark w-100 py-2 mb-2">
+                <a href="{% url 'catalogo' %}" class="btn btn-secundario w-100 py-2 mb-2">
                     <i class="bi bi-arrow-left"></i> Continuar navegando
                 </a>
 
