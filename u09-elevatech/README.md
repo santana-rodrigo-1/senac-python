@@ -68,17 +68,21 @@ Acesse o site em: **http://127.0.0.1:8000/**
 Em respeito à ética acadêmica e à transparência, declaro que este projeto utilizou recursos de Inteligência Artificial durante o seu desenvolvimento.
 
 **Ferramenta utilizada:**
+
 - **DeepSeek** (desenvolvido pela DeepSeek)
 - **Gemini** (desenvolvido pelo Google)
+- **Copilot** (desenvolvido pela Microsoft) - utilizado para geração das imagens dos elevadores.
 
 **Como a IA foi utilizada:**
 A IA foi empregada estritamente como uma **ferramenta de mentoria técnica e apoio ao aprendizado** (Pair Programming), atuando nos seguintes aspectos:
+
 1. **Explicação de conceitos:** Aprofundamento teórico sobre o framework Django (Models, Sessões, Transações e ORM).
 2. **Arquitetura de Software:** Sugestões de boas práticas de estruturação de pastas e separação de responsabilidades (apps).
 3. **Depuração (Debug):** Auxílio na leitura de tracebacks de erros e identificação de falhas de sintaxe em templates.
 4. **Design System:** Apoio na criação de variáveis CSS e adaptação de componentes do Bootstrap para o tema personalizado.
 
 **O que NÃO foi feito pela IA:**
+
 - Todo o código foi **digitado, testado e validado** pelo aluno no ambiente local.
 - A modelagem do banco de dados e as regras de negócio foram **compreendidas e definidas** pelo desenvolvedor.
 - A IA não gerou o projeto de forma automatizada; ele atuou como um "professor particular" ao lado do aluno durante o processo de construção.
@@ -87,5 +91,5 @@ A IA foi empregada estritamente como uma **ferramenta de mentoria técnica e apo
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Rodrigo**  
+Desenvolvido por **Rodrigo**
 Senac RJ - 2026
