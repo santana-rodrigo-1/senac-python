@@ -3,24 +3,29 @@
 {% block title %}ElevaTech — Início{% endblock %}
 
 {% block content %}
-<div class="container py-5 my-5">
+<div class="container py-5 my-4">
     <div class="row align-items-center">
-
+        
         <!-- Texto Principal -->
         <div class="col-lg-6 mb-5 mb-lg-0">
-            <span class="badge bg-dark mb-4 px-3 py-2 rounded-pill shadow-sm" style="letter-spacing: 1px;">SOLUÇÕES EM
-                MOBILIDADE</span>
-            <h1 class="display-4 fw-bold mb-4" style="color: #0f172a; line-height: 1.1;">
-                Elevadores para <br><span style="color: var(--laranja);">cada projeto</span>
+            <!-- Selo -->
+            <span class="badge bg-secondary mb-4 px-3 py-2 rounded-pill shadow-sm" style="letter-spacing: 1px;">SOLUÇÕES EM MOBILIDADE</span>
+            
+            <!-- Título -->
+            <h1 class="display-4 fw-bold mb-4" style="line-height: 1.1;">
+                Elevadores para <br><span class="texto-destaque">cada projeto</span>
             </h1>
+            
+            <!-- Subtítulo limpo -->
             <p class="lead mb-5" style="color: #475569; font-size: 1.15rem;">
                 Residenciais, comerciais e hospitalares. Tecnologia, segurança e acessibilidade em mobilidade vertical.
             </p>
+            
+            <!-- Apenas o botão de Catálogo -->
             <div class="d-flex gap-3 flex-wrap">
-                <a href="{% url 'catalogo' %}" class="btn btn-laranja btn-lg">
+                <a href="{% url 'catalogo' %}" class="btn btn-laranja btn-lg px-4 py-3">
                     <i class="bi bi-grid me-2"></i> Ver Catálogo
                 </a>
-
             </div>
         </div>
 

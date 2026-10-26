@@ -1,96 +1,99 @@
-/* Variáveis de Cor */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+/* TEMA CLARO (Padrão) */
 :root {
-  --bg-site: #e2e8f0;
-  --bg-card: #ffffff;
-  --texto-principal: #0f172a;
-  --texto-secundario: #475569;
-  --cor-borda: #cbd5e1;
-  --laranja: #ff6b35;
-  --laranja-hover: #e55a2b;
+    --bg-site: #e2e8f0;
+    --bg-card: #ffffff;
+    --texto-principal: #0f172a;
+    --texto-secundario: #475569;
+    --cor-borda: #cbd5e1;
+    --laranja: #ff6b35;
+}
+
+/* TEMA ESCURO */
+[data-theme="dark"] {
+    --bg-site: #0f172a;
+    --bg-card: #1e293b;
+    --texto-principal: #f8fafc;
+    --texto-secundario: #94a3b8;
+    --cor-borda: #334155;
 }
 
 /* Geral */
-html,
-body {
-  background-color: var(--bg-site) !important;
-  color: var(--texto-principal) !important;
-  font-family: "Segoe UI", Arial, sans-serif;
+html, body {
+    background-color: var(--bg-site) !important;
+    color: var(--texto-principal) !important;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 main {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
 
-/* Header e Footer */
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--texto-principal);
+}
+
+/* Textos secundários */
+.text-muted, .card p, .card small, .lead {
+    color: var(--texto-secundario) !important;
+}
+
+/* Header */
 .navbar-custom {
-  background-color: #0d1b2a !important;
-  border-bottom: 3px solid var(--laranja);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+    background-color: #0d1b2a !important;
+    border-bottom: 3px solid var(--laranja);
 }
 
 /* Cards */
 .card {
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--cor-borda) !important;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--cor-borda) !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-}
-
-.card p,
-.card small {
-  color: var(--texto-secundario) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Botões */
 .btn-laranja {
-  background-color: var(--laranja) !important;
-  border-color: var(--laranja) !important;
-  color: #ffffff !important;
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border-radius: 8px;
+    background-color: var(--laranja) !important;
+    border-color: var(--laranja) !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-radius: 8px;
 }
 
 .btn-laranja:hover {
-  background-color: var(--laranja-hover) !important;
-  border-color: var(--laranja-hover) !important;
+    background-color: #e55a2b !important;
+    border-color: #e55a2b !important;
 }
 
-/* Efeito Hover para Links */
-.hover-laranja {
-  transition: color 0.2s;
+.btn-secundario {
+    background-color: var(--bg-site) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--cor-borda) !important;
+    font-weight: 600;
+    border-radius: 8px;
 }
 
-.hover-laranja:hover {
-  color: var(--laranja) !important;
+.btn-secundario:hover {
+    background-color: var(--cor-borda) !important;
 }
 
-/* Ícone Gigante da Home */
+/* Ícone da Home */
 .icone-destaque {
-  font-size: 18rem;
-  color: var(--laranja);
-  opacity: 0.9;
-  filter: drop-shadow(0 20px 30px rgba(255, 107, 53, 0.3));
-  transition: transform 0.5s ease;
-}
-
-.icone-destaque:hover {
-  transform: scale(1.05);
-}
-
-/* Ajuste do menu para telas grandes */
-.navbar-custom .nav-link {
-  padding: 8px 12px !important;
-}
-.navbar-custom .nav-link:hover {
-  color: var(--laranja) !important;
+    font-size: 18rem; 
+    color: var(--laranja); 
+    opacity: 0.9;
+    filter: drop-shadow(0 20px 30px rgba(255, 107, 53, 0.3));
 }

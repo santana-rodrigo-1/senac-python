@@ -22,57 +22,69 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-
-    <!-- Header -->
+        <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top py-2">
-        <div class="container d-flex justify-content-between align-items-center">
-
+        <div class="container">
+            
             <!-- Logo -->
             <a class="navbar-brand fw-bold fs-3 mb-0" href="{% url 'home' %}">
                 <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
             </a>
 
-            <!-- Menu Direita -->
-            <div class="d-flex align-items-center gap-3">
-                <a class="nav-link text-white p-0 fw-medium" href="{% url 'home' %}">Início</a>
-                <a class="nav-link text-white p-0 fw-medium" href="{% url 'catalogo' %}">Catálogo</a>
-                <a class="nav-link text-white p-0 fw-medium" href="{% url 'sobre' %}">Sobre</a>
+            <!-- Botão Hambúrguer (Mobile) -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <!-- Carrinho com Contador -->
-                <a class="nav-link text-white p-0 fw-medium" href="{% url 'ver_carrinho' %}">
-                    <i class="bi bi-cart3"></i> Carrinho
-                    {% if carrinho_quantidade %}
-                    <span class="badge rounded-pill" style="background-color: #ff6b35; color: white;">{{carrinho_quantidade }}</span>
+            <!-- Menu de Links (Colapsável) -->
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center ms-auto gap-3 mt-3 mt-lg-0">
+                    
+                    <a class="nav-link text-white p-0 fw-medium" href="{% url 'home' %}">Início</a>
+                    <a class="nav-link text-white p-0 fw-medium" href="{% url 'catalogo' %}">Catálogo</a>
+                    <a class="nav-link text-white p-0 fw-medium" href="{% url 'sobre' %}">Sobre</a>
+
+                    <!-- Carrinho com Contador -->
+                    <a class="nav-link text-white p-0 fw-medium" href="{% url 'ver_carrinho' %}">
+                        <i class="bi bi-cart3"></i> Carrinho
+                        {% if carrinho_quantidade %}
+                            <span class="badge rounded-pill" style="background-color: #ff6b35; color: white;">{{ carrinho_quantidade }}</span>
+                        {% endif %}
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <span class="text-white fw-medium ms-lg-2">Olá, {{ user.username }}</span>
+
+                        {% if user.is_staff %}
+                            <a href="/admin/" class="btn btn-sm btn-outline-light fw-medium ms-lg-2">
+                                <i class="bi bi-gear"></i> Administração
+                            </a>
+                            <a href="{% url 'elevador_novo' %}" class="btn btn-sm btn-laranja fw-bold ms-lg-2">
+                                <i class="bi bi-plus-lg"></i> Novo Elevador
+                            </a>
+                        {% endif %}
+
+                        <form method="post" action="{% url 'logout' %}" class="d-inline ms-lg-2 mb-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-link text-white-50 text-decoration-none fw-medium">Sair</button>
+                        </form>
+
+                    {% else %}
+                        <a class="nav-link text-white p-0 fw-medium ms-lg-2" href="{% url 'login' %}">Entrar</a>
+                        <a class="nav-link text-white p-0 fw-medium" href="{% url 'register' %}">Criar conta</a>
                     {% endif %}
-                </a>
-
-                {% if user.is_authenticated %}
-                <!-- SE ESTIVER LOGADO -->
-                <span class="text-white fw-medium ms-2">Olá, {{ user.username }}</span>
-
-                {% if user.is_staff %}
-                <!-- BOTÕES DE ADMIN -->
-                <a href="/admin/" class="btn btn-sm btn-outline-light fw-medium ms-2">
-                    <i class="bi bi-gear"></i> Administração
-                </a>
-                <a href="{% url 'elevador_novo' %}" class="btn btn-sm btn-laranja fw-bold ms-2">
-                    <i class="bi bi-plus-lg"></i> Novo Elevador
-                </a>
-                {% endif %}
-
-                <!-- BOTÃO SAIR -->
-                <form method="post" action="{% url 'logout' %}" class="d-inline ms-2 mb-0">
-                    {% csrf_token %}
-                    <button type="submit"
-                        class="btn btn-sm btn-link text-white-50 text-decoration-none fw-medium">Sair</button>
-                </form>
-
-                {% else %}
-                <!-- SE NÃO ESTIVER LOGADO -->
-                <a class="nav-link text-white p-0 fw-medium ms-2" href="{% url 'login' %}">Entrar</a>
-                <a class="nav-link text-white p-0 fw-medium" href="{% url 'register' %}">Criar conta</a>
-                {% endif %}
+                </div>
             </div>
+
+            <!-- BOTÃO DE TEMA (Fora do menu, separado à direita) -->
+            <div class="ms-lg-4 ps-lg-4 border-lg-start border-secondary mt-3 mt-lg-0">
+                <button id="theme-toggle" class="btn btn-sm rounded-circle d-flex align-items-center justify-content-center" 
+                        style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;" 
+                        title="Mudar Tema">
+                    <i id="theme-icon" class="bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
+                </button>
+            </div>
+
         </div>
     </nav>
 
@@ -85,8 +97,8 @@
     <footer class="py-5 mt-auto" style="background-color: #0d1b2a; border-top: 3px solid #ff6b35;">
         <div class="container">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
-
-                <!-- Bloco 1: Logo -->
+                
+                <!-- Logo e Copyright -->
                 <div>
                     <a class="text-white text-decoration-none fw-bold fs-3" href="{% url 'home' %}">
                         <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
@@ -95,23 +107,18 @@
                     <p class="text-white-50 small mb-0 opacity-75">&copy; 2026 ElevaTech.</p>
                 </div>
 
-                <!-- Bloco 2: Contato (Agora na direita) -->
+                <!-- Contato e Redes -->
                 <div class="text-md-end">
-                    <h6 class="text-uppercase fw-bold mb-3"
-                        style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
+                    <h6 class="text-uppercase fw-bold mb-3" style="color: #ff6b35; letter-spacing: 1px; font-size: 0.85rem;">Contato</h6>
                     <ul class="list-unstyled small text-white-50 mb-3">
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@elevatech.com.br</li>
                         <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> (21) 90000-0000</li>
                         <li><i class="bi bi-clock me-2"></i> Seg a Sex, 8h às 18h</li>
                     </ul>
-
-                    <div class="d-flex gap-2 justify-content-md-end">
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Instagram"><i
-                                class="bi bi-instagram"></i></a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="LinkedIn"><i
-                                class="bi bi-linkedin"></i></a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="YouTube"><i
-                                class="bi bi-youtube"></i></a>
+                    <div class="d-flex gap-2 justify-content-center justify-content-md-end">
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                     </div>
                 </div>
 
@@ -121,6 +128,30 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Verifica se o cliente já tinha escolhido o tema escuro antes
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            icon.className = 'bi bi-sun'; // Ícone de sol
+        }
+
+        btn.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                icon.className = 'bi bi-moon-stars'; // Ícone de lua
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.className = 'bi bi-sun'; // Ícone de sol
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 
 </html>
