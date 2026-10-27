@@ -25,9 +25,7 @@ body {
   background-color: var(--bg-site) !important;
   color: var(--texto-principal) !important;
   font-family: "Montserrat", sans-serif;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 main {
@@ -35,12 +33,7 @@ main {
 }
 
 /* Títulos - Força a cor correta */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
   letter-spacing: -0.5px;
@@ -48,15 +41,11 @@ h6 {
 }
 
 /* Textos gerais - Força a cor correta */
-p,
-small,
-span {
+p, small, span {
   color: var(--texto-principal);
 }
 
-.text-muted,
-.card p,
-.card small {
+.text-muted, .card p, .card small {
   color: var(--texto-secundario) !important;
 }
 
@@ -65,10 +54,22 @@ span {
   color: var(--laranja) !important;
 }
 
-/* Header */
-.navbar-custom {
+/* MOLDURA UNIFICADA: Header e Footer com a mesma cor */
+.navbar-custom, 
+.footer-custom {
   background-color: #0d1b2a !important;
+}
+
+/* Destaque do Header */
+.navbar-custom {
   border-bottom: 3px solid var(--laranja);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Destaque do Footer */
+.footer-custom {
+  border-top: 3px solid var(--laranja);
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Cards */
@@ -77,9 +78,7 @@ span {
   border: 1px solid var(--cor-borda) !important;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
