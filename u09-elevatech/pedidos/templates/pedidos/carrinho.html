@@ -37,8 +37,9 @@
                     <form method="post" action="{% url 'carrinho_atualizar' item.elevador.pk %}"
                         class="d-flex gap-2 align-items-center">
                         {% csrf_token %}
+                        <!-- CORRIGIDO: Removido o bg-light e forçada a cor do texto -->
                         <input type="number" name="quantidade" value="{{ item.quantidade }}" min="1" max="99"
-                            class="form-control form-control-sm bg-light" style="width: 70px;">
+                            class="form-control form-control-sm" style="width: 70px; color: var(--texto-principal) !important;">
                         <button type="submit" class="btn btn-sm btn-secundario">Atualizar</button>
                     </form>
 
