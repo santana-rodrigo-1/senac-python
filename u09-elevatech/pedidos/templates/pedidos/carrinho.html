@@ -4,16 +4,6 @@
 {% block content %}
 <div class="container py-5">
 
-    {% if messages %}
-    <div class="mb-4">
-        {% for message in messages %}
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
     <h1 class="fw-bold mb-4">Meu <span class="texto-destaque">Carrinho</span></h1>
 
     {% if itens %}
