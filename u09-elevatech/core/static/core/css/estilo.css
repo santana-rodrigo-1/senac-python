@@ -117,7 +117,6 @@ p, small, span {
   font-size: 18rem;
   color: var(--laranja);
   opacity: 0.9;
-  filter: drop-shadow(0 20px 30px rgba(255, 107, 53, 0.3));
 }
 
 /* Inputs e Formulários */
