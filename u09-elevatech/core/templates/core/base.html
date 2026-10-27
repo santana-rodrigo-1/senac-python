@@ -92,23 +92,17 @@
     <!-- Conteúdo Principal -->
     <main class="flex-grow-1">
         
-        <!-- Bloco de Mensagens do Django -->
+        <!-- Bloco de Mensagens do Django (Padrão ElevaTech) -->
         {% if messages %}
             <div class="container mt-3">
                 {% for message in messages %}
-                    <!-- O if abaixo traduz o 'error' do Django para o 'danger' do Bootstrap (vermelho) -->
-                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show shadow-sm border-0" role="alert">
-                        
-                        {% if message.tags == 'success' %}
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                        {% elif message.tags == 'error' %}
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                        {% else %}
-                            <i class="bi bi-info-circle-fill me-2"></i>
-                        {% endif %}
-                        
+                    <!-- Alerta customizado usando as variáveis do seu CSS -->
+                    <div class="alert alert-dismissible fade show shadow-sm border-0" role="alert" 
+                         style="background-color: var(--bg-card); color: var(--texto-principal); border-left: 5px solid var(--laranja) !important;">
+                        <i class="bi bi-info-circle-fill me-2" style="color: var(--laranja);"></i>
                         {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <!-- btn-close-white deixa o X visível no tema escuro -->
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
             </div>
