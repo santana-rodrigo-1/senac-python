@@ -56,6 +56,18 @@ def finalizar(request):
     if not carrinho:
         return redirect("catalogo")
 
+    # =========================================================
+    # MODO DE TESTE (ADMIN): Simula a compra sem afetar o banco
+    # =========================================================
+    if request.user.is_staff:
+        request.session["carrinho"] = {}  # Limpa o carrinho para não travar
+        messages.info(
+            request,
+            "MODO DE TESTE: Compra simulada! O estoque e o banco não foram alterados.",
+        )
+        return redirect("meus_pedidos")
+    # =========================================================
+
     try:
         with transaction.atomic():
             pedido = Pedido.objects.create(usuario=request.user)
@@ -98,7 +110,7 @@ def atualizar_carrinho(request, pk):
     elevador = get_object_or_404(Elevador, pk=pk)
     carrinho = request.session.get("carrinho", {})
     chave = str(pk)
-    
+
     try:
         qtd = int(request.POST.get("quantidade", 1))
     except (ValueError, TypeError):
