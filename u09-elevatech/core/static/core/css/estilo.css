@@ -177,3 +177,39 @@ main {
   background: transparent !important;
   border: none !important;
 }
+
+/* Botão Voltar ao Topo */
+.btn-topo {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background-color: var(--laranja);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  /* Sombra escura e sutil, igual aos seus cards, sem brilho colorido */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+}
+
+/* Quando a classe 'mostrar' é adicionada via JS */
+.btn-topo.mostrar {
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-topo:hover {
+  background-color: #e55a2b;
+  /* Subida bem sutil, sem exageros */
+  transform: translateY(-2px); 
+}
