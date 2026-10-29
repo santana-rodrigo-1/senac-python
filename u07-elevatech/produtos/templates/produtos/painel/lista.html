@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+{% block title %}Painel — Elevadores{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <h1 class="titulo-secao mb-0">Painel de elevadores</h1>
+            <a href="{% url 'painel_novo' %}" class="btn btn-laranja">
+                <i class="bi bi-plus-circle"></i> Novo elevador
+            </a>
+        </div>
+
+        <div class="table-responsive caixa-filtro">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Categoria</th>
+                        <th class="text-end">Capacidade</th>
+                        <th class="text-center">Destaque</th>
+                        <th class="text-center">Ativo</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in elevadores %}
+                    <tr>
+                        <td><strong>{{ e.nome }}</strong></td>
+                        <td>{{ e.get_tipo_display }}</td>
+                        <td>{{ e.categoria.nome }}</td>
+                        <td class="text-end">{{ e.capacidade_kg }} kg</td>
+                        <td class="text-center">
+                            {% if e.destaque %}<i class="bi bi-star-fill" style="color: var(--laranja-marca);"></i>{%
+                            else %}—{% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if e.ativo %}<span class="badge bg-success">Sim</span>
+                            {% else %}<span class="badge bg-secondary">Não</span>{% endif %}
+                        </td>
+                        <td class="text-end">
+                            <a href="{% url 'produto_detalhe' e.slug %}" class="btn btn-sm btn-outline-light"
+                                title="Ver no site">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'painel_editar' e.slug %}" class="btn btn-sm btn-outline-warning"
+                                title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'painel_excluir' e.slug %}" class="btn btn-sm btn-outline-danger"
+                                title="Excluir">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4" style="color: var(--texto-muted);">
+                            Nenhum elevador cadastrado ainda.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

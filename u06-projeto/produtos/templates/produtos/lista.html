@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% block title %}Catálogo — ElevaTech{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 my-4">
+    
+    <!-- Título Sozinho -->
+    <div class="mb-4">
+        <h1 class="fw-bold mb-0">Nossos <span style="color: var(--laranja);">Elevadores</span></h1>
+    </div>
+
+    <!-- Linha com Filtros (Esquerda) e Busca (Direita) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+        
+        <!-- Botões de Categoria -->
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'catalogo' %}" class="btn {% if not categoria_atual %}btn-laranja{% else %}btn-secundario{% endif %}">Todos</a>
+            {% for c in categorias %}
+                <a href="?categoria={{ c }}" class="btn {% if categoria_atual == c %}btn-laranja{% else %}btn-secundario{% endif %}">{{ c }}</a>
+            {% endfor %}
+        </div>
+
+        <!-- Barra de Busca -->
+        <form method="get" class="d-flex gap-2 w-100" style="max-width: 400px;">
+            <input type="text" name="q" class="form-control" placeholder="Buscar elevador...">
+            <button type="submit" class="btn btn-laranja px-4">Buscar</button>
+        </form>
+
+    </div>
+
+
+    <!-- Grade de Cards -->
+    <div class="row g-4">
+        {% for elevador in elevadores %}
+        <div class="col-md-4">
+            <!-- Card usa d-flex flex-column para alinhar o rodapé -->
+            <div class="card h-100 d-flex flex-column">
+
+                <!-- Imagem -->
+                {% if elevador.imagem %}
+                <img src="{{ elevador.imagem.url }}" class="card-img-top" alt="{{ elevador.nome }}"
+                    style="height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                {% else %}
+                <div class="bg-secondary d-flex align-items-center justify-content-center"
+                    style="height: 200px; border-radius: 8px 8px 0 0;">
+                    <i class="bi bi-image text-white opacity-50 fs-1"></i>
+                </div>
+                {% endif %}
+
+                <!-- Corpo do Card -->
+                <div class="card-body d-flex flex-column p-3">
+                    <span class="badge bg-dark mb-2 align-self-start">{{ elevador.categoria }}</span>
+                    <h5 class="fw-bold mb-1">{{ elevador.nome }}</h5>
+                    <p class="text-muted small mb-3">Estoque: {{ elevador.estoque }} un.</p>
+
+                    <!-- mt-auto empurra o preço e os botões para o final do card -->
+                    <div class="mt-auto">
+                        <h4 class="fw-bold mb-3" style="color: var(--laranja);">R$ {{ elevador.preco }}</h4>
+
+                        <!-- Botões Lado a Lado -->
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'elevador_detalhe' elevador.pk %}" class="btn btn-secundario w-50 py-2">
+                                Ver detalhes
+                            </a>
+
+                            <form method="post" action="{% url 'carrinho_adicionar' elevador.pk %}" class="w-50">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-laranja w-100 py-2">Adicionar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão de Editar (Só para Admin) -->
+                {% if user.is_staff %}
+                <div class="card-footer bg-transparent border-top-0 pb-3 text-center">
+                    <a href="{% url 'elevador_editar' elevador.pk %}"
+                        class="btn btn-sm btn-link text-muted text-decoration-none">
+                        <i class="bi bi-pencil"></i> Editar produto
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h4 class="text-muted">Nenhum elevador encontrado.</h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

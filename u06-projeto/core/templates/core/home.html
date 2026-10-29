@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block title %}ElevaTech — Início{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+    <div class="row align-items-center">
+        
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <span class="badge bg-secondary mb-4 px-3 py-2 rounded-pill shadow-sm" style="letter-spacing: 1px;">SOLUÇÕES EM MOBILIDADE</span>
+            
+            <h1 class="display-4 fw-bold mb-4" style="line-height: 1.1;">
+                Elevadores para <br><span class="texto-destaque">cada projeto</span>
+            </h1>
+            
+            <p class="lead mb-5" style="font-size: 1.15rem;">
+                Residenciais, comerciais e hospitalares. Tecnologia, segurança e acessibilidade em mobilidade vertical.
+            </p>
+            
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="{% url 'catalogo' %}" class="btn btn-laranja btn-lg px-4 py-3">
+                    <i class="bi bi-grid me-2"></i> Ver Catálogo
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-6 text-center d-none d-lg-block">
+            <i class="bi bi-buildings icone-destaque"></i>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
