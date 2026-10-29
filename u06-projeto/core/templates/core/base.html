@@ -61,25 +61,36 @@
 
                     <!-- Área do Usuário Autenticado -->
                     {% if user.is_authenticated %}
-                    <span class="text-white-50 fw-medium mt-2 mt-lg-0 me-lg-2">Olá, {{ user.username }}</span>
+                    
+                    <!-- Bloco da Conta do Usuário (Saudação + Ações) -->
+                    <div class="d-flex align-items-center gap-3 px-3 py-2 rounded mt-2 mt-lg-0" 
+                         style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                        
+                        <!-- Saudação -->
+                        <span class="text-white-50 fw-medium">Olá, {{ user.username }}</span>
 
-                    <!-- Ações de Administrador -->
-                    {% if user.is_staff %}
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="/admin/" target="_blank" rel="noopener noreferrer">
-                        <i class="bi bi-gear"></i> Admin
-                    </a>
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'elevador_novo' %}">
-                        <i class="bi bi-plus-lg"></i> Novo
-                    </a>
-                    {% endif %}
+                        <!-- Botão ADMIN: Apenas o Superusuário (Dono) vê -->
+                        {% if user.is_superuser %}
+                        <a class="nav-link text-white p-0 fw-medium" href="/admin/" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-gear"></i> Admin
+                        </a>
+                        {% endif %}
 
-                    <!-- Botão de Logout (Estilizado como link de texto) -->
-                    <form method="post" action="{% url 'logout' %}" class="d-inline mt-2 mt-lg-0 mb-0">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-link text-white p-0 fw-medium py-2 py-lg-0 btn-link-custom">
-                            Sair
-                        </button>
-                    </form>
+                        <!-- Botão NOVO: Staff e Superusuário veem -->
+                        {% if user.is_staff %}
+                        <a class="nav-link text-white p-0 fw-medium" href="{% url 'elevador_novo' %}">
+                            <i class="bi bi-plus-lg"></i> Novo
+                        </a>
+                        {% endif %}
+
+                        <!-- Botão de Logout (Todos veem) -->
+                        <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link text-white p-0 fw-medium btn-link-custom">
+                                Sair
+                            </button>
+                        </form>
+                    </div>
 
                     <!-- Área do Usuário Não Autenticado -->
                     {% else %}
@@ -123,7 +134,7 @@
         {% block content %}{% endblock %}
     </main>
 
-        <!-- Rodapé -->
+    <!-- Rodapé -->
     <footer class="py-5 mt-auto footer-custom">
         <div class="container">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center text-start gap-4">
@@ -151,7 +162,7 @@
         </div>
     </footer>
 
-        <!-- Botão Voltar ao Topo (Fica escondido até rolar a página) -->
+    <!-- Botão Voltar ao Topo -->
     <button id="btn-topo" class="btn-topo" title="Voltar ao topo">
         <i class="bi bi-arrow-up"></i>
     </button>
@@ -187,7 +198,6 @@
         // --- 2. Botão Voltar ao Topo ---
         const btnTopo = document.getElementById("btn-topo");
 
-        // Mostra o botão após rolar 300px
         window.addEventListener("scroll", () => {
             if (window.scrollY > 300) {
                 btnTopo.classList.add("mostrar");
@@ -196,7 +206,6 @@
             }
         });
 
-        // Ao clicar, rola suavemente para o topo
         btnTopo.addEventListener("click", () => {
             window.scrollTo({
                 top: 0,
