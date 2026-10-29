@@ -35,16 +35,28 @@
                 <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
             </a>
 
-            <!-- Botão Hambúrguer (Mobile) -->
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false"
-                aria-label="Abrir menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <!-- ==================================================== -->
+            <!-- CONTROLES MOBILE (Visível apenas no celular)         -->
+            <!-- ==================================================== -->
+            <div class="d-flex align-items-center d-lg-none ms-auto">
+                <!-- Botão do Sol (Mobile) -->
+                <button class="theme-toggle-btn btn btn-sm rounded-circle d-flex align-items-center justify-content-center me-2"
+                    style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;"
+                    title="Mudar Tema">
+                    <i class="theme-icon bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
+                </button>
+                
+                <!-- Botão Hambúrguer -->
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false"
+                    aria-label="Abrir menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
 
             <!-- Menu de Links (Colapsável) -->
             <div class="collapse navbar-collapse" id="menuPrincipal">
-                <div class="d-flex flex-column flex-lg-row align-items-lg-center ms-auto gap-3 mt-4 mt-lg-0 pb-3 pb-lg-0">
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center ms-auto gap-3 mt-4 mt-lg-0 pb-3 pb-lg-0 w-100 justify-content-lg-end">
 
                     <!-- Links de Navegação Padrão -->
                     <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'home' %}">Início</a>
@@ -66,24 +78,20 @@
                     <div class="d-flex align-items-center gap-3 px-3 py-2 rounded mt-2 mt-lg-0" 
                          style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
                         
-                        <!-- Saudação -->
                         <span class="text-white-50 fw-medium">Olá, {{ user.username }}</span>
 
-                        <!-- Botão ADMIN: Apenas o Superusuário (Dono) vê -->
                         {% if user.is_superuser %}
                         <a class="nav-link text-white p-0 fw-medium" href="/admin/" target="_blank" rel="noopener noreferrer">
                             <i class="bi bi-gear"></i> Admin
                         </a>
                         {% endif %}
 
-                        <!-- Botão NOVO: Staff e Superusuário veem -->
                         {% if user.is_staff %}
                         <a class="nav-link text-white p-0 fw-medium" href="{% url 'elevador_novo' %}">
                             <i class="bi bi-plus-lg"></i> Novo
                         </a>
                         {% endif %}
 
-                        <!-- Botão de Logout (Todos veem) -->
                         <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
                             {% csrf_token %}
                             <button type="submit" class="nav-link text-white p-0 fw-medium btn-link-custom">
@@ -98,12 +106,15 @@
                     <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'register' %}">Criar conta</a>
                     {% endif %}
 
-                    <!-- Alternador de Tema -->
-                    <div class="ms-lg-3 mt-3 mt-lg-0 border-lg-start border-secondary ps-lg-3">
-                        <button id="theme-toggle" class="btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                    <!-- ==================================================== -->
+                    <!-- CONTROLES DESKTOP (Visível apenas no PC)             -->
+                    <!-- ==================================================== -->
+                    <div class="d-none d-lg-flex align-items-center ms-lg-4 ps-lg-4 border-lg-start border-secondary">
+                        <!-- Botão do Sol (Desktop) -->
+                        <button class="theme-toggle-btn btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
                             style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;"
                             title="Mudar Tema">
-                            <i id="theme-icon" class="bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
+                            <i class="theme-icon bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
                         </button>
                     </div>
 
@@ -170,29 +181,34 @@
     <!-- Scripts do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Lógica do Alternador de Tema e Botão Voltar ao Topo -->
+    <!-- Lógica do Alternador de Tema (Suporta múltiplos botões) e Botão Voltar ao Topo -->
     <script>
         // --- 1. Alternador de Tema ---
-        const btn = document.getElementById('theme-toggle');
-        const icon = document.getElementById('theme-icon');
+        // Agora buscamos por classes em vez de IDs, pois temos dois botões (mobile e desktop)
+        const themeButtons = document.querySelectorAll('.theme-toggle-btn');
+        const themeIcons = document.querySelectorAll('.theme-icon');
         const html = document.documentElement;
 
+        // Verifica se o tema escuro já estava ativo
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') {
             html.setAttribute('data-theme', 'dark');
-            icon.className = 'bi bi-sun';
+            themeIcons.forEach(icon => icon.className = 'bi bi-sun');
         }
 
-        btn.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                icon.className = 'bi bi-moon-stars';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                icon.className = 'bi bi-sun';
-                localStorage.setItem('theme', 'dark');
-            }
+        // Adiciona o evento de clique para TODOS os botões de tema na tela
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (html.getAttribute('data-theme') === 'dark') {
+                    html.removeAttribute('data-theme');
+                    themeIcons.forEach(icon => icon.className = 'bi bi-moon-stars');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    themeIcons.forEach(icon => icon.className = 'bi bi-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
         });
 
         // --- 2. Botão Voltar ao Topo ---
