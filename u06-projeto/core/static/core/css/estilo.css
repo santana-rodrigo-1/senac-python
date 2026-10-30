@@ -1,7 +1,6 @@
 /* 1. IMPORTAÇÕES E VARIÁVEIS */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap");
 
-/* TEMA CLARO (Padrão) */
 :root {
   --bg-site: #e2e8f0;
   --bg-card: #ffffff;
@@ -11,7 +10,6 @@
   --laranja: #ff6b35;
 }
 
-/* TEMA ESCURO */
 [data-theme="dark"] {
   --bg-site: #0f172a;
   --bg-card: #1e293b;
@@ -21,15 +19,13 @@
 }
 
 /* 2. ESTILOS GLOBAIS E TIPOGRAFIA */
-html,
-body {
+html, body {
   background-color: var(--bg-site) !important;
   color: var(--texto-principal) !important;
   font-family: "Montserrat", sans-serif;
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Títulos */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
@@ -37,20 +33,17 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--texto-principal) !important;
 }
 
-/* Textos gerais */
 p, small, span {
   color: var(--texto-principal);
 }
 
-/* 3. ESTRUTURA (Header, Footer e Main) */
+/* 3. ESTRUTURA */
 main {
   background-color: transparent !important;
   animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Moldura Unificada: Header e Footer com a mesma cor */
-.navbar-custom, 
-.footer-custom {
+.navbar-custom, .footer-custom {
   background-color: #0d1b2a !important;
 }
 
@@ -64,7 +57,7 @@ main {
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* 4. COMPONENTES (Cards, Botões de Compra, Inputs) */
+/* 4. COMPONENTES */
 .card {
   background-color: var(--bg-card) !important;
   border: 1px solid var(--cor-borda) !important;
@@ -73,12 +66,20 @@ main {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  }
 }
 
-/* Botões Laranjas (Usados nas ações de compra do site) */
+@media (hover: none) {
+  .card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+}
+
 .btn-laranja {
   background-color: var(--laranja) !important;
   border-color: var(--laranja) !important;
@@ -104,7 +105,11 @@ main {
   background-color: var(--cor-borda) !important;
 }
 
-/* Inputs e Formulários */
+.btn:active {
+  transform: scale(0.96);
+  transition: transform 0.1s;
+}
+
 .form-control {
   background-color: var(--bg-site) !important;
   color: var(--texto-principal) !important;
@@ -123,7 +128,7 @@ main {
   opacity: 0.7;
 }
 
-/* 5. CLASSES UTILITÁRIAS (Helpers) */
+/* 5. UTILITÁRIOS */
 .text-muted, .card p, .card small {
   color: var(--texto-secundario) !important;
 }
@@ -138,19 +143,12 @@ main {
   opacity: 0.9;
 }
 
-/* 6. ANIMAÇÕES E PLUGINS */
+/* 6. ANIMAÇÕES */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Pace.js (Barra de Carregamento) */
 .pace .pace-progress {
   background: var(--laranja) !important;
   position: fixed;
@@ -165,20 +163,17 @@ main {
   display: none;
 }
 
-/* 7. EFEITOS DO TOPO (NAVBAR) */
-/* Efeito de hover para os links de texto e o botão de sair */
+/* 7. NAVBAR E BOTÕES ESPECÍFICOS */
 .navbar .nav-link:hover,
 .navbar .btn-link-custom:hover {
   color: var(--laranja) !important;
 }
 
-/* Reset para o botão de Sair parecer um link de texto */
 .btn-link-custom {
   background: transparent !important;
   border: none !important;
 }
 
-/* Botão Voltar ao Topo */
 .btn-topo {
   position: fixed;
   bottom: 30px;
@@ -198,11 +193,9 @@ main {
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 1000;
-  /* Sombra escura e sutil, igual aos seus cards, sem brilho colorido */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
 }
 
-/* Quando a classe 'mostrar' é adicionada via JS */
 .btn-topo.mostrar {
   opacity: 1;
   visibility: visible;
@@ -210,15 +203,30 @@ main {
 
 .btn-topo:hover {
   background-color: #e55a2b;
-  /* Subida bem sutil, sem exageros */
   transform: translateY(-2px); 
 }
 
-/* Esconde a barra de rolagem do carrossel de categorias */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+/* 8. CARROSSEL DE FILTROS */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Classes de Esfumaçado Dinâmico */
+.fade-direita {
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
 }
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+.fade-esquerda {
+  mask-image: linear-gradient(to right, transparent 0%, black 15%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);
+}
+
+.fade-ambos {
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.fade-nenhum {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
 }
