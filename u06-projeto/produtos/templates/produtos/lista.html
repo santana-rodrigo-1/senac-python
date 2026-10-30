@@ -13,11 +13,11 @@
     <!-- Linha com Filtros (Esquerda) e Busca (Direita) -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
         
-        <!-- Botões de Categoria -->
-        <div class="d-flex gap-2 flex-wrap">
-            <a href="{% url 'catalogo' %}" class="btn {% if not categoria_atual %}btn-laranja{% else %}btn-secundario{% endif %}">Todos</a>
+        <!-- Botões de Categoria (Agora com Scroll Lateral no celular) -->
+        <div class="d-flex gap-2 flex-nowrap overflow-auto pb-2 hide-scrollbar">
+            <a href="{% url 'catalogo' %}" class="btn flex-shrink-0 {% if not categoria_atual %}btn-laranja{% else %}btn-secundario{% endif %}">Todos</a>
             {% for c in categorias %}
-                <a href="?categoria={{ c }}" class="btn {% if categoria_atual == c %}btn-laranja{% else %}btn-secundario{% endif %}">{{ c }}</a>
+                <a href="?categoria={{ c }}" class="btn flex-shrink-0 {% if categoria_atual == c %}btn-laranja{% else %}btn-secundario{% endif %}">{{ c }}</a>
             {% endfor %}
         </div>
 

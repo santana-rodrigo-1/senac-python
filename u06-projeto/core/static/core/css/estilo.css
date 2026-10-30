@@ -213,3 +213,12 @@ main {
   /* Subida bem sutil, sem exageros */
   transform: translateY(-2px); 
 }
+
+/* Esconde a barra de rolagem do carrossel de categorias */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
