@@ -35,18 +35,14 @@
                 <i class="bi bi-buildings" style="color: #ff6b35;"></i> ElevaTech
             </a>
 
-            <!-- ==================================================== -->
-            <!-- CONTROLES MOBILE (Visível apenas no celular)         -->
-            <!-- ==================================================== -->
+            <!-- CONTROLES MOBILE (Sol + Hambúrguer) -->
             <div class="d-flex align-items-center d-lg-none ms-auto">
-                <!-- Botão do Sol (Mobile) -->
                 <button class="theme-toggle-btn btn btn-sm rounded-circle d-flex align-items-center justify-content-center me-2"
                     style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;"
                     title="Mudar Tema">
                     <i class="theme-icon bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
                 </button>
                 
-                <!-- Botão Hambúrguer -->
                 <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false"
                     aria-label="Abrir menu">
@@ -56,66 +52,70 @@
 
             <!-- Menu de Links (Colapsável) -->
             <div class="collapse navbar-collapse" id="menuPrincipal">
-                <div class="d-flex flex-column flex-lg-row align-items-lg-center ms-auto gap-3 mt-4 mt-lg-0 pb-3 pb-lg-0 w-100 justify-content-lg-end">
+                <!-- Container Flex Principal (justify-content-lg-end empurra tudo para a direita) -->
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100 mt-4 mt-lg-0 pb-3 pb-lg-0 justify-content-lg-end">
 
-                    <!-- Links de Navegação Padrão -->
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'home' %}">Início</a>
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'catalogo' %}">Catálogo</a>
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'sobre' %}">Sobre</a>
-
-                    <!-- Carrinho com Contador Dinâmico -->
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0 me-lg-2" href="{% url 'ver_carrinho' %}">
-                        <i class="bi bi-cart3"></i> Carrinho
-                        {% if carrinho_quantidade %}
-                        <span class="badge rounded-pill ms-1" style="background-color: #ff6b35; color: white;">{{ carrinho_quantidade }}</span>
-                        {% endif %}
-                    </a>
-
-                    <!-- Área do Usuário Autenticado -->
-                    {% if user.is_authenticated %}
-                    
-                    <!-- Bloco da Conta do Usuário (Saudação + Ações) -->
-                    <div class="d-flex align-items-center gap-3 px-3 py-2 rounded mt-2 mt-lg-0" 
-                         style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <!-- GRUPO DOS LINKS -->
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 gap-lg-4">
+                        <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0 text-nowrap" href="{% url 'home' %}">Início</a>
+                        <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0 text-nowrap" href="{% url 'catalogo' %}">Catálogo</a>
+                        <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0 text-nowrap" href="{% url 'sobre' %}">Sobre</a>
                         
-                        <span class="text-white-50 fw-medium">Olá, {{ user.username }}</span>
-
-                        {% if user.is_superuser %}
-                        <a class="nav-link text-white p-0 fw-medium" href="/admin/" target="_blank" rel="noopener noreferrer">
-                            <i class="bi bi-gear"></i> Admin
+                        <!-- Carrinho -->
+                        <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0 text-nowrap" href="{% url 'ver_carrinho' %}">
+                            <i class="bi bi-cart3"></i> Carrinho
+                            {% if carrinho_quantidade %}
+                            <span class="badge rounded-pill ms-1" style="background-color: #ff6b35; color: white;">{{ carrinho_quantidade }}</span>
+                            {% endif %}
                         </a>
-                        {% endif %}
-
-                        {% if user.is_staff %}
-                        <a class="nav-link text-white p-0 fw-medium" href="{% url 'elevador_novo' %}">
-                            <i class="bi bi-plus-lg"></i> Novo
-                        </a>
-                        {% endif %}
-
-                        <form method="post" action="{% url 'logout' %}" class="d-inline mb-0">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link text-white p-0 fw-medium btn-link-custom">
-                                Sair
-                            </button>
-                        </form>
                     </div>
 
-                    <!-- Área do Usuário Não Autenticado -->
-                    {% else %}
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'login' %}">Entrar</a>
-                    <a class="nav-link text-white p-0 fw-medium py-2 py-lg-0" href="{% url 'register' %}">Criar conta</a>
-                    {% endif %}
+                    <!-- GRUPO DA CONTA E TEMA (ms-lg-4 afasta um pouco dos links) -->
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mt-3 mt-lg-0 ms-lg-4">
+                        
+                        {% if user.is_authenticated %}
+                        <!-- Bloco da Conta (Logado) -->
+                        <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 gap-lg-3 px-3 py-3 py-lg-2 rounded text-nowrap w-100 w-lg-auto" 
+                             style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            
+                            <span class="text-white-50 fw-medium mb-1 mb-lg-0">Olá, {{ user.username }}</span>
 
-                    <!-- ==================================================== -->
-                    <!-- CONTROLES DESKTOP (Visível apenas no PC)             -->
-                    <!-- ==================================================== -->
-                    <div class="d-none d-lg-flex align-items-center ms-lg-4 ps-lg-4 border-lg-start border-secondary">
-                        <!-- Botão do Sol (Desktop) -->
-                        <button class="theme-toggle-btn btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                            style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;"
-                            title="Mudar Tema">
-                            <i class="theme-icon bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
-                        </button>
+                            {% if user.is_superuser %}
+                            <a class="nav-link text-white p-0 fw-medium py-1 py-lg-0" href="/admin/" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-gear"></i> Admin
+                            </a>
+                            {% endif %}
+
+                            {% if user.is_staff %}
+                            <a class="nav-link text-white p-0 fw-medium py-1 py-lg-0" href="{% url 'elevador_novo' %}">
+                                <i class="bi bi-plus-lg"></i> Novo
+                            </a>
+                            {% endif %}
+
+                            <form method="post" action="{% url 'logout' %}" class="d-inline mb-0 py-1 py-lg-0">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link text-white p-0 fw-medium btn-link-custom">
+                                    Sair
+                                </button>
+                            </form>
+                        </div>
+
+                        {% else %}
+                        <!-- Bloco da Conta (Deslogado) -->
+                        <div class="d-flex align-items-center gap-3 px-3 py-2 rounded mt-2 mt-lg-0 text-nowrap w-100 w-lg-auto" 
+                             style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <a class="nav-link text-white p-0 fw-medium" href="{% url 'login' %}">Entrar</a>
+                        </div>
+                        {% endif %}
+
+                        <!-- CONTROLES DESKTOP (Botão do Sol) -->
+                        <div class="d-none d-lg-flex align-items-center ps-lg-3 border-lg-start border-secondary">
+                            <button class="theme-toggle-btn btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                                style="border: 2px solid #ff6b35; width: 38px; height: 38px; background: transparent; transition: 0.3s;"
+                                title="Mudar Tema">
+                                <i class="theme-icon bi bi-moon-stars" style="color: #ff6b35; font-size: 1.2rem;"></i>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -181,22 +181,19 @@
     <!-- Scripts do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Lógica do Alternador de Tema (Suporta múltiplos botões) e Botão Voltar ao Topo -->
+    <!-- Lógica do Alternador de Tema e Botão Voltar ao Topo -->
     <script>
         // --- 1. Alternador de Tema ---
-        // Agora buscamos por classes em vez de IDs, pois temos dois botões (mobile e desktop)
         const themeButtons = document.querySelectorAll('.theme-toggle-btn');
         const themeIcons = document.querySelectorAll('.theme-icon');
         const html = document.documentElement;
 
-        // Verifica se o tema escuro já estava ativo
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') {
             html.setAttribute('data-theme', 'dark');
             themeIcons.forEach(icon => icon.className = 'bi bi-sun');
         }
 
-        // Adiciona o evento de clique para TODOS os botões de tema na tela
         themeButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 if (html.getAttribute('data-theme') === 'dark') {
