@@ -1,0 +1,110 @@
+/* 1. Importação de Fontes e Ícones */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+/* 2. Tipografia Global (Forçando a fonte no Admin inteiro) */
+body, h1, h2, h3, h4, h5, h6, .nav-link, .btn, .table, input, select, textarea, p, span, label {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* 3. A Logo (Esconde o 'A' genérico e coloca o prédio laranja) */
+.brand-image {
+    display: none !important; /* Esconde o ícone padrão */
+}
+
+.brand-text {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 1.3rem !important;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+}
+
+.brand-text::before {
+    content: "\F4D2"; /* Código do bi-buildings */
+    font-family: "bootstrap-icons" !important;
+    color: #ff6b35 !important;
+    margin-right: 10px;
+    font-size: 1.4rem;
+}
+
+.brand-link {
+    border-bottom: 3px solid #ff6b35 !important;
+}
+
+/* 4. Cores da Navbar e Sidebar */
+.main-header.navbar, .main-sidebar {
+    background-color: #0d1b2a !important;
+}
+
+/* 5. Botões (Laranja, Arredondado, Fonte Grossa) */
+.btn-primary, .btn-success, .btn-info, .btn-warning, input[type="submit"], .submit-row input {
+    background-color: #ff6b35 !important;
+    border-color: #ff6b35 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    transition: 0.2s !important;
+    text-shadow: none !important;
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-warning:hover, input[type="submit"]:hover {
+    background-color: #e55a2b !important;
+    border-color: #e55a2b !important;
+}
+
+/* Botões de ação secundária (Cancelar, Remover) */
+.btn-secondary, .btn-danger, .btn-outline-light {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+
+/* 6. Menu Lateral Ativo (Laranja) */
+.nav-sidebar .nav-link.active {
+    background-color: #ff6b35 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: rgba(255, 107, 53, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+/* 7. Ajuste de Layout (Corrigindo a bagunça da tela de edição) */
+.card, .module {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 12px !important;
+}
+
+/* Dá mais respiro para os campos de formulário e alinha as colunas */
+.form-row {
+    padding: 10px 0 !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+.form-row label {
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+}
+
+.form-control, .vTextField, select, textarea {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+}
+
+.form-control:focus {
+    border-color: #ff6b35 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25) !important;
+}
+
+body {
+    background-color: red !important;
+}
