@@ -1,0 +1,36 @@
+{% extends 'dashboard/base_painel.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Gerenciar Produtos</h2>
+    <!-- Reutilizando a sua view de cadastro -->
+    <a href="{% url 'elevador_novo' %}" class="btn btn-laranja"><i class="bi bi-plus-lg"></i> Novo Produto</a>
+</div>
+
+<div class="card border-0 shadow-sm p-0 overflow-hidden">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.categoria }}</td>
+                <td>R$ {{ produto.preco }}</td>
+                <td>{{ produto.estoque }}</td>
+                <td>
+                    <a href="{% url 'elevador_editar' produto.pk %}" class="btn btn-sm btn-outline-light"><i class="bi bi-pencil"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

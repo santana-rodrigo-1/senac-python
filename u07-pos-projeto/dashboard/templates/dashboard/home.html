@@ -1,0 +1,37 @@
+{% extends 'dashboard/base_painel.html' %}
+
+{% block painel_content %}
+<h2 class="fw-bold mb-4">Visão Geral</h2>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm border-0">
+            <h5 class="text-muted">Total de Produtos</h5>
+            <h1 class="display-4 fw-bold" style="color: var(--laranja);">{{ total_produtos }}</h1>
+            <a href="{% url 'painel_produtos' %}" class="text-decoration-none">Gerenciar produtos <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm border-0">
+            <h5 class="text-muted">Total de Pedidos</h5>
+            <h1 class="display-4 fw-bold" style="color: var(--laranja);">{{ total_pedidos }}</h1>
+            <a href="{% url 'painel_pedidos' %}" class="text-decoration-none">Ver todos os pedidos <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<h4 class="fw-bold mb-3">Últimos Pedidos</h4>
+<div class="card border-0 shadow-sm">
+    <ul class="list-group list-group-flush bg-transparent">
+        {% for pedido in pedidos_recentes %}
+        <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between align-items-center">
+            <span>Pedido #{{ pedido.pk }} - {{ pedido.usuario.username }}</span>
+            <span class="badge bg-secondary">{{ pedido.status }}</span>
+            <span class="text-muted small">{{ pedido.criado_em|date:"d/m/Y" }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item bg-transparent text-muted">Nenhum pedido recente.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
