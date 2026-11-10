@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | ElevaTech{% endblock %}
+
+{% block branding %}
+<!-- Importa a fonte Montserrat e os Ícones do Bootstrap (igual ao site) -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<div id="site-name">
+    <a href="{% url 'admin:index' %}" style="text-decoration: none; display: flex; align-items: center;">
+        
+        <!-- O Ícone de prédio idêntico ao do site -->
+        <i class="bi bi-buildings" style="color: #ff6b35; margin-right: 10px; font-size: 1.6rem;"></i>
+        
+        <!-- O Texto "ElevaTech" em Montserrat, Branco e Negrito -->
+        <span style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: #ffffff; font-size: 1.5rem; letter-spacing: -0.5px;">ElevaTech</span>
+        
+        <!-- O Texto "| Administração" em Montserrat, Cinza e Fino -->
+        <span style="font-family: 'Montserrat', sans-serif; font-weight: 400; color: #94a3b8; font-size: 1.1rem; margin-left: 8px;">| Administração</span>
+        
+    </a>
+</div>
+{% endblock %}

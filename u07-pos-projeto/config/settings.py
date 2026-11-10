@@ -19,16 +19,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "core",
+    "produtos",
+    "pedidos",
+    "dashboard",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "core",
-    "produtos",
-    "pedidos",
-    "dashboard",
 ]
 
 MIDDLEWARE = [
