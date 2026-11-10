@@ -174,3 +174,33 @@ def limpar_carrinho(request):
     request.session["carrinho"] = {}
     messages.info(request, "Carrinho limpo.")
     return redirect("ver_carrinho")
+
+# ... imports existentes
+
+@login_required
+@require_POST # Usamos POST por segurança, para evitar cancelamento acidental clicando em links
+def cancelar_pedido(request, pk):
+    pedido = get_object_or_404(Pedido, pk=pk, usuario=request.user)
+    
+    # Regra de negócio: Só pode cancelar se ainda estiver como "novo"
+    if pedido.status != 'novo':
+        messages.error(request, "Este pedido já foi processado e não pode mais ser cancelado.")
+        return redirect("meus_pedidos")
+    
+    try:
+        with transaction.atomic():
+            # Devolve os itens ao estoque
+            for item in pedido.itens.all():
+                elevador = Elevador.objects.select_for_update().get(pk=item.elevador.pk)
+                elevador.estoque += item.quantidade
+                elevador.save()
+            
+            # Atualiza o status do pedido
+            pedido.status = 'cancelado'
+            pedido.save()
+            
+        messages.success(request, f"Pedido #{pedido.pk} cancelado com sucesso. Os itens retornaram ao estoque.")
+    except Exception as e:
+        messages.error(request, "Ocorreu um erro ao cancelar o pedido. Tente novamente.")
+        
+    return redirect("meus_pedidos")

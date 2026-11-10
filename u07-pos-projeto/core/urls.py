@@ -7,6 +7,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("cadastro/", views.register, name="register"),
     path("sobre/", views.sobre, name="sobre"),
+    path('perfil/editar-endereco/', views.editar_endereco, name='editar_endereco'),
     
     # Rotas do Perfil
     path('perfil/', views.perfil, name='perfil'),

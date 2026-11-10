@@ -12,10 +12,37 @@
                     {% csrf_token %}
                     
                     <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2" style="color: var(--laranja);"></i> Endereço de Instalação</h4>
-                    <div class="mb-3">
-                        <label class="form-label text-muted">Endereço Completo</label>
-                        <input type="text" name="endereco" class="form-control" value="{{ endereco_salvo }}" required>
-                    </div>
+                    
+                    {% if endereco_salvo %}
+                        <!-- Se o cliente já tem endereço no perfil -->
+                        <div class="mb-3 p-3 rounded" style="background-color: var(--bg-site); border: 1px solid var(--cor-borda);">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="opcao_endereco" id="endereco_cadastro" value="cadastro" checked onchange="alternarEndereco()">
+                                <label class="form-check-label text-white" for="endereco_cadastro">
+                                    <strong>Usar endereço do cadastro</strong><br>
+                                    <span class="text-muted small">{{ endereco_salvo }}</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="opcao_endereco" id="endereco_novo" value="novo" onchange="alternarEndereco()">
+                                <label class="form-check-label text-white" for="endereco_novo">
+                                    Entregar em outro endereço
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Campo de texto escondido por padrão, aparece se escolher "novo" -->
+                        <div class="mb-3" id="campo_novo_endereco" style="display: none;">
+                            <label class="form-label text-muted">Digite o novo endereço completo</label>
+                            <input type="text" name="endereco" id="input_endereco" class="form-control" placeholder="Rua, Número, Bairro, Cidade - Estado, CEP">
+                        </div>
+                    {% else %}
+                        <!-- Se não tem endereço salvo, mostra o campo direto -->
+                        <div class="mb-3">
+                            <label class="form-label text-muted">Endereço Completo</label>
+                            <input type="text" name="endereco" class="form-control" required placeholder="Rua, Número, Bairro, Cidade - Estado, CEP">
+                        </div>
+                    {% endif %}
 
                     <hr class="my-4" style="border-color: var(--cor-borda);">
 
@@ -62,4 +89,23 @@
         </div>
     </div>
 </div>
+
+<!-- Script simples para mostrar/esconder o campo de endereço -->
+<script>
+    function alternarEndereco() {
+        const opcaoNovo = document.getElementById('endereco_novo');
+        const campoNovo = document.getElementById('campo_novo_endereco');
+        const inputEndereco = document.getElementById('input_endereco');
+
+        if (opcaoNovo && opcaoNovo.checked) {
+            campoNovo.style.display = 'block'; // Mostra o campo
+            inputEndereco.required = true;     // Torna obrigatório
+            inputEndereco.focus();
+        } else {
+            campoNovo.style.display = 'none';  // Esconde o campo
+            inputEndereco.required = false;
+            inputEndereco.value = '';          // Limpa o campo se voltar para o cadastro
+        }
+    }
+</script>
 {% endblock %}

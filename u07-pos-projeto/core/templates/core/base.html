@@ -57,11 +57,6 @@
                             <i class="bi bi-person"></i> Perfil
                         </a>
 
-                        <!-- LINK DE ALTERAR SENHA (NOVO) -->
-                        <a class="nav-link text-white p-0 fw-medium py-1 py-lg-0" href="{% url 'password_change' %}">
-                            <i class="bi bi-key"></i> Senha
-                        </a>
-
                         <form method="post" action="{% url 'logout' %}" class="d-inline mb-0 py-1 py-lg-0">
                             {% csrf_token %}
                             <button type="submit" class="nav-link text-white p-0 fw-medium btn-link-custom">Sair</button>

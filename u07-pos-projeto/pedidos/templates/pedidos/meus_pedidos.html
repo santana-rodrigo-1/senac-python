@@ -9,10 +9,24 @@
     <div class="card mb-3 p-3">
         <div class="d-flex justify-content-between">
             <h5 class="fw-bold">Pedido #{{ pedido.pk }}</h5>
-            <span class="badge bg-dark">{{ pedido.status }}</span>
+            <span class="badge {% if pedido.status == 'cancelado' %}bg-danger{% else %}bg-dark{% endif %}">
+                {{ pedido.status|title }}
+            </span>
         </div>
         <p class="text-muted small mb-1">Data: {{ pedido.criado_em|date:"d/m/Y H:i" }}</p>
-        <h5 class="mb-0">Total: <span style="color: var(--laranja);">R$ {{ pedido.total }}</span></h5>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h5 class="mb-0">Total: <span style="color: var(--laranja);">R$ {{ pedido.total }}</span></h5>
+
+            {% if pedido.status == 'novo' %}
+            <form method="post" action="{% url 'cancelar_pedido' pedido.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                    onclick="return confirm('Tem certeza que deseja cancelar este pedido? Os itens voltarão ao estoque.');">
+                    <i class="bi bi-x-circle"></i> Cancelar Pedido
+                </button>
+            </form>
+            {% endif %}
+        </div>
     </div>
     {% empty %}
     <p class="text-muted">Você ainda não fez nenhum pedido.</p>

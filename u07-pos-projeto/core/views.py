@@ -3,8 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import EditarPerfilForm, CustomPasswordChangeForm
+from .forms import EditarPerfilForm, CustomPasswordChangeForm, EditarEnderecoForm
 from .models import Perfil
+
 
 def home(request):
     return render(request, "core/home.html")
@@ -55,3 +56,19 @@ def editar_perfil(request):
         })
     
     return render(request, "core/editar_perfil.html", {"form": form})
+
+
+@login_required
+def editar_endereco(request):
+    perfil, criado = Perfil.objects.get_or_create(usuario=request.user)
+    
+    if request.method == 'POST':
+        form = EditarEnderecoForm(request.POST, instance=perfil)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Endereço de instalação atualizado com sucesso!")
+            return redirect("perfil")
+    else:
+        form = EditarEnderecoForm(instance=perfil)
+    
+    return render(request, "core/editar_endereco.html", {"form": form})
