@@ -6,6 +6,8 @@ from django.views.decorators.http import require_POST
 from produtos.models import Elevador
 from .models import ItemPedido, Pedido
 from core.models import Perfil
+from datetime import timedelta
+from django.utils import timezone
 
 
 @require_POST
@@ -241,3 +243,22 @@ def cancelar_pedido(request, pk):
         messages.error(request, "Ocorreu um erro ao cancelar o pedido. Tente novamente.")
         
     return redirect("meus_pedidos")
+
+
+@login_required
+def meus_pedidos(request):
+    pedidos = Pedido.objects.filter(usuario=request.user).order_by("-criado_em")
+    
+    # Calcula a data de 7 dias atrás
+    sete_dias_atras = timezone.now() - timedelta(days=7)
+    
+    # Verifica se tem algum cancelamento APENAS nos últimos 7 dias
+    tem_cancelado = pedidos.filter(
+        status='cancelado', 
+        criado_em__gte=sete_dias_atras
+    ).exists()
+    
+    return render(request, "pedidos/meus_pedidos.html", {
+        "pedidos": pedidos,
+        "tem_cancelado": tem_cancelado
+    })

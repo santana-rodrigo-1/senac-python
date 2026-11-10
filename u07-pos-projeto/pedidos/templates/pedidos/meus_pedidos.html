@@ -6,11 +6,14 @@
 <div class="container py-5 my-4">
     <h2 class="fw-bold mb-4">Meus <span class="texto-destaque">Pedidos</span></h2>
 
-    <!-- Aviso de Pedido Cancelado (Apenas se a view enviar True) -->
+    <!-- Aviso de Pedido Cancelado -->
     {% if tem_cancelado %}
-        <div class="alert alert-danger border-0 shadow-sm mb-4" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Atenção: Um ou mais pedidos seus foram cancelados pela loja. Verifique os detalhes abaixo ou entre em contato com o suporte.
+            Atenção: Um ou mais pedidos seus foram cancelados recentemente. Verifique os detalhes abaixo ou entre em contato com o suporte.
+            
+            <!-- Botão de Fechar (X) -->
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endif %}
 
