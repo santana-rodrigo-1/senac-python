@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Editar Perfil — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card p-5 shadow-sm border-0">
+                
+                <h2 class="fw-bold mb-4">
+                    <i class="bi bi-person-gear" style="color: var(--laranja);"></i> Editar Perfil
+                </h2>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-laranja w-100 py-3 fw-bold">
+                            Salvar Alterações
+                        </button>
+                        <a href="{% url 'perfil' %}" class="btn btn-secundario w-50 py-3">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

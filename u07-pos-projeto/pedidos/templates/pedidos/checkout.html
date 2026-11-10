@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% block title %}Checkout — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+    <h2 class="fw-bold mb-4">Finalizar <span class="texto-destaque">Compra</span></h2>
+    
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card p-4 shadow-sm border-0">
+                <form method="post" action="{% url 'processar_pedido' %}">
+                    {% csrf_token %}
+                    
+                    <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2" style="color: var(--laranja);"></i> Endereço de Instalação</h4>
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Endereço Completo</label>
+                        <input type="text" name="endereco" class="form-control" value="{{ endereco_salvo }}" required>
+                    </div>
+
+                    <hr class="my-4" style="border-color: var(--cor-borda);">
+
+                    <h4 class="fw-bold mb-3"><i class="bi bi-credit-card me-2" style="color: var(--laranja);"></i> Pagamento (Simulação)</h4>
+                    <p class="small text-muted mb-3">Ambiente seguro. Nenhum dado real de cartão é salvo.</p>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Número do Cartão</label>
+                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-muted">Validade</label>
+                            <input type="text" class="form-control" placeholder="MM/AA" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-muted">CVV</label>
+                            <input type="text" class="form-control" placeholder="123" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-laranja w-100 py-3 fw-bold fs-5">Confirmar e Pagar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card p-4 shadow-sm border-0">
+                <h4 class="fw-bold mb-4">Resumo do Pedido</h4>
+                <ul class="list-group list-group-flush bg-transparent">
+                    {% for item in itens %}
+                    <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between">
+                        <span>{{ item.quantidade }}x {{ item.elevador.nome }}</span>
+                        <span class="text-muted">R$ {{ item.subtotal }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <hr style="border-color: var(--cor-borda);">
+                <div class="d-flex justify-content-between fw-bold fs-4">
+                    <span>Total:</span>
+                    <span style="color: var(--laranja);">R$ {{ total }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
