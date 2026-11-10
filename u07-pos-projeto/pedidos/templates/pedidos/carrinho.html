@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+{% block title %}Meu Carrinho — ElevaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+
+    <h1 class="fw-bold mb-4">Meu <span class="texto-destaque">Carrinho</span></h1>
+
+    {% if itens %}
+    <div class="row g-4">
+        <!-- Coluna Esquerda: Lista de Itens -->
+        <div class="col-lg-8">
+            {% for item in itens %}
+            <div class="card mb-3 p-3 shadow-sm border-0">
+                <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+
+                    <!-- Imagem -->
+                    {% if item.elevador.imagem %}
+                    <img src="{{ item.elevador.imagem.url }}" style="width: 90px; height: 90px; object-fit: cover;"
+                        class="rounded">
+                    {% else %}
+                    <div class="bg-secondary rounded d-flex align-items-center justify-content-center"
+                        style="width: 90px; height: 90px;">
+                        <i class="bi bi-image fs-3 text-white opacity-50"></i>
+                    </div>
+                    {% endif %}
+
+                    <!-- Nome e Detalhes -->
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1">{{ item.elevador.nome }}</h5>
+                        <p class="text-muted small mb-1">{{ item.elevador.categoria }} · Estoque:
+                            {{item.elevador.estoque }}</p>
+                        <p class="small mb-0" style="color: var(--laranja);">R$ {{ item.elevador.preco }} cada</p>
+                    </div>
+
+                    <!-- Formulário de Quantidade -->
+                    <form method="post" action="{% url 'carrinho_atualizar' item.elevador.pk %}"
+                        class="d-flex gap-2 align-items-center">
+                        {% csrf_token %}
+                        <!-- CORRIGIDO: Removido o bg-light e forçada a cor do texto -->
+                        <input type="number" name="quantidade" value="{{ item.quantidade }}" min="1" max="99"
+                            class="form-control form-control-sm" style="width: 70px; color: var(--texto-principal) !important;">
+                        <button type="submit" class="btn btn-sm btn-secundario">Atualizar</button>
+                    </form>
+
+                    <!-- Subtotal e Remover -->
+                    <div class="text-end" style="min-width: 120px;">
+                        <h5 class="fw-bold mb-2" style="color: var(--laranja);">R$ {{ item.subtotal }}</h5>
+
+                        <form method="post" action="{% url 'carrinho_atualizar' item.elevador.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantidade" value="0">
+                            <button type="submit" class="btn btn-sm btn-link text-danger text-decoration-none p-0">
+                                <i class="bi bi-trash-fill"></i> Remover
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Coluna Direita: Resumo -->
+        <div class="col-lg-4">
+            <div class="card p-4 shadow-sm border-0">
+                <h4 class="fw-bold mb-4">Resumo do Carrinho</h4>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal</span>
+                    <span>R$ {{ total }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Frete</span>
+                    <span class="text-muted">A combinar</span>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <span class="fw-bold fs-5">Total</span>
+                    <span class="fw-bold fs-5" style="color: var(--laranja);">R$ {{ total }}</span>
+                </div>
+
+                <!-- Botão de Finalizar -->
+                <a href="{% url 'finalizar' %}" class="btn btn-laranja w-100 py-2 mb-2 fw-bold fs-5">
+                    {% if user.is_authenticated %}Finalizar Compra{% else %}Entrar e Comprar{% endif %}
+                </a>
+
+                <!-- Botões Secundários -->
+                <a href="{% url 'catalogo' %}" class="btn btn-secundario w-100 py-2 mb-2">
+                    <i class="bi bi-arrow-left"></i> Continuar navegando
+                </a>
+
+                <a href="{% url 'carrinho_limpar' %}" class="btn btn-outline-danger w-100 py-2">
+                    <i class="bi bi-trash-fill"></i> Esvaziar carrinho
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Carrinho Vazio -->
+    <div class="text-center py-5">
+        <i class="bi bi-cart-x text-muted" style="font-size: 4rem;"></i>
+        <h4 class="text-muted mt-3 mb-4">Seu carrinho está vazio.</h4>
+        <a href="{% url 'catalogo' %}" class="btn btn-laranja px-4 py-2">Ver Elevadores</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
