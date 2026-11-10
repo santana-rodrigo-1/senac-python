@@ -1,17 +1,20 @@
 {% extends 'dashboard/base_painel.html' %}
 
-{% block content %}
-<h2 class="fw-bold mb-4">Todos os Pedidos</h2>
+{% block painel_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Gestão de Pedidos</h2>
+</div>
 
 <div class="card border-0 shadow-sm p-0 overflow-hidden">
-    <table class="table table-dark table-hover mb-0">
+    <table class="table table-dark table-hover mb-0 align-middle">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Data</th>
-                <th>Status</th>
                 <th>Total</th>
+                <th>Status Atual</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +23,49 @@
                 <td>#{{ pedido.pk }}</td>
                 <td>{{ pedido.usuario.username }}</td>
                 <td>{{ pedido.criado_em|date:"d/m/Y H:i" }}</td>
-                <td><span class="badge bg-warning text-dark">{{ pedido.status }}</span></td>
-                <td>R$ {{ pedido.total }}</td>
+                <td style="color: var(--laranja); font-weight: bold;">R$ {{ pedido.total }}</td>
+                
+                <!-- Coluna do Status com Cores -->
+                <td>
+                    {% if pedido.status == 'novo' or pedido.status == 'pendente' %}
+                        <span class="badge bg-warning text-dark">Aguardando Pagamento</span>
+                    {% elif pedido.status == 'pago' %}
+                        <span class="badge bg-success">Pago</span>
+                    {% elif pedido.status == 'enviado' %}
+                        <span class="badge bg-primary">Enviado</span>
+                    {% elif pedido.status == 'entregue' %}
+                        <span class="badge bg-info text-dark">Entregue</span>
+                    {% elif pedido.status == 'cancelado' %}
+                        <span class="badge bg-danger">Cancelado</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ pedido.status|title }}</span>
+                    {% endif %}
+                </td>
+
+                <!-- Formulário de Atualização Inteligente -->
+                <td>
+                    {% if pedido.status == 'entregue' or pedido.status == 'cancelado' %}
+                        <span class="text-muted small fw-bold"><i class="bi bi-lock-fill"></i> Finalizado</span>
+                    {% else %}
+                    <form method="post" action="{% url 'atualizar_status_pedido' pedido.pk %}" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <select name="status" class="form-select form-select-sm" style="width: 150px; background-color: #0f172a; color: white; border: 1px solid #334155;" required>
+                            <option value="" disabled selected>Mudar para...</option>
+                            
+                            <!-- Ocultando o status atual para não haver erro de duplicação -->
+                            {% if pedido.status != 'novo' %}<option value="novo">Novo</option>{% endif %}
+                            {% if pedido.status != 'pago' %}<option value="pago">Pago</option>{% endif %}
+                            {% if pedido.status != 'enviado' %}<option value="enviado">Enviado</option>{% endif %}
+                            {% if pedido.status != 'entregue' %}<option value="entregue">Entregue</option>{% endif %}
+                            {% if pedido.status != 'cancelado' %}<option value="cancelado">Cancelar</option>{% endif %}
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-laranja">Salvar</button>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
-            <tr><td colspan="5" class="text-center text-muted py-4">Nenhum pedido realizado ainda.</td></tr>
+            <tr><td colspan="6" class="text-center text-muted py-4">Nenhum pedido realizado ainda.</td></tr>
             {% endfor %}
         </tbody>
     </table>

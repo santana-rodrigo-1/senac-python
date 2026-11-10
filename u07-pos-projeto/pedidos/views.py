@@ -138,7 +138,14 @@ def processar_pedido(request):
 @login_required
 def meus_pedidos(request):
     pedidos = Pedido.objects.filter(usuario=request.user).order_by("-criado_em")
-    return render(request, "pedidos/meus_pedidos.html", {"pedidos": pedidos})
+    
+    # Verifica no banco de dados se existe algum pedido cancelado deste usuário
+    tem_cancelado = pedidos.filter(status='cancelado').exists()
+    
+    return render(request, "pedidos/meus_pedidos.html", {
+        "pedidos": pedidos,
+        "tem_cancelado": tem_cancelado
+    })
 
 
 @require_POST
@@ -201,6 +208,36 @@ def cancelar_pedido(request, pk):
             
         messages.success(request, f"Pedido #{pedido.pk} cancelado com sucesso. Os itens retornaram ao estoque.")
     except Exception as e:
+        messages.error(request, "Ocorreu um erro ao cancelar o pedido. Tente novamente.")
+        
+    return redirect("meus_pedidos")
+
+
+@login_required
+@require_POST
+def cancelar_pedido(request, pk):
+    # Busca o pedido garantindo que pertence ao usuário logado
+    pedido = get_object_or_404(Pedido, pk=pk, usuario=request.user)
+    
+    # Regra de negócio: Só cancela se ainda não foi enviado
+    if pedido.status in ['enviado', 'entregue', 'cancelado']:
+        messages.error(request, f"O pedido #{pedido.pk} já está em processo de envio ou foi finalizado e não pode ser cancelado.")
+        return redirect("meus_pedidos")
+    
+    try:
+        with transaction.atomic():
+            # 1. Devolve os itens ao estoque
+            for item in pedido.itens.all():
+                elevador = Elevador.objects.select_for_update().get(pk=item.elevador.pk)
+                elevador.estoque += item.quantidade
+                elevador.save()
+            
+            # 2. Muda o status do pedido
+            pedido.status = 'cancelado'
+            pedido.save()
+            
+        messages.success(request, f"Pedido #{pedido.pk} cancelado com sucesso. Os itens retornaram ao estoque.")
+    except Exception:
         messages.error(request, "Ocorreu um erro ao cancelar o pedido. Tente novamente.")
         
     return redirect("meus_pedidos")
